@@ -27,6 +27,7 @@ export default async function GalleryPage({ params }: Props) {
         title={dict.gallery.title}
         subtitle={dict.hero.tagline}
         scene="safari"
+        image="/media/pages/gallery.jpg"
         crumbs={[
           { name: dict.common.home, path: href(lang) },
           { name: dict.nav.gallery, path: href(lang, "/gallery") },

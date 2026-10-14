@@ -6,12 +6,20 @@ import { useI18n } from "@/components/providers/AppProviders";
 import { Modal } from "@/components/ui/Modal";
 import { tours } from "@/lib/data/tours";
 import { l } from "@/lib/i18n/config";
-import type { GuideLanguage } from "@/lib/types";
+import type { GuideLanguage, PackageOption } from "@/lib/types";
 
 type Errors = Partial<Record<"name" | "email", string>>;
 
 /** Booking form → POST /api/booking → success modal with booking reference. */
-export function ContactForm({ defaultTour = "", defaultMessage = "" }: { defaultTour?: string; defaultMessage?: string }) {
+export function ContactForm({
+  defaultTour = "",
+  defaultOption = "",
+  defaultMessage = "",
+}: {
+  defaultTour?: string;
+  defaultOption?: "" | PackageOption;
+  defaultMessage?: string;
+}) {
   const { lang, dict } = useI18n();
   const t = dict.contact;
   const [errors, setErrors] = useState<Errors>({});
@@ -145,7 +153,7 @@ export function ContactForm({ defaultTour = "", defaultMessage = "" }: { default
             <input id="cf-end" name="endDate" type="date" min={today} className="input" />
           </div>
         </fieldset>
-        <div className="sm:col-span-2">
+        <div>
           <label htmlFor="cf-tour" className="field-label">
             {t.tour}
           </label>
@@ -156,6 +164,20 @@ export function ContactForm({ defaultTour = "", defaultMessage = "" }: { default
                 {l(tour.title, lang)}
               </option>
             ))}
+          </select>
+        </div>
+        <div>
+          <label htmlFor="cf-option" className="field-label">
+            {t.option}
+          </label>
+          <select id="cf-option" name="option" className="input" defaultValue={defaultOption}>
+            <option value="">{t.tourNone}</option>
+            <option value="standard">
+              {dict.tour.standard} — {dict.tour.standardHotels}
+            </option>
+            <option value="premium">
+              {dict.tour.premium} — {dict.tour.premiumHotels}
+            </option>
           </select>
         </div>
         <div className="sm:col-span-2">

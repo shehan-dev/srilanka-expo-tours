@@ -1,19 +1,20 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Check, CheckCircle2, ChevronRight, Clock, Gauge, Languages, MapPin, MessageCircle } from "lucide-react";
+import { BedDouble, Check, CheckCircle2, ChevronRight, Clock, Info, Languages, MapPin, MessageCircle } from "lucide-react";
 import { JsonLd } from "@/components/ui/JsonLd";
 import { Media } from "@/components/ui/Media";
 import { Price } from "@/components/ui/Price";
 import { Reveal } from "@/components/ui/Reveal";
-import { Stars } from "@/components/ui/Stars";
 import { MapView } from "@/components/map/MapView";
 import { TourCard, TourTags } from "@/components/tours/TourCard";
-import { getTour, tours } from "@/lib/data/tours";
+import { dayLabels, getTour, tours } from "@/lib/data/tours";
 import { getDictionary } from "@/lib/i18n";
 import { hasLocale, href, l, locales } from "@/lib/i18n/config";
 import { breadcrumbLd, pageMetadata, tourLd } from "@/lib/seo";
 import { site } from "@/lib/site";
+import type { PackageOption } from "@/lib/types";
+import { cn } from "@/lib/utils";
 
 type Props = { params: Promise<{ lang: string; slug: string }> };
 
@@ -34,6 +35,7 @@ export default async function TourPage({ params }: Props) {
   if (!hasLocale(lang) || !tour) notFound();
   const dict = await getDictionary(lang);
   const title = l(tour.title, lang);
+  const labels = dayLabels(tour);
 
   const crumbs = [
     { name: dict.common.home, path: href(lang) },
@@ -46,6 +48,10 @@ export default async function TourPage({ params }: Props) {
     .slice(0, 3);
 
   const whatsappText = encodeURIComponent(`${dict.contact.prefill} — ${title}`);
+  const options: { key: PackageOption; label: string; hotels: string }[] = [
+    { key: "standard", label: dict.tour.standard, hotels: dict.tour.standardHotels },
+    { key: "premium", label: dict.tour.premium, hotels: dict.tour.premiumHotels },
+  ];
 
   return (
     <>
@@ -85,16 +91,23 @@ export default async function TourPage({ params }: Props) {
               <Clock className="h-4 w-4" aria-hidden /> {tour.durationDays} {dict.tour.days}
             </li>
             <li className="flex items-center gap-1.5">
-              <Stars rating={tour.rating} size={14} label={dict.common.stars} /> {tour.rating.toFixed(1)} · {tour.reviewCount} {dict.tour.reviews}
-            </li>
-            <li className="flex items-center gap-1.5">
               <MapPin className="h-4 w-4" aria-hidden /> {tour.regions.map((r) => dict.regions[r]).join(" · ")}
             </li>
           </ul>
         </div>
+        {tour.imageCredit && (
+          <a
+            href={tour.imageCredit.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute right-3 bottom-2 text-[11px] text-white/60 hover:text-white"
+          >
+            {dict.tour.photoBy}: {tour.imageCredit.name} / Unsplash
+          </a>
+        )}
       </header>
 
-      <div className="container-site grid gap-10 py-12 lg:grid-cols-[1fr_360px] lg:py-16">
+      <div className="container-site grid gap-10 py-12 lg:grid-cols-[1fr_380px] lg:py-16">
         <div className="flex min-w-0 flex-col gap-12">
           <Reveal>
             <p className="text-lg leading-8 text-ink/85">{l(tour.description, lang)}</p>
@@ -122,7 +135,7 @@ export default async function TourPage({ params }: Props) {
                     {i + 1}
                   </span>
                   <p className="text-xs font-semibold tracking-wide text-accent-700 uppercase">
-                    {dict.tour.day} {i + 1}
+                    {labels[i].multi ? dict.tour.days : dict.tour.day} {labels[i].label}
                   </p>
                   <h3 className="mt-1 text-lg font-semibold">{l(d.title, lang)}</h3>
                   <p className="mt-1 text-[15px] text-muted">{l(d.description, lang)}</p>
@@ -149,14 +162,42 @@ export default async function TourPage({ params }: Props) {
           />
         </div>
 
-        {/* Booking sidebar */}
+        {/* Booking sidebar: Standard / Premium options */}
         <aside aria-label={dict.tour.bookThis}>
           <div className="card sticky top-24 flex flex-col gap-5 p-6">
-            <p>
-              <span className="block text-sm text-muted">{dict.tour.from}</span>
-              <Price usd={tour.priceFrom} className="font-heading text-4xl font-bold" />
-              <span className="text-sm text-muted"> / {dict.tour.perPerson}</span>
-            </p>
+            <h2 className="text-lg font-semibold">{dict.tour.options}</h2>
+            <ul className="flex flex-col gap-3">
+              {options.map((o) => (
+                <li
+                  key={o.key}
+                  className={cn(
+                    "flex items-center justify-between gap-3 rounded-2xl border-2 p-4",
+                    o.key === "premium" ? "border-primary/40 bg-primary-50/60" : "border-line"
+                  )}
+                >
+                  <div>
+                    <p className="font-semibold">{o.label}</p>
+                    <p className="flex items-center gap-1 text-xs text-muted">
+                      <BedDouble className="h-3.5 w-3.5" aria-hidden /> {o.hotels}
+                    </p>
+                    <p className="mt-1">
+                      <Price usd={tour.prices[o.key]} className="font-heading text-2xl font-bold" />
+                      <span className="text-xs text-muted"> / {dict.tour.perPerson}</span>
+                    </p>
+                  </div>
+                  <Link
+                    href={`${href(lang, "/contact")}?tour=${tour.slug}&option=${o.key}`}
+                    className={cn("btn btn-sm", o.key === "premium" ? "btn-primary" : "btn-outline")}
+                  >
+                    {dict.tour.bookOption}
+                    <span className="sr-only">
+                      : {title} — {o.label}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+
             <dl className="grid gap-3 text-sm">
               <div className="flex items-center justify-between gap-2">
                 <dt className="flex items-center gap-2 text-muted">
@@ -166,27 +207,14 @@ export default async function TourPage({ params }: Props) {
                   {tour.durationDays} {dict.tour.days}
                 </dd>
               </div>
-              <div className="flex items-center justify-between gap-2">
-                <dt className="flex items-center gap-2 text-muted">
-                  <Gauge className="h-4 w-4" aria-hidden /> {dict.tour.difficulty}
-                </dt>
-                <dd className="font-medium">{dict.difficulties[tour.difficulty]}</dd>
-              </div>
-              <div className="flex items-center justify-between gap-2">
-                <dt className="flex items-center gap-2 text-muted">
-                  <Languages className="h-4 w-4" aria-hidden /> {dict.tour.languages}
-                </dt>
-                <dd className="text-right font-medium">{tour.languages.map((x) => dict.languages[x]).join(", ")}</dd>
-              </div>
             </dl>
+
+            <p className="flex gap-2 rounded-xl bg-sky p-3 text-xs text-ink/80">
+              <Languages className="h-4 w-4 shrink-0 text-accent-700" aria-hidden /> {dict.tour.anyGuide}
+            </p>
+
             <div className="flex flex-col gap-2">
-              <Link href={`${href(lang, "/contact")}?tour=${tour.slug}`} className="btn btn-primary">
-                {dict.tour.bookThis}
-              </Link>
-              <Link
-                href={`${href(lang, "/itinerary")}?days=${tour.durationDays}&guide=${lang === "it" ? "italian" : "driver"}`}
-                className="btn btn-outline"
-              >
+              <Link href={`${href(lang, "/contact")}?tour=${tour.slug}`} className="btn btn-outline btn-sm">
                 {dict.tour.customise}
               </Link>
               <a
@@ -198,7 +226,12 @@ export default async function TourPage({ params }: Props) {
                 <MessageCircle className="h-4 w-4" aria-hidden /> {dict.tour.askQuestion}
               </a>
             </div>
-            <p className="text-xs text-muted">{dict.tour.priceNote}</p>
+            <p className="flex gap-2 text-xs text-muted">
+              <Info className="h-4 w-4 shrink-0" aria-hidden />
+              <span>
+                {dict.tour.priceDisclaimer} {dict.tour.priceNote}
+              </span>
+            </p>
           </div>
         </aside>
       </div>

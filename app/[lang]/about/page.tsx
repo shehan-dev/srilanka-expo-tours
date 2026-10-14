@@ -28,6 +28,7 @@ export default async function AboutPage({ params }: Props) {
         title={dict.about.title}
         subtitle={dict.about.story}
         scene="temple"
+        image="/media/pages/about.jpg"
         crumbs={[
           { name: dict.common.home, path: href(lang) },
           { name: dict.nav.about, path: href(lang, "/about") },

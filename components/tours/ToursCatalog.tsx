@@ -4,25 +4,23 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { LayoutGrid, List, Map as MapIcon, RotateCcw, SlidersHorizontal } from "lucide-react";
+import { Info, LayoutGrid, List,Map as MapIcon, RotateCcw, SlidersHorizontal } from "lucide-react";
 import { useI18n } from "@/components/providers/AppProviders";
 import { MapView } from "@/components/map/MapView";
 import { Price } from "@/components/ui/Price";
-import { maxTourPrice, tours } from "@/lib/data/tours";
+import { lengthOf, maxTourPrice, tours, type LengthId } from "@/lib/data/tours";
 import { href, l } from "@/lib/i18n/config";
-import type { Difficulty, GuideLanguage, RegionId, ThemeId, Tour } from "@/lib/types";
+import type { RegionId, ThemeId, Tour } from "@/lib/types";
 import { cn } from "@/lib/utils";
 import { TourCard } from "./TourCard";
 import { TourPreviewModal } from "./TourPreviewModal";
 
-export type LengthId = "short" | "medium" | "long";
+export type { LengthId };
 
 export interface CatalogFilters {
   theme: ThemeId | "all";
   regions: RegionId[];
   lengths: LengthId[];
-  difficulties: Difficulty[];
-  languages: GuideLanguage[];
   maxPrice: number;
   sort: "popular" | "price-asc" | "price-desc" | "duration";
 }
@@ -30,11 +28,8 @@ export interface CatalogFilters {
 const themes: (ThemeId | "all")[] = ["all", "culture", "nature", "wildlife", "beach", "adventure", "family", "food"];
 const regionIds: RegionId[] = ["cultural-triangle", "hill-country", "south-coast", "east-coast", "national-parks", "city"];
 const lengthIds: LengthId[] = ["short", "medium", "long"];
-const difficultyIds: Difficulty[] = ["easy", "moderate", "active"];
-const languageIds: GuideLanguage[] = ["it", "en", "de", "fr"];
 const PAGE_SIZE = 9;
 
-const lengthOf = (days: number): LengthId => (days <= 3 ? "short" : days <= 7 ? "medium" : "long");
 
 /** Filter + sort. Runs during SSR with the URL's filters, so filtered views are pre-rendered for SEO. */
 export function filterTours(f: CatalogFilters): Tour[] {
@@ -43,14 +38,12 @@ export function filterTours(f: CatalogFilters): Tour[] {
       (f.theme === "all" || t.themes.includes(f.theme)) &&
       (!f.regions.length || t.regions.some((r) => f.regions.includes(r))) &&
       (!f.lengths.length || f.lengths.includes(lengthOf(t.durationDays))) &&
-      (!f.difficulties.length || f.difficulties.includes(t.difficulty)) &&
-      (!f.languages.length || t.languages.some((x) => f.languages.includes(x))) &&
-      t.priceFrom <= f.maxPrice
+      t.prices.standard <= f.maxPrice
   );
   const sorters: Record<CatalogFilters["sort"], (a: Tour, b: Tour) => number> = {
-    popular: (a, b) => Number(!!b.popular) - Number(!!a.popular) || b.reviewCount - a.reviewCount,
-    "price-asc": (a, b) => a.priceFrom - b.priceFrom,
-    "price-desc": (a, b) => b.priceFrom - a.priceFrom,
+    popular: (a, b) => Number(!!b.popular) - Number(!!a.popular) || a.durationDays - b.durationDays,
+    "price-asc": (a, b) => a.prices.standard - b.prices.standard,
+    "price-desc": (a, b) => b.prices.standard - a.prices.standard,
     duration: (a, b) => a.durationDays - b.durationDays,
   };
   return list.sort(sorters[f.sort]);
@@ -108,8 +101,6 @@ export function ToursCatalog({ initial }: { initial: CatalogFilters }) {
     if (filters.theme !== "all") p.set("theme", filters.theme);
     if (filters.regions.length) p.set("region", filters.regions.join(","));
     if (filters.lengths.length) p.set("length", filters.lengths.join(","));
-    if (filters.difficulties.length) p.set("difficulty", filters.difficulties.join(","));
-    if (filters.languages.length) p.set("language", filters.languages.join(","));
     if (filters.maxPrice < maxTourPrice) p.set("max", String(filters.maxPrice));
     if (filters.sort !== "popular") p.set("sort", filters.sort);
     const qs = p.toString();
@@ -117,10 +108,10 @@ export function ToursCatalog({ initial }: { initial: CatalogFilters }) {
   }, [filters, pathname]);
 
   const activeCount =
-    filters.regions.length + filters.lengths.length + filters.difficulties.length + filters.languages.length + (filters.maxPrice < maxTourPrice ? 1 : 0);
+    filters.regions.length + filters.lengths.length + (filters.maxPrice < maxTourPrice ? 1 : 0);
 
   const reset = () =>
-    set({ theme: "all", regions: [], lengths: [], difficulties: [], languages: [], maxPrice: maxTourPrice });
+    set({ theme: "all", regions: [], lengths: [], maxPrice: maxTourPrice });
 
   const filterPanel = (
     <div className="flex flex-col gap-6">
@@ -134,16 +125,14 @@ export function ToursCatalog({ initial }: { initial: CatalogFilters }) {
         <input
           id="max-price"
           type="range"
-          min={50}
+          min={500}
           max={maxTourPrice}
-          step={10}
+          step={20}
           value={filters.maxPrice}
           onChange={(e) => set({ maxPrice: Number(e.target.value) })}
           className="w-full accent-primary"
         />
       </div>
-      <ChipGroup label={dict.catalog.difficulty} options={difficultyIds} selected={filters.difficulties} onToggle={(x) => set({ difficulties: toggle(filters.difficulties, x) })} render={(x) => dict.difficulties[x]} />
-      <ChipGroup label={dict.catalog.language} options={languageIds} selected={filters.languages} onToggle={(x) => set({ languages: toggle(filters.languages, x) })} render={(x) => dict.languages[x]} />
       <button type="button" onClick={reset} className="inline-flex items-center gap-1.5 self-start text-sm font-semibold text-primary-600 hover:underline">
         <RotateCcw className="h-4 w-4" aria-hidden /> {dict.catalog.reset}
       </button>
@@ -211,6 +200,14 @@ export function ToursCatalog({ initial }: { initial: CatalogFilters }) {
           </button>
         </div>
       </div>
+
+      <p className="mb-6 flex items-start gap-2 rounded-2xl bg-sky px-4 py-3 text-sm text-ink/80">
+        <Info className="mt-0.5 h-4 w-4 shrink-0 text-accent-700" aria-hidden />
+        <span>
+          {dict.tour.standard} = {dict.tour.standardHotels} · {dict.tour.premium} = {dict.tour.premiumHotels}. {dict.tour.priceDisclaimer}{" "}
+          {dict.tour.anyGuide}
+        </span>
+      </p>
 
       <AnimatePresence initial={false}>
         {showFilters && (

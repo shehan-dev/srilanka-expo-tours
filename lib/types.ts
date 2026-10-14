@@ -22,8 +22,9 @@ export type RegionId =
   | "city";
 
 export type ThemeId = "culture" | "nature" | "wildlife" | "beach" | "adventure" | "family" | "food";
-export type Difficulty = "easy" | "moderate" | "active";
 export type GuideLanguage = "it" | "en" | "de" | "fr";
+
+export type PackageOption = "standard" | "premium";
 
 export interface Tour {
   id: string;
@@ -32,20 +33,22 @@ export interface Tour {
   tagline: L10n;
   description: L10n;
   durationDays: number;
-  /** Price per person in USD, based on 2 travellers sharing. */
-  priceFrom: number;
+  /**
+   * Indicative price per person in USD (2 sharing).
+   * standard = 3★ hotels, premium = 4★ & 5★ hotels.
+   */
+  prices: Record<PackageOption, number>;
   regions: RegionId[];
   themes: ThemeId[];
-  difficulty: Difficulty;
-  languages: GuideLanguage[];
-  rating: number;
-  reviewCount: number;
   scene: Scene;
   image?: string;
-  tags: ("best-seller" | "family" | "new" | "italian-guide")[];
+  /** Photographer credit for `image` (Unsplash License). */
+  imageCredit?: { name: string; url: string };
+  tags: ("best-seller" | "family" | "new" | "honeymoon")[];
   popular?: boolean;
   highlights: L10nList;
-  itinerary: { title: L10n; description: L10n }[];
+  /** Each stop covers `days` days (default 1); the sum must equal durationDays. */
+  itinerary: { title: L10n; description: L10n; days?: number }[];
   includes: L10nList;
   /** Main location of the tour, used for map pins. */
   coords: [number, number];
@@ -70,7 +73,7 @@ export interface Testimonial {
   flag: string;
   rating: number;
   quote: L10n;
-  source: "google" | "tripadvisor";
+  source: "google";
   link: string;
   date: string;
 }

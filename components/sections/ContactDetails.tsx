@@ -15,7 +15,7 @@ export function ContactDetails({ dict }: { dict: Dictionary }) {
         <address className="flex flex-col gap-3 text-[15px] not-italic">
           <p className="flex gap-3">
             <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-accent-700" aria-hidden />
-            {site.address.street}, {site.address.city}, {site.address.country}
+            {site.address.street}, {site.address.city}, {site.address.region}, {site.address.country}
           </p>
           <a href={site.phoneHref} className="flex gap-3 hover:text-primary">
             <Phone className="mt-0.5 h-5 w-5 shrink-0 text-accent-700" aria-hidden />
@@ -62,7 +62,7 @@ export function ContactDetails({ dict }: { dict: Dictionary }) {
         <MapView
           className="h-64"
           label={t.meetingPoint}
-          points={[{ id: "office", coords: site.meetingPoint, title: site.name, subtitle: `${site.address.street}, ${site.address.city}` }]}
+          points={[{ id: "office", coords: site.meetingPoint, title: site.name, subtitle: `${site.address.street}, ${site.address.city}, ${site.address.region}` }]}
         />
       </div>
     </div>

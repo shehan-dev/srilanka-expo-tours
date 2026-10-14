@@ -2,9 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Fleet, SafetyNotes, ServicesGrid } from "@/components/sections/Services";
-import { PricingTable } from "@/components/sections/PricingTable";
 import { PageHeader } from "@/components/ui/PageHeader";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { getDictionary } from "@/lib/i18n";
 import { hasLocale, href } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/seo";
@@ -30,6 +28,7 @@ export default async function ServicesPage({ params }: Props) {
         title={dict.services.title}
         subtitle={dict.services.subtitle}
         scene="city"
+        image="/media/pages/services.jpg"
         crumbs={[
           { name: dict.common.home, path: href(lang) },
           { name: dict.nav.services, path: href(lang, "/services") },
@@ -41,17 +40,11 @@ export default async function ServicesPage({ params }: Props) {
           <Fleet dict={dict} lang={lang} />
           <SafetyNotes dict={dict} />
         </div>
-      </section>
-      <section aria-labelledby="pricing-title" className="section bg-sky/60">
-        <div className="container-site">
-          <SectionHeading id="pricing-title" eyebrow={dict.pricing.eyebrow} title={dict.pricing.title} subtitle={dict.pricing.subtitle} />
-          <PricingTable dict={dict} lang={lang} />
-          <p className="mt-10 text-center">
-            <Link href={href(lang, "/contact")} className="btn btn-primary">
-              {dict.nav.bookNow}
-            </Link>
-          </p>
-        </div>
+        <p className="container-site mt-12 text-center">
+          <Link href={href(lang, "/contact")} className="btn btn-primary">
+            {dict.nav.bookNow}
+          </Link>
+        </p>
       </section>
     </>
   );

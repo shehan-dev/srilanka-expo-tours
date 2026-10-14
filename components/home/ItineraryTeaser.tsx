@@ -15,13 +15,16 @@ export function ItineraryTeaser({ lang, dict }: { lang: Locale; dict: Dictionary
           <div aria-hidden className="absolute -bottom-32 left-1/3 h-72 w-72 rounded-full bg-white/10 blur-2xl" />
           <div className="relative grid items-center gap-10 lg:grid-cols-[1.1fr_1fr]">
             <div>
-              <p className="text-sm font-semibold tracking-wider text-white/85 uppercase">{dict.itinerary.eyebrow}</p>
+              <p className="flex flex-wrap items-center gap-3 text-sm font-semibold tracking-wider text-white/85 uppercase">
+                {dict.itinerary.eyebrow}
+                <span className="rounded-full bg-white px-3 py-1 text-xs tracking-wide text-primary-600">{dict.itinerary.comingSoon}</span>
+              </p>
               <h2 id="builder-title" className="mt-3 text-3xl font-semibold text-white sm:text-4xl">
                 {dict.itinerary.title}
               </h2>
-              <p className="mt-4 max-w-xl text-lg text-white/90">{dict.itinerary.subtitle}</p>
-              <Link href={href(lang, "/itinerary")} className="btn mt-8 bg-white text-primary-600 shadow-lg hover:bg-sky">
-                {dict.hero.ctaSecondary} <ArrowRight className="h-4 w-4" aria-hidden />
+              <p className="mt-4 max-w-xl text-lg text-white/90">{dict.itinerary.comingSoonText}</p>
+              <Link href={href(lang, "/contact")} className="btn mt-8 bg-white text-primary-600 shadow-lg hover:bg-sky">
+                {dict.itinerary.comingSoonCta} <ArrowRight className="h-4 w-4" aria-hidden />
               </Link>
             </div>
             <ol className="grid gap-3">

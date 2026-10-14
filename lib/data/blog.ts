@@ -3,6 +3,7 @@ import type { BlogPost } from "@/lib/types";
 export const posts: BlogPost[] = [
   {
     slug: "best-time-to-visit-sri-lanka",
+    image: "/media/blog/best-time-to-visit-sri-lanka.jpg",
     title: { en: "The best time to visit Sri Lanka, month by month", it: "Il periodo migliore per visitare lo Sri Lanka, mese per mese" },
     excerpt: {
       en: "Two monsoons, one island: how to choose the right coast for your travel dates.",
@@ -48,6 +49,7 @@ Brevi e intensi acquazzoni pomeridiani sono comuni su tutta l'isola, ma i prezzi
   },
   {
     slug: "sri-lanka-for-italian-travellers",
+    image: "/media/blog/sri-lanka-for-italian-travellers.jpg",
     title: { en: "Sri Lanka for Italian travellers: 10 things to know", it: "Sri Lanka per viaggiatori italiani: 10 cose da sapere" },
     excerpt: {
       en: "Plugs, money, coffee, flights from Italy and more — the practical guide we give every Italian guest.",
@@ -95,6 +97,7 @@ L'inglese è molto diffuso. Con una delle nostre guide di lingua italiana non pe
   },
   {
     slug: "sri-lankan-food-guide",
+    image: "/media/blog/sri-lankan-food-guide.jpg",
     title: { en: "A food lover's guide to Sri Lanka", it: "Guida gastronomica allo Sri Lanka" },
     excerpt: {
       en: "Hoppers, kottu, lamprais and the perfect cup of Ceylon tea — what to eat and where.",
@@ -138,6 +141,7 @@ Visita una fabbrica di tè a Nuwara Eliya per assaggiare il Ceylon d'alta quota 
   },
   {
     slug: "ethical-wildlife-safaris",
+    image: "/media/blog/ethical-wildlife-safaris.jpg",
     title: { en: "Ethical wildlife safaris in Sri Lanka", it: "Safari etici in Sri Lanka" },
     excerpt: {
       en: "Where to see leopards, elephants and whales responsibly — and what to avoid.",

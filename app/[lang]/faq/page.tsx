@@ -30,6 +30,7 @@ export default async function FaqPage({ params }: Props) {
         title={dict.faq.title}
         subtitle={dict.faq.subtitle}
         scene="temple"
+        image="/media/pages/faq.jpg"
         crumbs={[
           { name: dict.common.home, path: href(lang) },
           { name: dict.nav.faq, path: href(lang, "/faq") },

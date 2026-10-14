@@ -50,6 +50,7 @@ export async function POST(request: Request) {
     startDate: clean(body.startDate, 20),
     endDate: clean(body.endDate, 20),
     tour: clean(body.tour, 120),
+    option: body.option === "premium" || body.option === "standard" ? body.option : undefined,
     message: clean(body.message, 4000),
     smsOptIn: Boolean(body.smsOptIn),
     // Itinerary builder payload (already a plain object from the client)

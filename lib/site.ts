@@ -5,28 +5,27 @@ export const site = {
   name: "SriLanka Expo Tours",
   shortName: "SriLanka Expo",
   url: (process.env.NEXT_PUBLIC_SITE_URL || "https://www.srilankaexpotours.com").replace(/\/$/, ""),
-  phone: "+94 77 000 0000", // TODO
-  phoneHref: "tel:+94770000000", // TODO
-  whatsapp: "94770000000", // TODO: international format, digits only
+  phone: "+94 77 706 6217",
+  phoneHref: "tel:+94777066217",
+  whatsapp: "94777066217", // international format, digits only
   telegram: "srilankaexpo", // TODO: Telegram username
   email: "info@srilankaexpotours.com", // TODO
   address: {
-    street: "123 Galle Road", // TODO
-    city: "Colombo",
+    street: "578 B/1 Madiwela Road",
+    city: "Thalawatugoda",
+    region: "Colombo",
     country: "Sri Lanka",
     countryCode: "LK",
   },
-  /** Meeting point shown on the contact map (default: Colombo Fort). */
-  meetingPoint: [6.9344, 79.8428] as [number, number],
+  /** Office / meeting point shown on the contact map (Madiwela Road, Thalawatugoda). */
+  meetingPoint: [6.8775, 79.9285] as [number, number],
   licenseNumber: "SLTDA Reg. No. — TBC", // TODO: Sri Lanka Tourism Development Authority licence
   founder: "Nishan Silva",
   rating: { value: 4.9, count: 2300 },
   social: {
     facebook: "https://facebook.com/",
     instagram: "https://instagram.com/",
-    tripadvisor: "https://www.tripadvisor.com/",
     google: "https://g.page/",
-    youtube: "https://youtube.com/",
   },
   /** Downloadable licence / insurance documents. Put PDFs in /public/documents and list them here. */
   documents: [] as { label: string; href: string }[],

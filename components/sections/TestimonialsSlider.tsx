@@ -11,7 +11,7 @@ import { intlLocale, l } from "@/lib/i18n/config";
 import { site } from "@/lib/site";
 import { cn, formatDate } from "@/lib/utils";
 
-const sourceName = { google: "Google", tripadvisor: "Tripadvisor" };
+const sourceName = { google: "Google" };
 
 /** Auto-advancing review carousel. Pauses on hover/focus; fully keyboard operable. */
 export function TestimonialsSlider() {
@@ -136,9 +136,6 @@ export function TestimonialsSlider() {
           <div className="flex flex-col gap-2">
             <a href={site.social.google} target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-sm">
               <PenLine className="h-4 w-4" aria-hidden /> {dict.testimonials.write} · Google
-            </a>
-            <a href={site.social.tripadvisor} target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-sm">
-              <PenLine className="h-4 w-4" aria-hidden /> {dict.testimonials.write} · Tripadvisor
             </a>
           </div>
         </div>

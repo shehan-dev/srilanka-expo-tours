@@ -6,15 +6,15 @@ import { useI18n } from "@/components/providers/AppProviders";
 import { MapView } from "@/components/map/MapView";
 import { Media } from "@/components/ui/Media";
 import { Modal } from "@/components/ui/Modal";
-import { Price } from "@/components/ui/Price";
-import { Stars } from "@/components/ui/Stars";
+import { dayLabels } from "@/lib/data/tours";
 import { href, l } from "@/lib/i18n/config";
 import type { Tour } from "@/lib/types";
-import { TourTags } from "./TourCard";
+import { TourPrices, TourTags } from "./TourCard";
 
-/** Quick-view dialog: highlights, itinerary bullets, map and booking CTA. */
+/** Quick-view dialog: highlights, itinerary bullets, map, both price options and booking CTA. */
 export function TourPreviewModal({ tour, onClose }: { tour: Tour | null; onClose: () => void }) {
   const { lang, dict } = useI18n();
+  const labels = tour ? dayLabels(tour) : [];
 
   return (
     <Modal
@@ -44,9 +44,6 @@ export function TourPreviewModal({ tour, onClose }: { tour: Tour | null; onClose
                 <span className="inline-flex items-center gap-1">
                   <Clock className="h-4 w-4" aria-hidden /> {tour.durationDays} {dict.tour.days}
                 </span>
-                <span className="inline-flex items-center gap-1">
-                  <Stars rating={tour.rating} size={14} label={dict.common.stars} /> {tour.rating.toFixed(1)} ({tour.reviewCount})
-                </span>
               </div>
               <p className="text-[15px] text-ink/85">{l(tour.description, lang)}</p>
 
@@ -55,8 +52,8 @@ export function TourPreviewModal({ tour, onClose }: { tour: Tour | null; onClose
                 <ol className="flex flex-col gap-2">
                   {tour.itinerary.slice(0, 7).map((d, i) => (
                     <li key={i} className="flex gap-3 text-sm">
-                      <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-sky text-xs font-bold text-primary-600">
-                        {i + 1}
+                      <span className="grid h-6 min-w-6 shrink-0 place-items-center rounded-full bg-sky px-1.5 text-xs font-bold text-primary-600">
+                        {labels[i].label}
                       </span>
                       <span>
                         <strong className="font-semibold">{l(d.title, lang)}</strong>
@@ -86,9 +83,10 @@ export function TourPreviewModal({ tour, onClose }: { tour: Tour | null; onClose
                 <MapPin className="h-3.5 w-3.5" aria-hidden />
                 {tour.regions.map((r) => dict.regions[r]).join(" · ")}
               </p>
-              <div className="mt-auto rounded-2xl bg-sky p-4">
-                <p className="text-sm text-muted">
-                  {dict.tour.from} <Price usd={tour.priceFrom} className="font-heading text-2xl font-bold text-ink" /> / {dict.tour.perPerson}
+              <div className="mt-auto rounded-2xl border border-line p-4">
+                <TourPrices tour={tour} />
+                <p className="mt-2 text-xs text-muted">
+                  / {dict.tour.perPerson} · {dict.tour.priceDisclaimer}
                 </p>
                 <div className="mt-3 flex flex-wrap gap-2">
                   <Link href={`${href(lang, "/contact")}?tour=${tour.slug}`} className="btn btn-primary btn-sm flex-1">

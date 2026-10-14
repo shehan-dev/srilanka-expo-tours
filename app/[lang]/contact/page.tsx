@@ -27,13 +27,10 @@ export default async function ContactPage({ params, searchParams }: Props) {
   const dict = await getDictionary(lang);
   const sp = await searchParams;
 
-  // Prefill from links like ?tour=slug, ?package=comfort or ?guide=nishan
+  // Prefill from links like ?tour=slug&option=premium, ?guide=nishan or ?message=… (booking bar estimate)
   const tour = sp.tour && getTour(sp.tour) ? sp.tour : "";
-  const tier = dict.pricing.tiers.find((t) => t.id === sp.package);
-  const message = [
-    tier ? `${dict.pricing.eyebrow}: ${tier.name}` : "",
-    sp.guide === "nishan" ? `${dict.about.bookNishan} (${site.founder})` : "",
-  ]
+  const option = sp.option === "premium" || sp.option === "standard" ? sp.option : "";
+  const message = [sp.message?.slice(0, 500) ?? "", sp.guide === "nishan" ? `${dict.about.bookNishan} (${site.founder})` : ""]
     .filter(Boolean)
     .join("\n");
 
@@ -44,6 +41,7 @@ export default async function ContactPage({ params, searchParams }: Props) {
         title={dict.contact.title}
         subtitle={dict.contact.subtitle}
         scene="coast"
+        image="/media/pages/contact.jpg"
         crumbs={[
           { name: dict.common.home, path: href(lang) },
           { name: dict.nav.contact, path: href(lang, "/contact") },
@@ -51,7 +49,7 @@ export default async function ContactPage({ params, searchParams }: Props) {
       />
       <section className="section pt-10 md:pt-14">
         <div className="container-site grid gap-8 lg:grid-cols-[1.5fr_1fr]">
-          <ContactForm defaultTour={tour} defaultMessage={message} />
+          <ContactForm defaultTour={tour} defaultOption={option} defaultMessage={message} />
           <ContactDetails dict={dict} />
         </div>
       </section>

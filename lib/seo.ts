@@ -55,6 +55,7 @@ export const organizationLd = (lang: Locale, description: string) => ({
     "@type": "PostalAddress",
     streetAddress: site.address.street,
     addressLocality: site.address.city,
+    addressRegion: site.address.region,
     addressCountry: site.address.countryCode,
   },
   founder: { "@type": "Person", name: site.founder },
@@ -96,14 +97,15 @@ export const tourLd = (tour: Tour, lang: Locale) => ({
     })),
   },
   offers: {
-    "@type": "Offer",
-    price: tour.priceFrom,
+    "@type": "AggregateOffer",
+    lowPrice: tour.prices.standard,
+    highPrice: tour.prices.premium,
+    offerCount: 2,
     priceCurrency: "USD",
     availability: "https://schema.org/InStock",
     url: abs(`/${lang}/tours/${tour.slug}`),
   },
   provider: { "@type": "TravelAgency", name: site.name, url: site.url },
-  aggregateRating: { "@type": "AggregateRating", ratingValue: tour.rating, reviewCount: tour.reviewCount },
 });
 
 export const faqLd = (items: Faq[], lang: Locale) => ({

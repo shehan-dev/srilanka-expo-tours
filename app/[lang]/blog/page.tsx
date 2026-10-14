@@ -38,6 +38,7 @@ export default async function BlogPage({ params, searchParams }: Props) {
         title={dict.blog.title}
         subtitle={dict.blog.subtitle}
         scene="coast"
+        image="/media/pages/blog.jpg"
         crumbs={[
           { name: dict.common.home, path: href(lang) },
           { name: dict.nav.blog, path: href(lang, "/blog") },

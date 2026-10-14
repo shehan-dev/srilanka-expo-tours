@@ -27,6 +27,7 @@ export default async function DiscoverPage({ params }: Props) {
         title={dict.discover.title}
         subtitle={dict.discover.subtitle}
         scene="hills"
+        image="/media/pages/discover.jpg"
         crumbs={[
           { name: dict.common.home, path: href(lang) },
           { name: dict.nav.discover, path: href(lang, "/discover") },

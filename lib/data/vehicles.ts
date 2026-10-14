@@ -1,8 +1,11 @@
 import type { Vehicle } from "@/lib/types";
 
+// Photos: Unsplash (see /public/media/CREDITS.md). pricePerDay is used only by the (upcoming) itinerary builder.
+
 export const vehicles: Vehicle[] = [
   {
     id: "sedan",
+    image: "/media/fleet/sedan.jpg",
     name: { en: "Comfort Sedan", it: "Berlina Comfort" },
     model: "Toyota Prius / Axio",
     capacity: 3,
@@ -13,6 +16,7 @@ export const vehicles: Vehicle[] = [
   },
   {
     id: "van",
+    image: "/media/fleet/van.jpg",
     name: { en: "Family Van", it: "Van Famiglia" },
     model: "Toyota KDH High-Roof",
     capacity: 7,
@@ -23,6 +27,7 @@ export const vehicles: Vehicle[] = [
   },
   {
     id: "minibus",
+    image: "/media/fleet/minibus.jpg",
     name: { en: "Luxury Minibus", it: "Minibus di Lusso" },
     model: "Toyota Coaster",
     capacity: 18,
@@ -33,6 +38,7 @@ export const vehicles: Vehicle[] = [
   },
   {
     id: "coach",
+    image: "/media/fleet/coach.jpg",
     name: { en: "Tour Coach", it: "Pullman Turistico" },
     model: "Ashok Leyland / Yutong",
     capacity: 35,

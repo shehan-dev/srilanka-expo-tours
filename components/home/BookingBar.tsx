@@ -176,16 +176,14 @@ export function BookingBar() {
     const params = new URLSearchParams();
     if (destination) params.set("region", destination.region);
     if (start && end) params.set("days", String(days));
-    params.set("language", guideLang);
     router.push(`${href(lang, "/tours")}?${params}`);
   };
 
-  const builderHref = `${href(lang, "/itinerary")}?${new URLSearchParams({
-    days: String(days),
-    adults: String(adults),
-    kids: String(kids),
-    guide: guideLang === "it" ? "italian" : "driver",
-    ...(start ? { start } : {}),
+  // Until the itinerary builder launches, the estimate leads to a custom quote request.
+  const quoteHref = `${href(lang, "/contact")}?${new URLSearchParams({
+    message: `${days} ${dict.booking.days} · ${adults} ${dict.booking.adults}${kids ? `, ${kids} ${dict.booking.kids}` : ""}${
+      destination ? ` · ${destination.label}` : ""
+    }${start ? ` · ${start}` : ""} · ${dict.booking.language}: ${dict.languages[guideLang]}`,
   })}`;
 
   return (
@@ -329,7 +327,7 @@ export function BookingBar() {
                     <p className="mt-1 text-xs text-muted">{dict.booking.estimateNote}</p>
                   </div>
                   <div className="flex gap-2">
-                    <Link href={builderHref} className="btn btn-accent btn-sm">
+                    <Link href={quoteHref} className="btn btn-accent btn-sm">
                       {dict.booking.buildIt}
                     </Link>
                     <button

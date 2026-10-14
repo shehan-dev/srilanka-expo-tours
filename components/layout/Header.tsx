@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Menu, Phone, X, UserRound, Languages, MessageCircle } from "lucide-react";
+import { Menu, Phone, X, Languages, MessageCircle } from "lucide-react";
 import { useCurrency, useI18n } from "@/components/providers/AppProviders";
 import { href, locales, type Locale } from "@/lib/i18n/config";
 import { site, type Currency } from "@/lib/site";
@@ -34,7 +34,7 @@ export function Header() {
     { label: dict.nav.search, path: "/#search", desktop: true },
     { label: dict.nav.popular, path: "/#popular", desktop: true },
     { label: dict.nav.tours, path: "/tours", desktop: true },
-    { label: dict.nav.itinerary, path: "/itinerary", desktop: true },
+    { label: dict.nav.itinerary, path: "/itinerary", desktop: true, soon: true },
     { label: dict.nav.discover, path: "/discover", desktop: true },
     { label: dict.nav.services, path: "/services", desktop: true },
     { label: dict.nav.about, path: "/about", desktop: true },
@@ -80,13 +80,6 @@ export function Header() {
               </a>
               <LanguageToggle tone={overHero ? "light" : "dark"} />
               <CurrencySelect tone={overHero ? "light" : "dark"} />
-              <Link
-                href={href(lang, "/portal")}
-                className="flex items-center gap-1.5 rounded-full px-3 py-1 font-medium hover:bg-black/5"
-              >
-                <UserRound className="h-3.5 w-3.5" aria-hidden />
-                {dict.nav.login}
-              </Link>
             </div>
           </div>
         </div>
@@ -118,6 +111,11 @@ export function Header() {
                       )}
                     >
                       {link.label}
+                      {link.soon && (
+                        <span className="absolute -top-1.5 right-0 rounded-full bg-accent px-1.5 text-[9px] leading-4 font-bold tracking-wide text-ink uppercase">
+                          {dict.nav.soon}
+                        </span>
+                      )}
                     </Link>
                   </li>
                 ))}
@@ -158,7 +156,7 @@ function MobileMenu({
 }: {
   open: boolean;
   onClose: () => void;
-  links: { label: string; path: string }[];
+  links: { label: string; path: string; soon?: boolean }[];
   isActive: (path: string) => boolean;
 }) {
   const { lang, dict } = useI18n();
@@ -238,14 +236,14 @@ function MobileMenu({
                       )}
                     >
                       {link.label}
+                      {link.soon && (
+                        <span className="ml-2 rounded-full bg-accent px-2 py-0.5 align-middle text-[10px] font-bold tracking-wide text-ink uppercase">
+                          {dict.nav.soon}
+                        </span>
+                      )}
                     </Link>
                   </motion.li>
                 ))}
-                <li>
-                  <Link href={href(lang, "/portal")} onClick={onClose} className="block rounded-xl px-4 py-3 text-[17px] font-medium hover:bg-sky">
-                    {dict.nav.login}
-                  </Link>
-                </li>
               </ul>
             </nav>
 

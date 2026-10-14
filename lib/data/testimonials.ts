@@ -1,7 +1,7 @@
 import type { Testimonial } from "@/lib/types";
 
 // SAMPLE REVIEWS — placeholders for layout only.
-// Replace with genuine guest reviews (and their real Google / Tripadvisor links) before launch.
+// Replace with genuine guest reviews (and their real Google review links) before launch.
 
 export const testimonials: Testimonial[] = [
   {
@@ -14,8 +14,8 @@ export const testimonials: Testimonial[] = [
       en: "Our guide spoke perfect Italian and knew every hidden corner. The train to Ella and the Yala safari were unforgettable!",
       it: "La nostra guida parlava un italiano perfetto e conosceva ogni angolo nascosto. Il treno per Ella e il safari a Yala sono stati indimenticabili!",
     },
-    source: "tripadvisor",
-    link: "https://www.tripadvisor.com/",
+    source: "google",
+    link: "https://g.page/",
     date: "2026-03-12",
   },
   {
@@ -56,8 +56,8 @@ export const testimonials: Testimonial[] = [
       en: "Nishan adapted our itinerary every day based on the weather and our energy. It felt like travelling with a friend.",
       it: "Nishan ha adattato l'itinerario ogni giorno in base al meteo e alla nostra energia. Sembrava di viaggiare con un amico.",
     },
-    source: "tripadvisor",
-    link: "https://www.tripadvisor.com/",
+    source: "google",
+    link: "https://g.page/",
     date: "2025-12-08",
   },
   {

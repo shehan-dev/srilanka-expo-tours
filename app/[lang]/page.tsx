@@ -13,7 +13,6 @@ import { TestimonialsSlider } from "@/components/sections/TestimonialsSlider";
 import { GalleryMasonry } from "@/components/sections/GalleryMasonry";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { BlogCards } from "@/components/sections/BlogCards";
-import { PricingTable } from "@/components/sections/PricingTable";
 import { ContactForm } from "@/components/sections/ContactForm";
 import { ContactDetails } from "@/components/sections/ContactDetails";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -120,15 +119,8 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
           </div>
         </section>
 
-        {/* 14. Pricing comparison */}
-        <section id="pricing" aria-labelledby="pricing-title" className="section bg-sky/50">
-          <div className="container-site">
-            <SectionHeading id="pricing-title" eyebrow={dict.pricing.eyebrow} title={dict.pricing.title} subtitle={dict.pricing.subtitle} />
-            <PricingTable dict={dict} lang={lang} />
-          </div>
-        </section>
 
-        {/* 15. Contact / Book now */}
+        {/* 14. Contact / Book now */}
         <section id="contact" aria-labelledby="contact-title" className="section">
           <div className="container-site">
             <SectionHeading id="contact-title" eyebrow={dict.contact.eyebrow} title={dict.contact.title} subtitle={dict.contact.subtitle} />

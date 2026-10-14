@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, Clock } from "lucide-react";
 import { BlogCards } from "@/components/sections/BlogCards";
 import { JsonLd } from "@/components/ui/JsonLd";
-import { Media } from "@/components/ui/Media";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { getPost, posts } from "@/lib/data/blog";
 import { getDictionary } from "@/lib/i18n";
@@ -72,6 +71,7 @@ export default async function BlogPostPage({ params }: Props) {
         title={title}
         subtitle={l(post.excerpt, lang)}
         scene={post.scene}
+        image={post.image}
         crumbs={[
           { name: dict.common.home, path: href(lang) },
           { name: dict.nav.blog, path: href(lang, "/blog") },
@@ -87,9 +87,6 @@ export default async function BlogPostPage({ params }: Props) {
             <span aria-hidden>·</span>
             <Clock className="h-4 w-4" aria-hidden /> {post.readMinutes} {dict.blog.minRead}
           </p>
-          <div className="relative mb-10 aspect-[16/9] overflow-hidden rounded-card">
-            <Media src={post.image} scene={post.scene} alt="" sizes="(min-width: 768px) 768px, 100vw" priority />
-          </div>
           <ArticleBody source={l(post.body, lang)} />
           <Link href={href(lang, "/blog")} className="btn btn-outline mt-6">
             <ArrowLeft className="h-4 w-4" aria-hidden /> {dict.blog.back}

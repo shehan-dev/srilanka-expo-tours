@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { Clock, Eye, Languages, Star, Tag } from "lucide-react";
+import { Clock, Eye, MapPin, Tag } from "lucide-react";
 import { useI18n } from "@/components/providers/AppProviders";
 import { Media } from "@/components/ui/Media";
 import { Price } from "@/components/ui/Price";
@@ -16,7 +16,7 @@ export function TourTags({ tour, className }: { tour: Tour; className?: string }
     "best-seller": dict.tour.bestSeller,
     family: dict.tour.family,
     new: dict.tour.new,
-    "italian-guide": dict.tour.italianGuide,
+    honeymoon: dict.tour.honeymoon,
   };
   if (!tour.tags.length) return null;
   return (
@@ -26,14 +26,36 @@ export function TourTags({ tour, className }: { tour: Tour; className?: string }
           key={t}
           className={cn(
             "rounded-full px-2.5 py-1 text-[11px] font-bold tracking-wide uppercase shadow-sm",
-            t === "best-seller" ? "bg-star text-ink" : t === "italian-guide" ? "bg-white text-primary-600" : "bg-accent text-ink"
+            t === "best-seller" ? "bg-star text-ink" : t === "honeymoon" ? "bg-white text-primary-600" : "bg-accent text-ink"
           )}
         >
-          {t === "italian-guide" && <span aria-hidden>🇮🇹 </span>}
           {labels[t]}
         </li>
       ))}
     </ul>
+  );
+}
+
+/** Standard (3★) and Premium (4★ & 5★) prices side by side. */
+export function TourPrices({ tour, size = "md", className }: { tour: Tour; size?: "md" | "lg"; className?: string }) {
+  const { dict } = useI18n();
+  const options = [
+    { key: "standard" as const, label: dict.tour.standard, hotels: dict.tour.standardHotels },
+    { key: "premium" as const, label: dict.tour.premium, hotels: dict.tour.premiumHotels },
+  ];
+  return (
+    <dl className={cn("grid grid-cols-2 gap-2", className)}>
+      {options.map((o) => (
+        <div key={o.key} className={cn("rounded-xl px-3 py-2", o.key === "premium" ? "bg-primary-50" : "bg-sky")}>
+          <dt className="text-[11px] font-semibold tracking-wide text-muted uppercase">
+            {o.label} <span className="font-normal normal-case">· {o.hotels}</span>
+          </dt>
+          <dd>
+            <Price usd={tour.prices[o.key]} className={cn("font-heading font-bold text-ink", size === "lg" ? "text-2xl" : "text-lg")} />
+          </dd>
+        </div>
+      ))}
+    </dl>
   );
 }
 
@@ -76,11 +98,10 @@ export function TourCard({
             <span className="inline-flex items-center gap-1 text-muted">
               <Clock className="h-4 w-4" aria-hidden /> {tour.durationDays} {dict.tour.days}
             </span>
-            <span className="inline-flex items-center gap-1 text-muted">
-              <Star className="h-4 w-4 fill-star text-star" aria-hidden /> {tour.rating.toFixed(1)}
-            </span>
-            <span className="ml-auto font-semibold text-primary-600">
-              {dict.tour.from} <Price usd={tour.priceFrom} />
+            <span className="ml-auto text-muted">
+              {dict.tour.standard} <Price usd={tour.prices.standard} className="font-semibold text-ink" />
+              <span aria-hidden> · </span>
+              {dict.tour.premium} <Price usd={tour.prices.premium} className="font-semibold text-primary-600" />
             </span>
           </div>
         </div>
@@ -127,8 +148,8 @@ export function TourCard({
           </button>
         )}
         <p className="absolute bottom-3 left-3 inline-flex items-center gap-1 rounded-full bg-ink/60 px-2.5 py-1 text-xs font-semibold text-white backdrop-blur">
-          <Star className="h-3.5 w-3.5 fill-star text-star" aria-hidden />
-          {tour.rating.toFixed(1)} · {tour.reviewCount} {dict.tour.reviews}
+          <Clock className="h-3.5 w-3.5" aria-hidden />
+          {tour.durationDays} {dict.tour.days}
         </p>
       </div>
 
@@ -140,32 +161,28 @@ export function TourCard({
         </h3>
         <p className="line-clamp-2 text-sm text-muted">{l(tour.tagline, lang)}</p>
 
-        {/* duration · price · theme */}
         <ul className="flex flex-wrap gap-2 text-xs">
-          <li className="tag">
-            <Clock className="h-3.5 w-3.5" aria-hidden /> {tour.durationDays} {dict.tour.days}
-          </li>
           <li className="tag">
             <Tag className="h-3.5 w-3.5" aria-hidden /> {dict.themes[tour.themes[0]]}
           </li>
           <li className="tag">
-            <Languages className="h-3.5 w-3.5" aria-hidden /> {tour.languages.map((x) => x.toUpperCase()).join(" · ")}
+            <MapPin className="h-3.5 w-3.5" aria-hidden /> {dict.regions[tour.regions[0]]}
+            {tour.regions.length > 1 && ` +${tour.regions.length - 1}`}
           </li>
         </ul>
 
-        <div className="mt-auto flex items-end justify-between gap-3 pt-2">
-          <p className="leading-tight">
-            <span className="block text-xs text-muted">{dict.tour.from}</span>
-            <Price usd={tour.priceFrom} className="font-heading text-xl font-bold text-ink" />
-            <span className="text-xs text-muted"> / {dict.tour.perPerson}</span>
-          </p>
-          <Link
-            href={`${href(lang, "/contact")}?tour=${tour.slug}`}
-            className="btn btn-primary btn-sm transition-all duration-300 md:translate-y-2 md:opacity-0 md:group-focus-within:translate-y-0 md:group-focus-within:opacity-100 md:group-hover:translate-y-0 md:group-hover:opacity-100"
-          >
-            {dict.tour.book}
-            <span className="sr-only">: {title}</span>
-          </Link>
+        <div className="mt-auto flex flex-col gap-3 pt-2">
+          <TourPrices tour={tour} />
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-xs text-muted">/ {dict.tour.perPerson}</span>
+            <Link
+              href={`${href(lang, "/contact")}?tour=${tour.slug}`}
+              className="btn btn-primary btn-sm transition-all duration-300 md:translate-y-2 md:opacity-0 md:group-focus-within:translate-y-0 md:group-focus-within:opacity-100 md:group-hover:translate-y-0 md:group-hover:opacity-100"
+            >
+              {dict.tour.book}
+              <span className="sr-only">: {title}</span>
+            </Link>
+          </div>
         </div>
       </div>
     </motion.article>

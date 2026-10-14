@@ -1,8 +1,11 @@
 import type { Destination } from "@/lib/types";
 
+// Photos: Unsplash (see /public/media/CREDITS.md).
+
 export const destinations: Destination[] = [
   {
     id: "ella",
+    image: "/media/destinations/ella.jpg",
     name: "Ella",
     region: "hill-country",
     blurb: {
@@ -19,6 +22,7 @@ export const destinations: Destination[] = [
   },
   {
     id: "nuwara-eliya",
+    image: "/media/destinations/nuwara-eliya.jpg",
     name: "Nuwara Eliya",
     region: "hill-country",
     blurb: {
@@ -35,6 +39,7 @@ export const destinations: Destination[] = [
   },
   {
     id: "kandy",
+    image: "/media/destinations/kandy.jpg",
     name: "Kandy",
     region: "cultural-triangle",
     blurb: {
@@ -51,6 +56,7 @@ export const destinations: Destination[] = [
   },
   {
     id: "sigiriya",
+    image: "/media/destinations/sigiriya.jpg",
     name: "Sigiriya",
     region: "cultural-triangle",
     blurb: {
@@ -67,6 +73,7 @@ export const destinations: Destination[] = [
   },
   {
     id: "polonnaruwa",
+    image: "/media/destinations/polonnaruwa.jpg",
     name: "Polonnaruwa",
     region: "cultural-triangle",
     blurb: {
@@ -83,6 +90,7 @@ export const destinations: Destination[] = [
   },
   {
     id: "galle",
+    image: "/media/destinations/galle.jpg",
     name: "Galle",
     region: "south-coast",
     blurb: {
@@ -99,6 +107,7 @@ export const destinations: Destination[] = [
   },
   {
     id: "mirissa",
+    image: "/media/destinations/mirissa.jpg",
     name: "Mirissa",
     region: "south-coast",
     blurb: {
@@ -115,6 +124,7 @@ export const destinations: Destination[] = [
   },
   {
     id: "trincomalee",
+    image: "/media/destinations/trincomalee.jpg",
     name: "Trincomalee",
     region: "east-coast",
     blurb: {
@@ -131,6 +141,7 @@ export const destinations: Destination[] = [
   },
   {
     id: "arugam-bay",
+    image: "/media/destinations/arugam-bay.jpg",
     name: "Arugam Bay",
     region: "east-coast",
     blurb: {
@@ -147,6 +158,7 @@ export const destinations: Destination[] = [
   },
   {
     id: "yala",
+    image: "/media/destinations/yala.jpg",
     name: "Yala",
     region: "national-parks",
     blurb: {
@@ -163,6 +175,7 @@ export const destinations: Destination[] = [
   },
   {
     id: "udawalawe",
+    image: "/media/destinations/udawalawe.jpg",
     name: "Udawalawe",
     region: "national-parks",
     blurb: {
@@ -179,6 +192,7 @@ export const destinations: Destination[] = [
   },
   {
     id: "colombo",
+    image: "/media/destinations/colombo.jpg",
     name: "Colombo",
     region: "city",
     blurb: {

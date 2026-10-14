@@ -1,9 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Briefcase, Bus, Car, CarFront, CheckCircle2, Languages, Luggage, PlaneLanding, ShieldCheck, Users } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
 import { href, l, type Locale } from "@/lib/i18n/config";
 import { vehicles } from "@/lib/data/vehicles";
-import { Price } from "@/components/ui/Price";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 
@@ -53,7 +53,17 @@ export function Fleet({ dict, lang }: { dict: Dictionary; lang: Locale }) {
           return (
             <Reveal as="li" key={v.id} delay={i * 0.08} className="card group flex h-full flex-col overflow-hidden">
                 <div className="relative grid aspect-[16/10] place-items-center overflow-hidden bg-linear-to-br from-sky to-sky-200">
-                  <Icon className="h-20 w-20 text-primary transition-transform duration-500 group-hover:translate-x-2" strokeWidth={1.4} aria-hidden />
+                  {v.image ? (
+                    <Image
+                      src={v.image}
+                      alt={`${l(v.name, lang)} — ${v.model}`}
+                      fill
+                      sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  ) : (
+                    <Icon className="h-20 w-20 text-primary" strokeWidth={1.4} aria-hidden />
+                  )}
                 </div>
                 <div className="flex flex-1 flex-col gap-3 p-5">
                   <div>
@@ -83,9 +93,6 @@ export function Fleet({ dict, lang }: { dict: Dictionary; lang: Locale }) {
                       </li>
                     ))}
                   </ul>
-                  <p className="mt-auto pt-2 text-sm text-muted">
-                    <Price usd={v.pricePerDay} className="font-heading text-lg font-bold text-ink" /> {dict.services.perDay}
-                  </p>
                 </div>
             </Reveal>
           );

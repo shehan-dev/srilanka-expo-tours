@@ -15,8 +15,12 @@ import type { Scene } from "@/lib/types";
 import { easeOutExpo } from "@/lib/utils";
 
 // Progressive hero carousel (used when no hero video is configured in lib/site.ts).
-// Add `image: "/media/hero/....jpg"` to show photos instead of illustrations.
-const slides: { scene: Scene; image?: string }[] = [{ scene: "hills" }, { scene: "rock" }, { scene: "coast" }];
+// Photos: Unsplash (see /public/media/CREDITS.md).
+const slides: { scene: Scene; image?: string }[] = [
+  { scene: "hills", image: "/media/hero/tea-country.jpg" },
+  { scene: "rock", image: "/media/hero/sigiriya.jpg" },
+  { scene: "coast", image: "/media/hero/mirissa.jpg" },
+];
 
 const pins = [
   { label: "Sigiriya", top: "30%", left: "62%", depth: 60 },
@@ -143,7 +147,7 @@ export function HeroVideo() {
           <a href="#search" className="btn btn-primary text-base">
             {dict.hero.ctaPrimary} <ArrowRight className="h-4 w-4" aria-hidden />
           </a>
-          <Link href={href(lang, "/itinerary")} className="btn btn-ghost-light text-base">
+          <Link href={href(lang, "/contact")} className="btn btn-ghost-light text-base">
             <Sparkles className="h-4 w-4" aria-hidden /> {dict.hero.ctaSecondary}
           </Link>
         </motion.div>
@@ -173,7 +177,7 @@ export function HeroVideo() {
           <p className="text-xs font-semibold tracking-widest text-white/80 uppercase">{dict.tour.bestSeller}</p>
           <p className="mt-1 font-heading text-lg font-semibold">{l(featured.title, lang)}</p>
           <p className="mt-1 text-sm text-white/85">
-            {dict.tour.from} <Price usd={featured.priceFrom} className="font-semibold text-white" /> / {dict.tour.perPerson}
+            {dict.tour.from} <Price usd={featured.prices.standard} className="font-semibold text-white" /> / {dict.tour.perPerson}
           </p>
           <Link
             href={href(lang, `/tours/${featured.slug}`)}

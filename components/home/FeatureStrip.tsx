@@ -4,7 +4,6 @@ import { motion } from "motion/react";
 import { Award, BadgeCheck, CarFront, Route, ShieldCheck, Star } from "lucide-react";
 import { useI18n } from "@/components/providers/AppProviders";
 import { SectionHeading } from "@/components/ui/SectionHeading";
-import { TripadvisorIcon } from "@/components/ui/SocialIcons";
 import { easeOutExpo } from "@/lib/utils";
 
 const icons = [BadgeCheck, CarFront, Route, ShieldCheck];
@@ -54,7 +53,6 @@ export function FeatureStrip() {
         <ul className="mt-10 flex flex-wrap items-center justify-center gap-3" aria-label="Trust badges">
           {[
             { label: dict.features.badges.license, Icon: Award },
-            { label: dict.features.badges.tripadvisor, Icon: TripadvisorIcon },
             { label: dict.features.badges.google, Icon: Star },
           ].map(({ label, Icon }) => (
             <li key={label} className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium shadow-card ring-1 ring-line">
