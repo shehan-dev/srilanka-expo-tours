@@ -2,7 +2,7 @@ import { Clock, Headphones, Mail, MapPin, Phone } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
 import { site } from "@/lib/site";
 import { MapView } from "@/components/map/MapView";
-import { TelegramIcon, WhatsappIcon } from "@/components/ui/SocialIcons";
+import { WhatsappIcon } from "@/components/ui/SocialIcons";
 
 export function ContactDetails({ dict }: { dict: Dictionary }) {
   const t = dict.contact;
@@ -51,8 +51,8 @@ export function ContactDetails({ dict }: { dict: Dictionary }) {
           >
             <WhatsappIcon width={18} height={18} /> WhatsApp
           </a>
-          <a href={`https://t.me/${site.telegram}`} target="_blank" rel="noopener noreferrer" className="btn btn-sm bg-[#229ED9] text-white">
-            <TelegramIcon width={18} height={18} /> Telegram
+          <a href={site.phoneHref} className="btn btn-outline btn-sm">
+            <Phone className="h-4 w-4" aria-hidden /> {t.call}
           </a>
         </div>
       </div>

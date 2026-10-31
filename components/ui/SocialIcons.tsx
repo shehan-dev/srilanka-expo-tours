@@ -24,8 +24,3 @@ export const WhatsappIcon = (p: IconProps) => (
   </svg>
 );
 
-export const TelegramIcon = (p: IconProps) => (
-  <svg {...base} fill="currentColor" {...p}>
-    <path d="M21.9 4.3 18.7 19.4c-.2 1-.9 1.3-1.7.8l-4.8-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.9 8.9-8c.4-.4-.1-.6-.6-.2l-11 6.9L1.8 11.7c-1-.3-1-1 .2-1.5L20.5 3c.9-.3 1.6.2 1.4 1.3Z" />
-  </svg>
-);

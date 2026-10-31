@@ -38,12 +38,24 @@ Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL` (and optional
 ### Photos & video
 Tours, destinations, blog posts, the fleet and all page headers use free Unsplash photos stored in `/public/media` (credits in `public/media/CREDITS.md`). To swap one, replace the file or change the `image` field. Anything without an `image` (e.g. gallery items) shows an illustrated scene. Images are served through `next/image` (AVIF/WebP, lazy-loaded, blur-up). For the hero, either set `heroVideo` in `lib/site.ts` or edit the slides in `components/home/HeroVideo.tsx`.
 
-### Bookings → email / CRM
-`app/api/booking/route.ts` validates each submission, generates a reference (e.g. `SLE-261001-A1B2`) and, if `BOOKING_WEBHOOK_URL` is set, POSTs the JSON to it. Point that at Zapier / Make / n8n / an Airtable or HubSpot workflow to send confirmation emails/SMS and create the CRM record. Without it, submissions are only logged to the server console.
+### Booking form → emails
+The contact/booking form posts to `POST /api/booking`:
+
+```
+app/api/
+├── booking/route.ts        # the endpoint: rate limit → validate → email team + guest → optional webhook
+└── _lib/                   # private helpers (not routes)
+    ├── booking.ts          # validation, booking reference (e.g. SLE-261031-7F3A), webhook payload
+    ├── email-templates.ts  # team notification + guest confirmation (English / Italian)
+    ├── mailer.ts           # Nodemailer SMTP transport
+    └── rate-limit.ts       # 5 requests / 10 min per IP
+```
+
+For each request the team gets a notification (reply goes straight to the guest), and the guest gets a confirmation with their reference in the language they were browsing. To enable it, set the `SMTP_*`, `MAIL_FROM` and `BOOKING_NOTIFY_TO` variables from `.env.example`, both in `.env.local` and in Vercel → Settings → Environment Variables. Any SMTP provider works; for Gmail/Google Workspace, create an App Password. Optionally set `BOOKING_WEBHOOK_URL` to also send every request to a CRM or Zapier. Without SMTP or a webhook, requests are only logged to the server console.
 
 ## Before launch — placeholders to replace
 
-- [ ] Telegram username, email, SLTDA licence number, Facebook/Instagram/Google links — `lib/site.ts`
+- [ ] Email, SLTDA licence number, Facebook/Instagram/Google links — `lib/site.ts`
 - [ ] **Testimonials are samples** — replace with real reviews and links (`lib/data/testimonials.ts`)
 - [ ] Founder bio, years of experience, milestones (12+ years, 2,300+ travellers, 450+ tours) — dictionaries `about` section
 - [ ] Deposit %, payment methods and cancellation tiers — `lib/data/faqs.ts` and `lib/data/legal.ts`

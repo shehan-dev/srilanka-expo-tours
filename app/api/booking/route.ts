@@ -1,75 +1,84 @@
-// Receives booking requests, itinerary quote requests and newsletter sign-ups.
-// Every valid submission gets a reference number and, if BOOKING_WEBHOOK_URL is set,
-// is forwarded as JSON to that URL (Zapier / Make / n8n / Airtable / HubSpot workflow)
-// where you can send confirmation emails/SMS and create the CRM record.
+// POST /api/booking — receives the website's booking form (and itinerary quote requests).
+//
+// 1. Rate-limits by IP and drops bot submissions (honeypot field "website").
+// 2. Validates and normalises the request, and creates a booking reference.
+// 3. Emails the team a notification (Reply-To = guest) and the guest a confirmation in EN / IT.
+// 4. Optionally forwards the request as JSON to BOOKING_WEBHOOK_URL (CRM, Zapier, Make, n8n…).
+//
+// Email needs the SMTP_* variables (see .env.example). Without them, requests are logged to the
+// server console so the form still works during development.
 
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const TYPES = ["booking", "itinerary", "newsletter"] as const;
-type EnquiryType = (typeof TYPES)[number];
-
-const clean = (value: unknown, max = 500) =>
-  typeof value === "string" ? value.trim().slice(0, max) : typeof value === "number" ? value : undefined;
-
-function reference() {
-  const d = new Date();
-  const ymd = `${d.getFullYear() % 100}${String(d.getMonth() + 1).padStart(2, "0")}${String(d.getDate()).padStart(2, "0")}`;
-  const rand = crypto.randomUUID().replace(/-/g, "").slice(0, 4).toUpperCase();
-  return `SLE-${ymd}-${rand}`;
-}
+import { createReference, toWebhookPayload, validateEnquiry } from "../_lib/booking";
+import { adminNotification, customerConfirmation } from "../_lib/email-templates";
+import { isEmailConfigured, notifyTo, sendMail } from "../_lib/mailer";
+import { clientIp, rateLimit } from "../_lib/rate-limit";
 
 export async function POST(request: Request) {
+  const limit = rateLimit(`booking:${clientIp(request)}`);
+  if (!limit.allowed) {
+    return Response.json(
+      { ok: false, error: "too-many-requests" },
+      { status: 429, headers: { "Retry-After": String(limit.retryAfter) } }
+    );
+  }
+
   let body: Record<string, unknown>;
   try {
     body = await request.json();
   } catch {
-    return Response.json({ ok: false, error: "Invalid JSON" }, { status: 400 });
+    return Response.json({ ok: false, error: "invalid-json" }, { status: 400 });
   }
 
-  // Honeypot: bots fill the hidden "website" field. Pretend success.
-  if (body.website) return Response.json({ ok: true, reference: reference() });
+  // Honeypot: real visitors never see or fill the "website" field. Pretend success for bots.
+  if (body.website) return Response.json({ ok: true, reference: createReference() });
 
-  const type: EnquiryType = TYPES.includes(body.type as EnquiryType) ? (body.type as EnquiryType) : "booking";
-  const email = clean(body.email, 200);
-  const name = clean(body.name, 120);
+  const result = validateEnquiry(body);
+  if (!result.ok) return Response.json({ ok: false, errors: result.errors }, { status: 422 });
+  const enquiry = result.enquiry;
 
-  const errors: Record<string, string> = {};
-  if (typeof email !== "string" || !EMAIL.test(email)) errors.email = "invalid";
-  if (type !== "newsletter" && !name) errors.name = "required";
-  if (Object.keys(errors).length) return Response.json({ ok: false, errors }, { status: 422 });
+  let delivered = false;
 
-  const enquiry = {
-    reference: reference(),
-    type,
-    receivedAt: new Date().toISOString(),
-    name,
-    email,
-    phone: clean(body.phone, 40),
-    language: clean(body.language, 10),
-    adults: clean(body.adults, 3),
-    kids: clean(body.kids, 3),
-    startDate: clean(body.startDate, 20),
-    endDate: clean(body.endDate, 20),
-    tour: clean(body.tour, 120),
-    option: body.option === "premium" || body.option === "standard" ? body.option : undefined,
-    message: clean(body.message, 4000),
-    smsOptIn: Boolean(body.smsOptIn),
-    // Itinerary builder payload (already a plain object from the client)
-    itinerary: type === "itinerary" && typeof body.itinerary === "object" ? body.itinerary : undefined,
-  };
+  // Team notification (the important one) — then the guest confirmation.
+  if (isEmailConfigured()) {
+    try {
+      const admin = adminNotification(enquiry);
+      await sendMail({ to: notifyTo(), replyTo: `${enquiry.name} <${enquiry.email}>`, ...admin });
+      delivered = true;
+    } catch (err) {
+      console.error(`[booking] ${enquiry.reference}: team notification failed`, err);
+    }
+    try {
+      const guest = customerConfirmation(enquiry, notifyTo());
+      await sendMail({ to: `${enquiry.name} <${enquiry.email}>`, ...guest });
+    } catch (err) {
+      console.error(`[booking] ${enquiry.reference}: guest confirmation failed`, err);
+    }
+  }
 
   const webhook = process.env.BOOKING_WEBHOOK_URL;
   if (webhook) {
     try {
-      await fetch(webhook, {
+      const res = await fetch(webhook, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(enquiry),
+        body: JSON.stringify(toWebhookPayload(enquiry)),
       });
+      if (res.ok) delivered = true;
+      else console.error(`[booking] ${enquiry.reference}: webhook responded ${res.status}`);
     } catch (err) {
-      console.error("[booking] webhook failed", err);
+      console.error(`[booking] ${enquiry.reference}: webhook failed`, err);
     }
-  } else {
-    console.info("[booking] received (set BOOKING_WEBHOOK_URL to forward):", enquiry);
+  }
+
+  if (!isEmailConfigured() && !webhook) {
+    // Development fallback: nothing configured, so just log the request.
+    console.info("[booking] received (configure SMTP_* or BOOKING_WEBHOOK_URL to deliver it):", toWebhookPayload(enquiry));
+    delivered = true;
+  }
+
+  if (!delivered) {
+    // Delivery is configured but every channel failed — tell the visitor so they can use WhatsApp instead.
+    return Response.json({ ok: false, error: "delivery-failed", reference: enquiry.reference }, { status: 502 });
   }
 
   return Response.json({ ok: true, reference: enquiry.reference });

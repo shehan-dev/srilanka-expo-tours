@@ -8,7 +8,6 @@ export const site = {
   phone: "+94 77 706 6217",
   phoneHref: "tel:+94777066217",
   whatsapp: "94777066217", // international format, digits only
-  telegram: "srilankaexpo", // TODO: Telegram username
   email: "info@srilankaexpotours.com", // TODO
   address: {
     street: "578 B/1 Madiwela Road",
@@ -21,11 +20,12 @@ export const site = {
   meetingPoint: [6.8775, 79.9285] as [number, number],
   licenseNumber: "SLTDA Reg. No. — TBC", // TODO: Sri Lanka Tourism Development Authority licence
   founder: "Nishan Silva",
+  founderPhoto: "/media/pages/nishan-silva.jpg",
   rating: { value: 4.9, count: 2300 },
   social: {
-    facebook: "https://facebook.com/",
-    instagram: "https://instagram.com/",
-    google: "https://g.page/",
+    facebook: "https://facebook.com/", // TODO
+    instagram: "https://instagram.com/", // TODO
+    google: "https://g.page/", // TODO: Google Business profile
   },
   /** Downloadable licence / insurance documents. Put PDFs in /public/documents and list them here. */
   documents: [] as { label: string; href: string }[],

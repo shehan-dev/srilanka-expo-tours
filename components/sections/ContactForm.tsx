@@ -46,7 +46,7 @@ export function ContactForm({
       const res = await fetch("/api/booking", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, type: "booking", smsOptIn: data.smsOptIn === "on" }),
+        body: JSON.stringify({ ...data, type: "booking", locale: lang, whatsappOptIn: data.whatsappOptIn === "on" }),
       });
       const json = await res.json();
       if (!res.ok || !json.ok) throw new Error();
@@ -194,7 +194,7 @@ export function ContactForm({
           />
         </div>
         <label className="flex items-center gap-2 text-sm sm:col-span-2">
-          <input type="checkbox" name="smsOptIn" className="h-4 w-4 accent-primary" />
+          <input type="checkbox" name="whatsappOptIn" className="h-4 w-4 accent-primary" />
           {t.consent}
         </label>
 

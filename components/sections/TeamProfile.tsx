@@ -1,10 +1,10 @@
+import Image from "next/image";
 import Link from "next/link";
 import { BadgeCheck, Heart, Leaf, Quote, Sparkles } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
 import { href, type Locale } from "@/lib/i18n/config";
 import { site } from "@/lib/site";
 import { Reveal } from "@/components/ui/Reveal";
-import { SceneArt } from "@/components/ui/SceneArt";
 
 const missionIcons = [Sparkles, Leaf, Heart];
 
@@ -39,22 +39,23 @@ export function Milestones({ dict }: { dict: Dictionary }) {
   );
 }
 
-/** Founder / lead guide profile block. TODO: add a real photo at /public/media/team/nishan.jpg. */
+/** Founder / chauffeur tourist guide profile block. */
 export function TeamProfile({ dict, lang }: { dict: Dictionary; lang: Locale }) {
   return (
     <div className="grid items-center gap-10 lg:grid-cols-[0.9fr_1.1fr]">
       <Reveal className="relative mx-auto w-full max-w-md">
-        <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] shadow-lift">
-          <SceneArt scene="hills" />
-          <div className="absolute inset-0 grid place-items-center">
-            <span className="grid h-40 w-40 place-items-center rounded-full bg-white/85 font-heading text-6xl font-bold text-primary-600 shadow-xl backdrop-blur">
-              NS
-            </span>
-          </div>
+        <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] bg-sky shadow-lift">
+          <Image
+            src={site.founderPhoto}
+            alt={`${site.founder} — ${dict.about.founderTitle}`}
+            fill
+            sizes="(min-width: 1024px) 28rem, 90vw"
+            className="object-cover object-top"
+          />
         </div>
         <div className="absolute -right-4 -bottom-6 rounded-2xl bg-white p-4 shadow-lift ring-1 ring-line sm:-right-8">
           <p className="text-xs text-muted">{dict.about.yearsGuiding}</p>
-          <p className="font-heading text-3xl font-bold text-primary-600">12+</p>
+          <p className="font-heading text-3xl font-bold text-primary-600">5+</p>
         </div>
       </Reveal>
 
@@ -66,11 +67,18 @@ export function TeamProfile({ dict, lang }: { dict: Dictionary; lang: Locale }) 
         <h2 className="h2">{site.founder}</h2>
         <p className="text-lg text-ink/85">{dict.about.founderBio}</p>
 
-        <dl className="grid gap-3 sm:grid-cols-2">
+        <dl className="grid gap-3 sm:grid-cols-3">
           <div className="rounded-2xl bg-sky p-4">
             <dt className="text-xs font-semibold tracking-wide text-muted uppercase">{dict.about.credentials}</dt>
-            <dd className="mt-1 flex items-center gap-2 text-sm font-medium">
-              <BadgeCheck className="h-4 w-4 text-accent-700" aria-hidden /> {dict.about.credentialsText}
+            <dd className="mt-1 flex items-start gap-2 text-sm font-medium">
+              <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-accent-700" aria-hidden /> {dict.about.credentialsText}
+            </dd>
+          </div>
+          <div className="rounded-2xl bg-sky p-4">
+            <dt className="text-xs font-semibold tracking-wide text-muted uppercase">{dict.about.italy}</dt>
+            <dd className="mt-1 text-sm font-medium">
+              <span aria-hidden>🇮🇹 </span>
+              {dict.about.italyText}
             </dd>
           </div>
           <div className="rounded-2xl bg-sky p-4">

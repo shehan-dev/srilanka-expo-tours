@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { Clock, Eye, MapPin, Tag } from "lucide-react";
+import { ArrowRight, Clock, Eye, MapPin, Tag } from "lucide-react";
 import { useI18n } from "@/components/providers/AppProviders";
 import { Media } from "@/components/ui/Media";
 import { Price } from "@/components/ui/Price";
@@ -175,12 +175,10 @@ export function TourCard({
           <TourPrices tour={tour} />
           <div className="flex items-center justify-between gap-3">
             <span className="text-xs text-muted">/ {dict.tour.perPerson}</span>
-            <Link
-              href={`${href(lang, "/contact")}?tour=${tour.slug}`}
-              className="btn btn-primary btn-sm transition-all duration-300 md:translate-y-2 md:opacity-0 md:group-focus-within:translate-y-0 md:group-focus-within:opacity-100 md:group-hover:translate-y-0 md:group-hover:opacity-100"
-            >
-              {dict.tour.book}
+            <Link href={detailHref} className="btn btn-primary btn-sm group/view">
+              {dict.tour.view}
               <span className="sr-only">: {title}</span>
+              <ArrowRight className="h-4 w-4 transition-transform group-hover/view:translate-x-0.5" aria-hidden />
             </Link>
           </div>
         </div>

@@ -302,7 +302,7 @@ export function ItineraryBuilder({ initial }: { initial: BuilderInitial }) {
         body: JSON.stringify({
           ...data,
           type: "itinerary",
-          language: lang,
+          locale: lang,
           adults,
           kids,
           startDate: start,
