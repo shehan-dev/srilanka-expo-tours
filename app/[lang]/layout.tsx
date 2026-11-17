@@ -1,7 +1,7 @@
 import "../globals.css";
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { Lora, Montserrat, Playfair_Display } from "next/font/google";
+import localFont from "next/font/local";
 import { AppProviders } from "@/components/providers/AppProviders";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -14,25 +14,32 @@ import { hasLocale, locales } from "@/lib/i18n/config";
 import { organizationLd, pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
-// latin-ext covers the É in LANKAVÉ and Italian accented characters.
-const playfair = Playfair_Display({
-  subsets: ["latin", "latin-ext"],
-  weight: ["500", "600", "700"],
+// Self-hosted variable fonts (assets/fonts/web), subset to Latin + Latin-ext so the É in LANKAVÉ
+// and Italian accented characters render. Local files keep builds independent of Google Fonts.
+const playfair = localFont({
+  src: "../../assets/fonts/web/PlayfairDisplay-VF.woff2",
+  weight: "400 900",
+  style: "normal",
   variable: "--font-playfair",
   display: "swap",
+  fallback: ["Georgia", "serif"],
 });
-const montserrat = Montserrat({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
+const montserrat = localFont({
+  src: "../../assets/fonts/web/Montserrat-VF.woff2",
+  weight: "100 900",
+  style: "normal",
   variable: "--font-montserrat",
   display: "swap",
+  fallback: ["system-ui", "sans-serif"],
 });
-const lora = Lora({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500"],
-  style: ["normal", "italic"],
+const lora = localFont({
+  src: [
+    { path: "../../assets/fonts/web/Lora-VF.woff2", weight: "400 700", style: "normal" },
+    { path: "../../assets/fonts/web/Lora-Italic-VF.woff2", weight: "400 700", style: "italic" },
+  ],
   variable: "--font-lora",
   display: "swap",
+  fallback: ["Georgia", "serif"],
 });
 
 type Props = { children: React.ReactNode; params: Promise<{ lang: string }> };
