@@ -2,9 +2,9 @@ import type { Dictionary } from "./en";
 
 const it: Dictionary = {
   meta: {
-    title: "SriLanka Expo Tours — Tour privati in Sri Lanka con guide in italiano",
+    title: "Lankavé Tours: tour privati in Sri Lanka con guide in italiano",
     description:
-      "Tour privati su misura in Sri Lanka con guide autorizzate di lingua italiana, veicoli privati confortevoli e itinerari personalizzati. Prenota online o chiedici un viaggio su misura.",
+      "Tour privati su misura in Sri Lanka con guide autorizzate di lingua italiana, veicoli privati confortevoli e itinerari personalizzati. Feel Sri Lanka. Live the Journey.",
   },
   nav: {
     home: "Home",
@@ -30,8 +30,8 @@ const it: Dictionary = {
     callUs: "Chiamaci",
   },
   hero: {
-    title: "Scopri lo Sri Lanka — Tour su misura per viaggiatori italiani",
-    subtitle: "Guide autorizzate, veicoli privati e tour in italiano — ogni viaggio pensato intorno a te.",
+    title: "Scopri lo Sri Lanka: tour su misura per viaggiatori italiani",
+    subtitle: "Guide autorizzate, veicoli privati e tour in italiano, con ogni viaggio pensato intorno a te.",
     ctaPrimary: "Prenota un tour",
     ctaSecondary: "Viaggio su misura",
     badge: "Tour guidati in italiano disponibili",
@@ -43,13 +43,15 @@ const it: Dictionary = {
     title: "Pianifica il viaggio",
     destination: "Destinazione",
     destinationPlaceholder: "Regione o città",
-    noResults: "Nessun risultato — prova un altro luogo",
+    noResults: "Nessun risultato. Prova un altro luogo",
     start: "Data di partenza",
     end: "Data di ritorno",
     adults: "Adulti",
     kids: "Bambini",
     language: "Lingua della guida",
     estimate: "Stima il prezzo",
+    increase: "Aumenta",
+    decrease: "Diminuisci",
     search: "Cerca tour",
     expand: "Pianifica il viaggio",
     collapse: "Nascondi ricerca",
@@ -75,7 +77,7 @@ const it: Dictionary = {
   popular: {
     eyebrow: "I più amati",
     title: "Pacchetti tour popolari",
-    subtitle: "I nostri itinerari preferiti — ognuno adattabile alle tue date e al tuo ritmo.",
+    subtitle: "I nostri itinerari preferiti, ognuno adattabile alle tue date e al tuo ritmo.",
     prev: "Tour precedenti",
     next: "Tour successivi",
     preview: "Anteprima",
@@ -99,7 +101,7 @@ const it: Dictionary = {
     close: "Chiudi",
     priceNote: "Prezzo a persona in camera doppia. Il preventivo viene confermato entro 24 ore.",
     priceDisclaimer:
-      "I prezzi sono indicativi e non fissi — possono variare leggermente in base al tipo di veicolo, agli aggiornamenti delle tariffe alberghiere, alla stagione e al numero di partecipanti.",
+      "I prezzi sono indicativi e non fissi: possono variare leggermente in base al tipo di veicolo, agli aggiornamenti delle tariffe alberghiere, alla stagione e al numero di partecipanti.",
     options: "Opzioni del pacchetto",
     standard: "Standard",
     premium: "Premium",
@@ -126,7 +128,7 @@ const it: Dictionary = {
     price: "Prezzo massimo",
     reset: "Azzera filtri",
     results: "tour",
-    noResults: "Nessun tour corrisponde ai filtri. Prova ad ampliare la ricerca — o chiedici un viaggio su misura.",
+    noResults: "Nessun tour corrisponde ai filtri. Prova ad ampliare la ricerca, o chiedici un viaggio su misura.",
     grid: "Vista griglia",
     list: "Elenco compatto",
     map: "Mappa",
@@ -144,7 +146,7 @@ const it: Dictionary = {
   itinerary: {
     eyebrow: "Crea il tuo itinerario",
     title: "Costruisci il tuo itinerario in Sri Lanka",
-    subtitle: "Scegli i giorni, seleziona i luoghi che ami e guarda la stima in tempo reale — poi richiedi il preventivo gratuito.",
+    subtitle: "Scegli i giorni, seleziona i luoghi che ami e guarda la stima in tempo reale, poi richiedi il preventivo gratuito.",
     steps: ["Durata", "Luoghi", "Opzioni", "Riepilogo", "Preventivo"],
     step: "Passo",
     of: "di",
@@ -159,7 +161,7 @@ const it: Dictionary = {
     attractionsHint: "I luoghi scelti vengono distribuiti nei giorni. Trascina i giorni per riordinarli o sposta i luoghi tra un giorno e l'altro.",
     selected: "selezionati",
     dayPlan: "Il tuo programma",
-    freeDay: "Giorno libero — relax, mare o escursione facoltativa",
+    freeDay: "Giorno libero: relax, mare o escursione facoltativa",
     moveUp: "Sposta giorno su",
     moveDown: "Sposta giorno giù",
     moveToPrev: "Sposta al giorno precedente",
@@ -195,19 +197,19 @@ const it: Dictionary = {
     send: "Invia richiesta",
     sending: "Invio in corso…",
     successTitle: "Richiesta ricevuta!",
-    successText: "Grazie — ti invieremo il preventivo personalizzato entro 24 ore. Il tuo codice di riferimento è",
+    successText: "Grazie! Ti invieremo il preventivo personalizzato entro 24 ore. Il tuo codice di riferimento è",
     startOver: "Pianifica un altro viaggio",
     noAttractions: "Nessun luogo selezionato",
     comingSoon: "Prossimamente",
     comingSoonTitle: "Il nostro costruttore di itinerari online arriva presto",
     comingSoonText:
-      "Presto potrai scegliere i giorni, selezionare i luoghi che ami e vedere una stima del prezzo in tempo reale. Nel frattempo raccontaci cosa vorresti vedere e creeremo per te un itinerario su misura — gratis, entro 24 ore.",
+      "Presto potrai scegliere i giorni, selezionare i luoghi che ami e vedere una stima del prezzo in tempo reale. Nel frattempo raccontaci cosa vorresti vedere e creeremo per te un itinerario su misura, gratis, entro 24 ore.",
     comingSoonCta: "Pianifica con noi un viaggio su misura",
   },
   discover: {
     eyebrow: "Scopri lo Sri Lanka",
     title: "Regioni e destinazioni",
-    subtitle: "Dalle colline del tè avvolte nella nebbia alle spiagge selvagge della costa est — trova i luoghi giusti per la tua stagione.",
+    subtitle: "Dalle colline del tè avvolte nella nebbia alle spiagge selvagge della costa est: trova i luoghi giusti per la tua stagione.",
     bestMonths: "Mesi migliori",
     topThings: "Da non perdere",
     seeTours: "Tour da",
@@ -236,7 +238,7 @@ const it: Dictionary = {
   services: {
     eyebrow: "I nostri servizi",
     title: "Tutto ciò che ti serve, gestito sul posto",
-    subtitle: "Guide private, una flotta moderna e trasferimenti porta a porta — un solo team, un solo referente.",
+    subtitle: "Guide private, una flotta moderna e trasferimenti porta a porta: un solo team, un solo referente.",
     items: [
       { title: "Guide multilingue autorizzate", text: "Guide nazionali con licenza SLTDA e italiano certificato, che fanno rivivere storia e vita quotidiana." },
       { title: "Pacchetti autista-guida", text: "Itinerari guidati dal titolare con un autista-guida dedicato per tutto il viaggio." },
@@ -262,7 +264,7 @@ const it: Dictionary = {
     eyebrow: "Chi siamo",
     title: "Autentici, sostenibili, vicini agli italiani",
     story:
-      "SriLanka Expo Tours è nata da un autista-guida turistica srilankese che ha vissuto in Italia per oltre vent'anni. Progettiamo viaggi privati che sostengono guesthouse familiari, cuochi locali e progetti di comunità — e parliamo la tua lingua, letteralmente.",
+      "Lankavé Tours è nata da un autista-guida turistica srilankese che ha vissuto in Italia per oltre vent'anni. Progettiamo viaggi privati che sostengono guesthouse familiari, cuochi locali e progetti di comunità, e parliamo la tua lingua, letteralmente.",
     mission: [
       { title: "Esperienze autentiche", text: "Pranzi nei villaggi, cerimonie nei templi e passeggiate tra le piantagioni con chi ci vive." },
       { title: "Viaggi sostenibili", text: "Piccoli gruppi, fornitori locali e ricariche d'acqua plastic-free su ogni veicolo." },
@@ -270,9 +272,9 @@ const it: Dictionary = {
     ],
     founderTitle: "Fondatore e autista-guida turistica",
     founderBio:
-      "Nato nel profondo sud dello Sri Lanka, Nishan ha vissuto in Italia per oltre vent'anni prima di tornare a casa per far conoscere la sua isola ai viaggiatori. Come autista-guida turistica, con più di 5 anni di esperienza nel turismo, ha accolto ospiti internazionali da tutto il mondo — e grazie al suo italiano fluente e alla sua conoscenza dei gusti italiani, con lui i viaggiatori italiani si sentono sempre a casa.",
+      "Nato nel profondo sud dello Sri Lanka, Nishan ha vissuto in Italia per oltre vent'anni prima di tornare a casa per far conoscere la sua isola ai viaggiatori. Come autista-guida turistica, con più di 5 anni di esperienza nel turismo, ha accolto ospiti internazionali da tutto il mondo, e grazie al suo italiano fluente e alla sua conoscenza dei gusti italiani, con lui i viaggiatori italiani si sentono sempre a casa.",
     favouriteRoute: "Itinerario preferito",
-    favouriteRouteText: "«L'alba a Sigiriya, poi il treno lento da Kandy a Ella — non mi stanco mai di vedere gli ospiti scoprire le colline del tè per la prima volta.»",
+    favouriteRouteText: "«L'alba a Sigiriya, poi il treno lento da Kandy a Ella. Non mi stanco mai di vedere gli ospiti scoprire le colline del tè per la prima volta.»",
     yearsGuiding: "Anni nel turismo",
     languagesSpoken: "Lingue",
     credentials: "Ruolo",
@@ -318,7 +320,7 @@ const it: Dictionary = {
   faq: {
     eyebrow: "FAQ",
     title: "Domande frequenti",
-    subtitle: "Non trovi la risposta? Scrivici su WhatsApp — rispondiamo in italiano o in inglese.",
+    subtitle: "Non trovi la risposta? Scrivici su WhatsApp: rispondiamo in italiano o in inglese.",
     categories: {
       booking: "Prenotazione e pagamento",
       visas: "Visti e ingresso",
@@ -344,7 +346,7 @@ const it: Dictionary = {
   contact: {
     eyebrow: "Contatti",
     title: "Prenota ora o chiedici qualsiasi cosa",
-    subtitle: "Raccontaci il tuo viaggio — rispondiamo entro 24 ore, in italiano o in inglese.",
+    subtitle: "Raccontaci il tuo viaggio: rispondiamo entro 24 ore, in italiano o in inglese.",
     name: "Nome e cognome",
     email: "Email",
     phone: "Telefono",
@@ -356,6 +358,9 @@ const it: Dictionary = {
     tour: "Tour di interesse",
     tourNone: "Non so ancora",
     option: "Opzione del pacchetto",
+    groupDetails: "I tuoi dati",
+    groupTrip: "Il tuo viaggio",
+    groupMessage: "Messaggio",
     message: "Messaggio",
     messagePlaceholder: "Raccontaci cosa vorresti vedere, il tuo ritmo e qualsiasi richiesta speciale…",
     consent: "Potete contattarmi anche su WhatsApp",
@@ -405,6 +410,8 @@ const it: Dictionary = {
     backHome: "Torna alla home",
     loading: "Caricamento…",
     stars: "su 5 stelle",
+    backToTop: "Torna su",
+    backToTours: "Torna ai tour",
   },
 };
 

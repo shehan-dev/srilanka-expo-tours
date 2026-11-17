@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { CheckCircle2, Loader2, Send } from "lucide-react";
+import { Loader2, Send } from "lucide-react";
 import { useI18n } from "@/components/providers/AppProviders";
 import { Modal } from "@/components/ui/Modal";
 import { tours } from "@/lib/data/tours";
@@ -60,24 +60,26 @@ export function ContactForm({
 
   const err = (field: keyof Errors) =>
     errors[field] ? (
-      <p id={`cf-${field}-error`} className="mt-1 text-sm text-red-600">
+      <p id={`cf-${field}-error`} className="field-error">
         {errors[field]}
       </p>
     ) : null;
 
   return (
     <>
-      <form onSubmit={onSubmit} noValidate className="card grid gap-4 p-6 sm:grid-cols-2 md:p-8">
-        {/* Honeypot for bots — hidden from people and assistive tech */}
+      <form onSubmit={onSubmit} noValidate data-hide-actionbar className="card flex flex-col gap-8 p-6 md:p-8">
+        {/* Honeypot for bots: hidden from people and assistive tech */}
         <div aria-hidden className="absolute -left-[9999px]">
           <label>
             Website <input name="website" tabIndex={-1} autoComplete="off" />
           </label>
         </div>
 
+        <fieldset className="grid gap-4 sm:grid-cols-2">
+        <legend className="eyebrow mb-4">{t.groupDetails}</legend>
         <div className="sm:col-span-2">
           <label htmlFor="cf-name" className="field-label">
-            {t.name} <span className="text-red-600" aria-hidden>*</span>
+            {t.name} <span className="text-danger" aria-hidden>*</span>
           </label>
           <input
             id="cf-name"
@@ -92,7 +94,7 @@ export function ContactForm({
         </div>
         <div>
           <label htmlFor="cf-email" className="field-label">
-            {t.email} <span className="text-red-600" aria-hidden>*</span>
+            {t.email} <span className="text-danger" aria-hidden>*</span>
           </label>
           <input
             id="cf-email"
@@ -110,9 +112,9 @@ export function ContactForm({
           <label htmlFor="cf-phone" className="field-label">
             {t.phone}
           </label>
-          <input id="cf-phone" name="phone" type="tel" autoComplete="tel" className="input" />
+          <input id="cf-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" className="input" />
         </div>
-        <div>
+        <div className="sm:col-span-2">
           <label htmlFor="cf-language" className="field-label">
             {t.language}
           </label>
@@ -124,22 +126,26 @@ export function ContactForm({
             ))}
           </select>
         </div>
-        <div className="grid grid-cols-2 gap-3">
+        </fieldset>
+
+        <fieldset className="grid gap-4 sm:grid-cols-2">
+        <legend className="eyebrow mb-4">{t.groupTrip}</legend>
+        <div className="grid grid-cols-2 gap-3 sm:col-span-2">
           <div>
             <label htmlFor="cf-adults" className="field-label">
               {dict.booking.adults}
             </label>
-            <input id="cf-adults" name="adults" type="number" min={1} max={60} defaultValue={2} className="input" />
+            <input id="cf-adults" name="adults" type="number" inputMode="numeric" min={1} max={60} defaultValue={2} className="input" />
           </div>
           <div>
             <label htmlFor="cf-kids" className="field-label">
               {dict.booking.kids}
             </label>
-            <input id="cf-kids" name="kids" type="number" min={0} max={30} defaultValue={0} className="input" />
+            <input id="cf-kids" name="kids" type="number" inputMode="numeric" min={0} max={30} defaultValue={0} className="input" />
           </div>
         </div>
-        <fieldset className="grid grid-cols-2 gap-3 sm:col-span-2">
-          <legend className="field-label">{t.dates}</legend>
+        <div className="grid grid-cols-2 gap-3 sm:col-span-2" role="group" aria-labelledby="cf-dates">
+          <span id="cf-dates" className="field-label col-span-2 mb-0">{t.dates}</span>
           <div>
             <label htmlFor="cf-start" className="text-xs text-muted">
               {t.from}
@@ -152,7 +158,7 @@ export function ContactForm({
             </label>
             <input id="cf-end" name="endDate" type="date" min={today} className="input" />
           </div>
-        </fieldset>
+        </div>
         <div>
           <label htmlFor="cf-tour" className="field-label">
             {t.tour}
@@ -173,14 +179,18 @@ export function ContactForm({
           <select id="cf-option" name="option" className="input" defaultValue={defaultOption}>
             <option value="">{t.tourNone}</option>
             <option value="standard">
-              {dict.tour.standard} — {dict.tour.standardHotels}
+              {dict.tour.standard} ({dict.tour.standardHotels})
             </option>
             <option value="premium">
-              {dict.tour.premium} — {dict.tour.premiumHotels}
+              {dict.tour.premium} ({dict.tour.premiumHotels})
             </option>
           </select>
         </div>
-        <div className="sm:col-span-2">
+        </fieldset>
+
+        <fieldset className="flex flex-col gap-4">
+        <legend className="eyebrow mb-4">{t.groupMessage}</legend>
+        <div>
           <label htmlFor="cf-message" className="field-label">
             {t.message}
           </label>
@@ -193,18 +203,19 @@ export function ContactForm({
             defaultValue={defaultMessage}
           />
         </div>
-        <label className="flex items-center gap-2 text-sm sm:col-span-2">
-          <input type="checkbox" name="whatsappOptIn" className="h-4 w-4 accent-primary" />
+        <label className="flex min-h-11 items-center gap-3 text-sm">
+          <input type="checkbox" name="whatsappOptIn" className="h-5 w-5 accent-primary" />
           {t.consent}
         </label>
+        </fieldset>
 
         {status === "error" && (
-          <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700 sm:col-span-2">
+          <p role="alert" className="field-error rounded-control bg-red-50 px-4 py-3">
             {t.error}
           </p>
         )}
 
-        <button type="submit" disabled={status === "sending"} className="btn btn-primary sm:col-span-2 sm:justify-self-start">
+        <button type="submit" disabled={status === "sending"} className="btn btn-primary self-start">
           {status === "sending" ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden /> : <Send className="h-4 w-4" aria-hidden />}
           {status === "sending" ? t.sending : t.submit}
         </button>
@@ -212,9 +223,12 @@ export function ContactForm({
 
       <Modal open={!!reference} onClose={() => setReference(null)} title={t.successTitle} closeLabel={t.close} className="max-w-md">
         <div className="flex flex-col items-center gap-4 p-6 pt-2 text-center">
-          <CheckCircle2 className="h-16 w-16 text-accent" aria-hidden />
+          <svg viewBox="0 0 52 52" className="h-16 w-16" aria-hidden>
+            <circle cx="26" cy="26" r="24" fill="none" stroke="var(--color-accent)" strokeWidth="2.5" />
+            <path d="M15 27 l7 7 l15 -16" fill="none" stroke="var(--color-accent)" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="draw-check" />
+          </svg>
           <p className="text-ink/85">{t.successText}</p>
-          <p className="rounded-xl bg-sky px-5 py-3 font-mono text-xl font-bold tracking-wider text-primary-600">{reference}</p>
+          <p className="rounded-control bg-ivory px-5 py-3 font-mono text-xl font-bold tracking-wider text-primary">{reference}</p>
           <button type="button" onClick={() => setReference(null)} className="btn btn-primary">
             {t.close}
           </button>

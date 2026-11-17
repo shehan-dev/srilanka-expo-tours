@@ -1,24 +1,24 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { ChevronLeft, ChevronRight, ExternalLink, PenLine, Quote } from "lucide-react";
+import { ChevronLeft, ChevronRight, ExternalLink, PenLine } from "lucide-react";
 import { useI18n } from "@/components/providers/AppProviders";
+import { CountUp } from "@/components/ui/CountUp";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Stars } from "@/components/ui/Stars";
 import { testimonials } from "@/lib/data/testimonials";
 import { intlLocale, l } from "@/lib/i18n/config";
 import { site } from "@/lib/site";
-import { cn, formatDate } from "@/lib/utils";
+import { cn, easeOutExpo, formatDate } from "@/lib/utils";
 
 const sourceName = { google: "Google" };
 
-/** Auto-advancing review carousel. Pauses on hover/focus; fully keyboard operable. */
+/** Manually controlled review carousel: arrows, dots and swipe. No autoplay. */
 export function TestimonialsSlider() {
   const { lang, dict } = useI18n();
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
-  const [paused, setPaused] = useState(false);
   const count = testimonials.length;
 
   const go = (next: number, dir = next > index ? 1 : -1) => {
@@ -26,118 +26,118 @@ export function TestimonialsSlider() {
     setIndex((next + count) % count);
   };
 
-  useEffect(() => {
-    if (paused) return;
-    const t = setTimeout(() => go(index + 1, 1), 7000);
-    return () => clearTimeout(t);
-  }, [index, paused]); // eslint-disable-line react-hooks/exhaustive-deps
-
   const r = testimonials[index];
+  const stats = [
+    { value: "450+", label: dict.testimonials.toursRun },
+    { value: `${site.rating.count.toLocaleString(intlLocale[lang])}+`, label: dict.testimonials.travellers },
+    { value: `${site.rating.value.toLocaleString(intlLocale[lang])}★`, label: dict.testimonials.avgRating },
+  ];
 
   return (
-    <section aria-labelledby="reviews-title" className="section overflow-hidden bg-linear-to-b from-sky/60 to-white">
+    <section aria-labelledby="reviews-title" className="section overflow-hidden">
       <div className="container-site">
         <SectionHeading id="reviews-title" eyebrow={dict.testimonials.eyebrow} title={dict.testimonials.title} />
 
-        <div
-          className="relative mx-auto max-w-3xl"
-          role="region"
-          aria-roledescription="carousel"
-          aria-label={dict.testimonials.title}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onFocus={() => setPaused(true)}
-          onBlur={() => setPaused(false)}
-        >
-          <div className="relative min-h-[300px] sm:min-h-[260px]" aria-live={paused ? "polite" : "off"}>
-            <AnimatePresence mode="wait" custom={direction}>
-              <motion.figure
-                key={r.id}
-                custom={direction}
-                initial={{ opacity: 0, x: direction * 60 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: direction * -60 }}
-                transition={{ duration: 0.35, ease: [0.2, 0.9, 0.2, 1] }}
-                aria-roledescription="slide"
-                aria-label={`${index + 1} / ${count}`}
-                className="card relative flex flex-col gap-5 p-8 md:p-10"
-              >
-                <Quote className="absolute top-6 right-6 h-10 w-10 text-sky-200" aria-hidden />
-                <Stars rating={r.rating} label={dict.common.stars} size={18} />
-                <blockquote className="font-heading text-xl leading-relaxed text-ink md:text-2xl">“{l(r.quote, lang)}”</blockquote>
-                <figcaption className="flex flex-wrap items-center justify-between gap-3">
-                  <span className="flex items-center gap-3">
-                    <span className="text-3xl" role="img" aria-label={r.country}>
-                      {r.flag}
-                    </span>
-                    <span>
-                      <span className="block font-semibold">{r.name}</span>
-                      <span className="text-sm text-muted">
-                        {r.country} · {formatDate(r.date, intlLocale[lang])}
+        <div className="grid items-center gap-10 lg:grid-cols-[1.6fr_1fr] lg:gap-16">
+          <div role="region" aria-roledescription="carousel" aria-label={dict.testimonials.title}>
+            <div className="relative min-h-[320px] sm:min-h-[280px]" aria-live="polite">
+              <AnimatePresence mode="wait" initial={false} custom={direction}>
+                <motion.figure
+                  key={r.id}
+                  initial={{ opacity: 0, x: direction * 40 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: direction * -40 }}
+                  transition={{ duration: 0.28, ease: easeOutExpo }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.2}
+                  onDragEnd={(_, info) => {
+                    if (info.offset.x < -60) go(index + 1, 1);
+                    else if (info.offset.x > 60) go(index - 1, -1);
+                  }}
+                  aria-roledescription="slide"
+                  aria-label={`${index + 1} / ${count}`}
+                  className="flex cursor-grab touch-pan-y flex-col gap-5 active:cursor-grabbing"
+                >
+                  <span aria-hidden className="font-heading text-7xl leading-[0.6] text-accent">
+                    &ldquo;
+                  </span>
+                  <blockquote className="tagline text-2xl leading-snug text-primary md:text-[1.75rem]">{l(r.quote, lang)}</blockquote>
+                  <Stars rating={r.rating} label={dict.common.stars} size={18} />
+                  <figcaption className="flex flex-wrap items-center justify-between gap-3">
+                    <span className="flex items-center gap-3">
+                      <span className="text-3xl" role="img" aria-label={r.country}>
+                        {r.flag}
+                      </span>
+                      <span>
+                        <span className="block font-semibold text-ink">{r.name}</span>
+                        <span className="text-sm text-muted">
+                          {r.country} · {formatDate(r.date, intlLocale[lang])}
+                        </span>
                       </span>
                     </span>
-                  </span>
-                  <a
-                    href={r.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-sm font-semibold text-primary-600 hover:underline"
+                    <a
+                      href={r.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-primary hover:underline"
+                    >
+                      {dict.testimonials.readOn} {sourceName[r.source]} <ExternalLink className="h-3.5 w-3.5" aria-hidden />
+                    </a>
+                  </figcaption>
+                </motion.figure>
+              </AnimatePresence>
+            </div>
+
+            <div className="mt-6 flex items-center gap-4">
+              <button
+                type="button"
+                onClick={() => go(index - 1, -1)}
+                aria-label={dict.testimonials.prev}
+                className="grid h-11 w-11 place-items-center rounded-full border-[1.5px] border-primary text-primary transition-colors hover:bg-primary-50"
+              >
+                <ChevronLeft className="h-5 w-5" aria-hidden />
+              </button>
+              <div className="flex">
+                {testimonials.map((t, i) => (
+                  <button
+                    key={t.id}
+                    type="button"
+                    onClick={() => go(i)}
+                    aria-label={`${dict.testimonials.goTo} ${i + 1}`}
+                    aria-current={i === index ? "true" : undefined}
+                    className="grid h-11 w-6 place-items-center"
                   >
-                    {dict.testimonials.readOn} {sourceName[r.source]} <ExternalLink className="h-3.5 w-3.5" aria-hidden />
-                  </a>
-                </figcaption>
-              </motion.figure>
-            </AnimatePresence>
+                    <span className={cn("block h-2 rounded-full transition-all duration-300", i === index ? "w-6 bg-primary" : "w-2 bg-line")} />
+                  </button>
+                ))}
+              </div>
+              <button
+                type="button"
+                onClick={() => go(index + 1, 1)}
+                aria-label={dict.testimonials.next}
+                className="grid h-11 w-11 place-items-center rounded-full border-[1.5px] border-primary text-primary transition-colors hover:bg-primary-50"
+              >
+                <ChevronRight className="h-5 w-5" aria-hidden />
+              </button>
+            </div>
           </div>
 
-          <div className="mt-6 flex items-center justify-center gap-4">
-            <button
-              type="button"
-              onClick={() => go(index - 1, -1)}
-              aria-label={dict.testimonials.prev}
-              className="grid h-11 w-11 place-items-center rounded-full bg-white shadow-card ring-1 ring-line hover:bg-sky"
-            >
-              <ChevronLeft className="h-5 w-5" aria-hidden />
-            </button>
-            <div className="flex gap-2">
-              {testimonials.map((t, i) => (
-                <button
-                  key={t.id}
-                  type="button"
-                  onClick={() => go(i)}
-                  aria-label={`${dict.testimonials.goTo} ${i + 1}`}
-                  aria-current={i === index ? "true" : undefined}
-                  className={cn("h-2.5 rounded-full transition-all", i === index ? "w-8 bg-primary" : "w-2.5 bg-line hover:bg-primary/40")}
-                />
+          <aside className="flex flex-col gap-6 rounded-panel bg-white p-8 shadow-card ring-1 ring-line/60">
+            <dl className="grid gap-6">
+              {stats.map((s) => (
+                <div key={s.label} className="flex flex-col-reverse">
+                  <dt className="text-xs font-semibold tracking-[0.15em] text-accent-700 uppercase">{s.label}</dt>
+                  <dd className="font-heading text-4xl font-semibold text-primary">
+                    <CountUp value={s.value} />
+                  </dd>
+                </div>
               ))}
-            </div>
-            <button
-              type="button"
-              onClick={() => go(index + 1, 1)}
-              aria-label={dict.testimonials.next}
-              className="grid h-11 w-11 place-items-center rounded-full bg-white shadow-card ring-1 ring-line hover:bg-sky"
-            >
-              <ChevronRight className="h-5 w-5" aria-hidden />
-            </button>
-          </div>
-        </div>
-
-        <div className="mx-auto mt-14 grid max-w-4xl gap-4 sm:grid-cols-[1fr_1fr_1fr_auto] sm:items-center">
-          {[
-            { value: "450+", label: dict.testimonials.toursRun },
-            { value: `${site.rating.count.toLocaleString(intlLocale[lang])}+`, label: dict.testimonials.travellers },
-            { value: `${site.rating.value}★`, label: dict.testimonials.avgRating },
-          ].map((s) => (
-            <div key={s.label} className="text-center">
-              <p className="font-heading text-3xl font-bold text-primary-600">{s.value}</p>
-              <p className="text-sm text-muted">{s.label}</p>
-            </div>
-          ))}
-          <div className="flex flex-col gap-2">
-            <a href={site.social.google} target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-sm">
+            </dl>
+            <a href={site.social.google} target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-sm self-start">
               <PenLine className="h-4 w-4" aria-hidden /> {dict.testimonials.write} · Google
             </a>
-          </div>
+          </aside>
         </div>
       </div>
     </section>

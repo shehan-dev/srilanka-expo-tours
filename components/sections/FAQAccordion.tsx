@@ -2,12 +2,12 @@
 
 import { useId, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Plus } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useI18n } from "@/components/providers/AppProviders";
 import { faqs } from "@/lib/data/faqs";
 import { l } from "@/lib/i18n/config";
 import type { FaqCategory } from "@/lib/types";
-import { cn } from "@/lib/utils";
+import { cn, easeOutExpo } from "@/lib/utils";
 
 const order: FaqCategory[] = ["booking", "visas", "health", "cancellations", "tips"];
 
@@ -19,29 +19,25 @@ export function FAQAccordion({ ids, grouped = true }: { ids?: string[]; grouped?
   const items = ids ? faqs.filter((f) => ids.includes(f.id)) : faqs;
 
   const renderItems = (list: typeof faqs) => (
-    <ul className="flex flex-col gap-3">
+    <ul className="flex flex-col border-t border-ivory-deep">
       {list.map((f) => {
         const isOpen = open === f.id;
         const panelId = `${baseId}-${f.id}`;
         return (
-          <li key={f.id} className={cn("card overflow-hidden transition-shadow", isOpen && "shadow-lift")}>
-            <h3>
+          <li key={f.id} className="border-b border-ivory-deep">
+            <h3 className="font-sans">
               <button
                 type="button"
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => setOpen(isOpen ? null : f.id)}
-                className="flex w-full items-center justify-between gap-4 px-5 py-4 text-left text-[16px] font-semibold"
+                className="flex min-h-14 w-full items-center justify-between gap-4 py-4 text-left text-[16px] font-semibold text-primary"
               >
                 {l(f.question, lang)}
-                <span
-                  className={cn(
-                    "grid h-8 w-8 shrink-0 place-items-center rounded-full bg-sky text-primary transition-transform duration-300",
-                    isOpen && "rotate-45 bg-primary text-white"
-                  )}
-                >
-                  <Plus className="h-4 w-4" aria-hidden />
-                </span>
+                <ChevronDown
+                  className={cn("h-5 w-5 shrink-0 text-accent-700 transition-transform duration-300", isOpen && "rotate-180")}
+                  aria-hidden
+                />
               </button>
             </h3>
             <AnimatePresence initial={false}>
@@ -50,12 +46,20 @@ export function FAQAccordion({ ids, grouped = true }: { ids?: string[]; grouped?
                   id={panelId}
                   role="region"
                   aria-label={l(f.question, lang)}
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.35, ease: [0.2, 0.9, 0.2, 1] }}
+                  initial={{ height: 0 }}
+                  animate={{ height: "auto" }}
+                  exit={{ height: 0 }}
+                  transition={{ duration: 0.28, ease: easeOutExpo }}
+                  className="overflow-hidden"
                 >
-                  <p className="px-5 pb-5 text-[15px] text-ink/80">{l(f.answer, lang)}</p>
+                  <motion.p
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1, transition: { delay: 0.08, duration: 0.2 } }}
+                    exit={{ opacity: 0, transition: { duration: 0.1 } }}
+                    className="measure pb-5 text-[15px] text-ink/85"
+                  >
+                    {l(f.answer, lang)}
+                  </motion.p>
                 </motion.div>
               )}
             </AnimatePresence>

@@ -2,6 +2,11 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Reveal } from "./Reveal";
 
+/**
+ * The one section-header pattern used across the site:
+ * gold uppercase eyebrow → Playfair heading → tapered gold rule → optional one-line intro.
+ * Centred for showcase sections; left-aligned with an action link on the right for list sections.
+ */
 export function SectionHeading({
   eyebrow,
   title,
@@ -10,6 +15,7 @@ export function SectionHeading({
   as: Tag = "h2",
   action,
   id,
+  className,
 }: {
   eyebrow?: string;
   title: string;
@@ -18,27 +24,36 @@ export function SectionHeading({
   as?: "h1" | "h2";
   action?: ReactNode;
   id?: string;
+  className?: string;
 }) {
+  const centred = align === "center";
   return (
-    <Reveal
+    <div
       className={cn(
-        "mb-10 flex flex-col gap-3 md:mb-14",
-        align === "center" ? "items-center text-center" : "items-start md:flex-row md:items-end md:justify-between"
+        "mb-10 flex flex-col gap-4 md:mb-14",
+        centred ? "items-center text-center" : "items-start md:flex-row md:items-end md:justify-between",
+        className
       )}
     >
-      <div className={cn("flex flex-col gap-3", align === "center" && "items-center")}>
+      <div className={cn("flex flex-col gap-3", centred && "items-center")}>
         {eyebrow && (
-          <span className="eyebrow">
-            <span aria-hidden className="h-px w-6 bg-accent" />
+          <Reveal as="span" className="eyebrow">
             {eyebrow}
-          </span>
+          </Reveal>
         )}
-        <Tag id={id} className={Tag === "h1" ? "h1" : "h2"}>
-          {title}
-        </Tag>
-        {subtitle && <p className={cn("max-w-2xl text-lg text-muted", align === "center" && "mx-auto")}>{subtitle}</p>}
+        <Reveal delay={0.08}>
+          <Tag id={id} className={Tag === "h1" ? "h1" : "h2"}>
+            {title}
+          </Tag>
+        </Reveal>
+        <Reveal as="span" variant="rule" delay={0.16} className="rule-taper" aria-hidden />
+        {subtitle && (
+          <Reveal as="p" delay={0.24} className={cn("measure text-lg text-muted", centred && "mx-auto")}>
+            {subtitle}
+          </Reveal>
+        )}
       </div>
       {action}
-    </Reveal>
+    </div>
   );
 }

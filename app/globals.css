@@ -1,113 +1,191 @@
 @import "tailwindcss";
 
-/* ───────────────── Design tokens (light blue + white) ───────────────── */
+/* ───────────────── Lankavé Tours design tokens ─────────────────
+   The five brand hexes are fixed (Tea Green, Golden Sand, Cinnamon, Ivory, Ocean Blue).
+   Derived shades exist only to pass WCAG AA contrast; see README for the measured ratios. */
 @theme {
-  --color-sky: #e8f6ff;
-  --color-sky-200: #cdeaff;
+  /* primary = Tea Green */
+  --color-primary: #0f4a3c;
+  --color-primary-600: #0a3329; /* green-dark: hover/pressed, text on gold */
+  --color-primary-50: #e3ede8; /* green-tint: chips, washes */
+
+  /* accent = Golden Sand (never as text on ivory/white: use accent-700) */
+  --color-accent: #d4a24a;
+  --color-accent-300: #e6c27a; /* gold-light: small text on green (5.9:1) */
+  --color-accent-700: #7e5a1d; /* gold-dark: gold-coloured text on light surfaces */
+  --color-accent-50: #f6ecd6; /* gold-tint */
+
+  --color-cinnamon: #b85c38;
+  --color-cinnamon-dark: #9a4a2b; /* small white text on cinnamon */
+  --color-ocean: #2f7e84;
+  --color-ocean-dark: #27696e; /* small white text on ocean */
+
+  --color-ivory: #f7f2e7;
+  --color-ivory-deep: #ede5d3;
   --color-surface: #ffffff;
-  --color-primary: #0a6eff;
-  --color-primary-600: #0759d1;
-  --color-primary-50: #eaf2ff;
-  --color-accent: #00a3c4;
-  --color-accent-700: #00728a; /* text-safe teal (≥4.5:1 on white) */
-  --color-accent-50: #e0f7fb;
-  --color-ink: #0f1724;
-  --color-muted: #475569;
-  --color-line: #d8e6f2;
-  --color-star: #f5a524;
+  --color-ink: #1c2b26;
+  --color-muted: #55635d;
+  --color-line: #e0d6bf; /* borders on ivory and white */
+  --color-star: #d4a24a;
+  --color-danger: #b42318;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-heading: var(--font-poppins), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-playfair), var(--font-lora), Georgia, serif;
+  --font-accent: var(--font-lora), "Cormorant", Georgia, serif;
 
-  --radius-card: 1.25rem;
-  --shadow-card: 0 1px 2px rgb(15 23 36 / 0.04), 0 8px 24px -8px rgb(10 110 255 / 0.12);
-  --shadow-lift: 0 2px 4px rgb(15 23 36 / 0.06), 0 22px 44px -12px rgb(10 110 255 / 0.28);
+  /* Radius scale: 8px controls, 16px cards, 24px large image panels */
+  --radius-control: 0.5rem;
+  --radius-card: 1rem;
+  --radius-panel: 1.5rem;
+
+  /* Two elevation levels, warm green-tinted */
+  --shadow-card: 0 1px 2px rgb(15 74 60 / 0.05), 0 8px 24px -12px rgb(15 74 60 / 0.12);
+  --shadow-lift: 0 2px 6px rgb(15 74 60 / 0.06), 0 22px 40px -16px rgb(15 74 60 / 0.24);
 
   /* Motion tokens */
-  --ease-brand: cubic-bezier(0.2, 0.9, 0.2, 1);
-  --duration-fast: 180ms;
-  --duration-medium: 350ms;
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1); /* entrances */
+  --ease-move: cubic-bezier(0.65, 0, 0.35, 1); /* moving between positions */
+  --duration-fast: 150ms;
+  --duration-base: 280ms;
   --duration-slow: 600ms;
 
-  --animate-float: float 3s ease-in-out infinite;
   --animate-shimmer: shimmer 1.6s linear infinite;
 
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
   @keyframes shimmer {
     from { background-position: -200% 0; }
     to { background-position: 200% 0; }
   }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes drop-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
+  @keyframes draw-stroke {
+    to { stroke-dashoffset: 0; }
+  }
+  @keyframes hero-zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.06); }
+  }
+  @keyframes gentle-pulse {
+    0% { box-shadow: 0 0 0 0 rgb(37 211 102 / 0.55); }
+    100% { box-shadow: 0 0 0 18px rgb(37 211 102 / 0); }
+  }
+}
+
+/* Brand aliases (same values as the theme tokens above) */
+:root {
+  --brand-green: var(--color-primary);
+  --brand-green-dark: var(--color-primary-600);
+  --brand-green-tint: var(--color-primary-50);
+  --brand-gold: var(--color-accent);
+  --brand-gold-dark: var(--color-accent-700);
+  --brand-cinnamon: var(--color-cinnamon);
+  --brand-cinnamon-dark: var(--color-cinnamon-dark);
+  --brand-ivory: var(--color-ivory);
+  --brand-ivory-deep: var(--color-ivory-deep);
+  --brand-ocean: var(--color-ocean);
+  --header-h: 4.5rem;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 9rem;
+    scroll-padding-top: 6rem;
     -webkit-text-size-adjust: 100%;
   }
   body {
-    @apply bg-white font-sans text-ink antialiased;
-    font-size: 16px;
-    line-height: 1.6;
+    @apply bg-ivory font-sans text-ink antialiased;
+    font-size: 1rem;
+    line-height: 1.65;
   }
   h1, h2, h3, h4 {
-    @apply font-heading font-semibold tracking-tight text-ink;
+    @apply font-heading font-semibold text-primary;
     line-height: 1.15;
+    letter-spacing: -0.005em;
+    text-wrap: balance;
+    font-variant-numeric: lining-nums;
   }
+  [id] {
+    scroll-margin-top: 6rem;
+  }
+  /* Focus rings: green on light surfaces, gold on green surfaces */
   :focus-visible {
-    outline: 3px solid var(--color-primary);
+    outline: 2px solid var(--color-primary);
     outline-offset: 2px;
-    border-radius: 6px;
+    border-radius: 4px;
+  }
+  .on-green :focus-visible {
+    outline-color: var(--color-accent);
   }
   ::selection {
-    background: var(--color-sky-200);
+    background: var(--color-accent);
+    color: var(--color-primary-600);
   }
 }
 
 @layer components {
   .container-site {
-    @apply mx-auto w-full max-w-[1200px] px-4 sm:px-6;
+    @apply mx-auto w-full max-w-[1240px] px-5 sm:px-6;
   }
+  /* One vertical rhythm: ~52px mobile → 112px desktop */
   .section {
-    @apply py-16 md:py-24;
+    padding-block: clamp(3.25rem, 8vw, 7rem);
   }
-  .eyebrow {
-    @apply inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-accent-700 uppercase;
-  }
-  .h1 {
-    @apply text-4xl font-bold sm:text-5xl lg:text-[56px];
-  }
-  .h2 {
-    @apply text-3xl font-semibold sm:text-[40px];
+  .measure {
+    max-width: 70ch;
   }
 
-  /* Buttons — hover scale + shadow, ripple on press */
+  /* Section eyebrow: Montserrat, uppercase, letter-spaced, gold */
+  .eyebrow {
+    @apply inline-flex max-w-full flex-wrap items-center gap-2 text-xs font-semibold text-accent-700 uppercase;
+    letter-spacing: 0.2em;
+  }
+  .on-green .eyebrow {
+    @apply text-accent-300;
+  }
+  .h1 {
+    @apply font-semibold;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.08;
+  }
+  .h2 {
+    @apply font-semibold;
+    font-size: clamp(1.875rem, 4vw, 3rem);
+    line-height: 1.12;
+  }
+  .tagline {
+    @apply font-accent italic;
+  }
+  .font-heading {
+    font-variant-numeric: lining-nums;
+  }
+
+  /* The logo's signature divider: a short gold rule that tapers at both ends */
+  .rule-taper {
+    display: block;
+    width: 64px;
+    height: 2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, var(--color-accent) 22%, var(--color-accent) 78%, transparent);
+  }
+
+  /* Buttons: colour transition + slight press scale */
   .btn {
-    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full px-6 py-3 text-[15px] font-semibold whitespace-nowrap select-none;
+    @apply relative inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 py-2.5 text-center text-[15px] font-semibold select-none sm:whitespace-nowrap;
     transition:
-      transform var(--duration-fast) ease-out,
-      box-shadow var(--duration-fast) ease-out,
-      background-color var(--duration-fast) ease-out;
-  }
-  .btn::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background: radial-gradient(circle, rgb(255 255 255 / 0.5) 10%, transparent 10.01%) center / 10000% 10000% no-repeat;
-    opacity: 0;
-    transition: background-size 0.5s, opacity 0.8s;
-  }
-  .btn:active::after {
-    background-size: 0 0;
-    opacity: 0.45;
-    transition: 0s;
-  }
-  .btn:hover {
-    transform: scale(1.03);
+      background-color var(--duration-fast) ease-out,
+      border-color var(--duration-fast) ease-out,
+      color var(--duration-fast) ease-out,
+      transform var(--duration-fast) ease-out;
   }
   .btn:active {
     transform: scale(0.98);
@@ -116,58 +194,185 @@
     @apply cursor-not-allowed opacity-60;
     transform: none;
   }
+  .btn > .btn-arrow {
+    transition: transform var(--duration-fast) ease-out;
+  }
+  .btn:hover > .btn-arrow,
+  .btn:focus-visible > .btn-arrow {
+    transform: translateX(4px);
+  }
   .btn-primary {
-    @apply bg-primary text-white shadow-[0_8px_20px_-6px_rgb(10_110_255/0.55)] hover:bg-primary-600 hover:shadow-[0_14px_28px_-8px_rgb(10_110_255/0.6)];
+    @apply bg-primary text-ivory hover:bg-primary-600;
   }
-  .btn-accent {
-    @apply bg-accent text-ink shadow-[0_8px_20px_-6px_rgb(0_163_196/0.5)] hover:shadow-[0_14px_28px_-8px_rgb(0_163_196/0.55)];
-  }
+  /* Secondary */
   .btn-outline {
-    @apply border border-primary/30 bg-white text-primary hover:border-primary hover:shadow-card;
+    @apply border-[1.5px] border-primary bg-transparent text-primary hover:bg-primary-50;
+  }
+  /* Accent (cinnamon): use sparingly, one per viewport */
+  .btn-accent {
+    @apply bg-cinnamon text-base font-semibold text-white hover:bg-cinnamon-dark;
+  }
+  /* On green or photo backgrounds */
+  .btn-gold {
+    @apply bg-accent text-primary-600 hover:bg-accent-300;
   }
   .btn-ghost-light {
-    @apply border border-white/50 bg-white/10 text-white backdrop-blur-md hover:bg-white/20;
+    @apply border-[1.5px] border-ivory/70 bg-transparent text-ivory hover:bg-ivory/15;
   }
   .btn-sm {
-    @apply px-4 py-2 text-sm;
+    @apply min-h-10 px-4 py-2 text-sm;
   }
 
   .card {
-    @apply rounded-card bg-surface shadow-card ring-1 ring-line/70;
+    @apply rounded-card bg-surface shadow-card ring-1 ring-line/60;
+  }
+  /* Hover/focus lift shared by tour, destination and blog cards */
+  .card-lift {
+    transition:
+      transform var(--duration-base) var(--ease-brand),
+      box-shadow var(--duration-base) var(--ease-brand);
+  }
+  .card-lift:hover,
+  .card-lift:focus-within {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lift);
+  }
+  .card-lift .card-img {
+    transition: transform var(--duration-slow) var(--ease-brand);
+  }
+  .card-lift:hover .card-img,
+  .card-lift:focus-within .card-img {
+    transform: scale(1.05);
+  }
+  .card-lift .card-arrow {
+    transition: transform var(--duration-fast) ease-out;
+  }
+  .card-lift:hover .card-arrow,
+  .card-lift:focus-within .card-arrow {
+    transform: translateX(4px);
   }
 
+  /* Filters and toggles: selected = green fill + ivory text */
   .chip {
-    @apply inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-line bg-white px-3.5 py-1.5 text-sm font-medium text-ink transition-colors duration-150 hover:border-primary/50;
+    @apply inline-flex min-h-10 cursor-pointer items-center gap-1.5 rounded-full border border-line bg-white px-4 py-1.5 text-sm font-medium text-ink;
+    transition:
+      background-color var(--duration-fast) ease-out,
+      border-color var(--duration-fast) ease-out,
+      color var(--duration-fast) ease-out;
+  }
+  .chip:hover {
+    @apply border-primary/50;
   }
   .chip[aria-pressed="true"],
   .chip[aria-selected="true"],
   .chip[data-active="true"] {
-    @apply border-primary bg-primary text-white;
+    @apply border-primary bg-primary text-ivory;
+  }
+  /* Chips whose selected background is a sliding pill (motion layoutId) instead of a fill */
+  .chip-slide {
+    isolation: isolate;
+  }
+  .chip.chip-slide[aria-pressed="true"],
+  .chip.chip-slide[aria-selected="true"] {
+    @apply bg-transparent;
+  }
+  @media (pointer: coarse) {
+    .chip {
+      @apply min-h-11;
+    }
+  }
+  /* Horizontally scrolling chip rows fade at the edges on small screens */
+  .chip-row {
+    @apply flex gap-2 overflow-x-auto pb-1;
+    scrollbar-width: none;
+    mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 24px), transparent);
+    padding-inline: 16px;
+    margin-inline: -16px;
+  }
+  .chip-row::-webkit-scrollbar {
+    display: none;
+  }
+  .chip-row > * {
+    flex-shrink: 0;
   }
 
   .field-label {
     @apply mb-1.5 block text-sm font-medium text-ink;
   }
   .input {
-    @apply w-full rounded-xl border border-line bg-white px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted/70;
+    @apply min-h-11 w-full rounded-control border border-line bg-white px-3.5 py-2.5 text-[15px] text-ink placeholder:text-muted/80;
     transition:
       border-color var(--duration-fast) ease-out,
       box-shadow var(--duration-fast) ease-out;
   }
   .input:focus {
     @apply border-primary outline-none;
-    box-shadow: 0 0 0 4px rgb(10 110 255 / 0.15);
+    box-shadow: 0 0 0 3px rgb(15 74 60 / 0.18);
   }
   .input[aria-invalid="true"] {
-    @apply border-red-500;
+    border-color: var(--color-danger);
+    animation: shake 0.28s ease-in-out 1;
+  }
+  .field-error {
+    @apply mt-1 text-sm;
+    color: var(--color-danger);
+    animation: drop-in var(--duration-base) var(--ease-brand);
   }
 
   .tag {
-    @apply inline-flex items-center gap-1 rounded-full bg-sky px-2.5 py-1 text-xs font-medium text-primary-600;
+    @apply inline-flex items-center gap-1 rounded-full bg-primary-50 px-2.5 py-1 text-xs font-medium text-primary;
+  }
+
+  /* Nav link underline that draws in from the left in gold */
+  .nav-link {
+    position: relative;
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0.625rem;
+    right: 0.625rem;
+    bottom: 0.25rem;
+    height: 2px;
+    border-radius: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--duration-base) var(--ease-brand);
+  }
+  .nav-link:hover::after,
+  .nav-link:focus-visible::after,
+  .nav-link[aria-current="page"]::after {
+    transform: scaleX(1);
+  }
+
+  /* Text that fades up on hover/focus, always visible on touch screens */
+  .hover-reveal {
+    transition:
+      opacity var(--duration-base) var(--ease-brand),
+      transform var(--duration-base) var(--ease-brand);
+  }
+  @media (hover: hover) {
+    .hover-reveal {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    .group:hover .hover-reveal,
+    .group:focus-within .hover-reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .card-shade {
+    transition: opacity var(--duration-base) var(--ease-brand);
+  }
+  .group:hover .card-shade,
+  .group:focus-within .card-shade {
+    opacity: 1;
   }
 
   .shimmer {
-    background: linear-gradient(90deg, var(--color-sky) 25%, #f6fbff 50%, var(--color-sky) 75%);
+    background: linear-gradient(90deg, var(--color-ivory-deep) 25%, var(--color-ivory) 50%, var(--color-ivory-deep) 75%);
     background-size: 200% 100%;
     animation: var(--animate-shimmer);
   }
@@ -179,9 +384,10 @@
     display: none;
   }
 
-  /* Blog article typography */
+  /* Long-form typography (legal pages); blog articles add .prose-blog for Lora */
   .prose-article {
     @apply text-[17px] leading-8 text-ink/90;
+    max-width: 70ch;
   }
   .prose-article h2 {
     @apply mt-10 mb-3 text-2xl;
@@ -192,6 +398,63 @@
   .prose-article ul {
     @apply mb-6 list-disc space-y-2 pl-6 marker:text-accent;
   }
+  .prose-blog {
+    @apply font-accent text-[18px];
+  }
+  .prose-blog h2 {
+    @apply font-heading;
+  }
+
+  .draw-check {
+    stroke-dasharray: 40;
+    stroke-dashoffset: 40;
+    animation: draw-stroke 0.5s var(--ease-brand) 0.15s forwards;
+  }
+  .fade-in {
+    animation: fade-in var(--duration-base) ease-out;
+  }
+  .pulse-once {
+    animation: gentle-pulse 1.4s ease-out 4s 2;
+  }
+}
+
+/* ───────────────── Scroll reveals ─────────────────
+   Hidden states apply only when the inline script in the root layout has run
+   (html[data-js]), so content is fully visible without JavaScript. */
+html[data-js] [data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--duration-slow) var(--ease-brand),
+    transform var(--duration-slow) var(--ease-brand);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+html[data-js] [data-reveal="rise"] {
+  opacity: 1;
+}
+html[data-js] [data-reveal="fade"] {
+  transform: none;
+}
+html[data-js] [data-reveal="rule"] {
+  opacity: 1;
+  transform: scaleX(0);
+}
+html[data-js] [data-reveal="line"] {
+  opacity: 1;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition-duration: 1.1s;
+}
+html[data-js] [data-reveal][data-revealed] {
+  opacity: 1;
+  transform: none;
+}
+
+/* Hero photo: one very slow scale for depth (desktop only) */
+@media (min-width: 768px) {
+  .hero-zoom {
+    animation: hero-zoom 12s ease-out 1 both;
+  }
 }
 
 /* Leaflet: keep maps below sticky header/modals */
@@ -201,6 +464,7 @@
   border-radius: inherit;
 }
 
+/* Reduced motion: no slides, scales, staggers or parallax; short fades only */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -211,5 +475,18 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  html[data-js] [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+  .card-lift:hover,
+  .card-lift:focus-within,
+  .card-lift:hover .card-img,
+  .card-lift:focus-within .card-img,
+  .hero-zoom {
+    transform: none;
+    animation: none;
   }
 }

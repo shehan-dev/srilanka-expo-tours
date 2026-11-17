@@ -70,9 +70,9 @@ export default function LeafletMap({
             center={p.coords}
             radius={active ? 12 : 8}
             pathOptions={{
-              color: "#ffffff",
+              color: "#D4A24A",
               weight: 3,
-              fillColor: active ? "#00a3c4" : "#0a6eff",
+              fillColor: active ? "#D4A24A" : "#0F4A3C",
               fillOpacity: 1,
             }}
             eventHandlers={{ click: () => onSelect?.(p.id) }}

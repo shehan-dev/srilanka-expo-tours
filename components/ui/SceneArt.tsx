@@ -33,8 +33,8 @@ export function SceneArt({ scene, className }: { scene: Scene; className?: strin
           <stop offset="1" stopColor={bottom} />
         </linearGradient>
         <linearGradient id={`sea${id}`} x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#3aa0e6" />
-          <stop offset="1" stopColor="#0a6eff" />
+          <stop offset="0" stopColor="#5FA3A6" />
+          <stop offset="1" stopColor="#2F7E84" />
         </linearGradient>
       </defs>
       <rect width="400" height="300" fill={`url(#sky${id})`} />

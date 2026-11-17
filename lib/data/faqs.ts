@@ -26,8 +26,8 @@ export const faqs: Faq[] = [
     category: "booking",
     question: { en: "Are all tours private?", it: "Tutti i tour sono privati?" },
     answer: {
-      en: "Yes. Every tour is private — just you, your companions, your driver and (if chosen) your guide. You can change the pace and stops at any time.",
-      it: "Sì. Ogni tour è privato — solo tu, i tuoi compagni di viaggio, l'autista e (se scelta) la guida. Puoi cambiare ritmo e tappe in qualsiasi momento.",
+      en: "Yes. Every tour is private: just you, your companions, your driver and (if chosen) your guide. You can change the pace and stops at any time.",
+      it: "Sì. Ogni tour è privato: solo tu, i tuoi compagni di viaggio, l'autista e (se scelta) la guida. Puoi cambiare ritmo e tappe in qualsiasi momento.",
     },
   },
   {
@@ -35,8 +35,8 @@ export const faqs: Faq[] = [
     category: "visas",
     question: { en: "Do Italian citizens need a visa for Sri Lanka?", it: "I cittadini italiani hanno bisogno del visto per lo Sri Lanka?" },
     answer: {
-      en: "Most visitors need an Electronic Travel Authorisation (ETA) before arrival. Entry rules change from time to time, so always check the official site eta.gov.lk before you fly — we're happy to help with the application.",
-      it: "La maggior parte dei visitatori necessita di un'autorizzazione elettronica di viaggio (ETA) prima dell'arrivo. Le regole di ingresso cambiano periodicamente: verifica sempre sul sito ufficiale eta.gov.lk prima di partire — saremo felici di aiutarti con la richiesta.",
+      en: "Most visitors need an Electronic Travel Authorisation (ETA) before arrival. Entry rules change from time to time, so always check the official site eta.gov.lk before you fly. We're happy to help with the application.",
+      it: "La maggior parte dei visitatori necessita di un'autorizzazione elettronica di viaggio (ETA) prima dell'arrivo. Le regole di ingresso cambiano periodicamente: verifica sempre sul sito ufficiale eta.gov.lk prima di partire. Saremo felici di aiutarti con la richiesta.",
     },
   },
   {
@@ -89,8 +89,8 @@ export const faqs: Faq[] = [
     category: "cancellations",
     question: { en: "Can I change my dates after booking?", it: "Posso cambiare le date dopo la prenotazione?" },
     answer: {
-      en: "Yes — date changes are free up to 30 days before arrival, subject to hotel availability.",
-      it: "Sì — il cambio date è gratuito fino a 30 giorni prima dell'arrivo, in base alla disponibilità degli hotel.",
+      en: "Yes, date changes are free up to 30 days before arrival, subject to hotel availability.",
+      it: "Sì, il cambio date è gratuito fino a 30 giorni prima dell'arrivo, in base alla disponibilità degli hotel.",
     },
   },
   {
@@ -116,8 +116,8 @@ export const faqs: Faq[] = [
     category: "tips",
     question: { en: "Is the food very spicy?", it: "Il cibo è molto piccante?" },
     answer: {
-      en: "It can be! Just say 'no spicy' — our guides always let the kitchen know. Many hotels also serve pasta and European dishes if you need a break from curry.",
-      it: "Può esserlo! Basta dire 'no spicy' — le nostre guide avvisano sempre la cucina. Molti hotel servono anche pasta e piatti europei se vuoi una pausa dal curry.",
+      en: "It can be! Just say 'no spicy' and our guides always let the kitchen know. Many hotels also serve pasta and European dishes if you need a break from curry.",
+      it: "Può esserlo! Basta dire 'no spicy' e le nostre guide avvisano sempre la cucina. Molti hotel servono anche pasta e piatti europei se vuoi una pausa dal curry.",
     },
   },
   {

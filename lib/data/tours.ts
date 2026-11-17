@@ -16,14 +16,14 @@ const unsplash = (name: string, id: string) => ({ name, url: `https://unsplash.c
 const includes = (nights: number, extras: [string, string][]) => ({
   en: [
     "Private air-conditioned vehicle with English-speaking chauffeur-guide",
-    `${nights} nights' accommodation — 3★ hotels (Standard) or 4★ & 5★ hotels (Premium)`,
+    `${nights} nights' accommodation: 3★ hotels (Standard) or 4★ & 5★ hotels (Premium)`,
     "Daily breakfast and dinner",
     ...extras.map(([e]) => e),
     "Airport pick-up and drop-off, bottled water, all taxes",
   ],
   it: [
     "Veicolo privato climatizzato con autista-guida di lingua inglese",
-    `${nights} notti — hotel 3★ (Standard) o hotel 4★ e 5★ (Premium)`,
+    `${nights} notti: hotel 3★ (Standard) o hotel 4★ e 5★ (Premium)`,
     "Colazione e cena ogni giorno",
     ...extras.map(([, i]) => i),
     "Trasferimenti da/per l'aeroporto, acqua in bottiglia, tasse incluse",
@@ -34,7 +34,7 @@ export const tours: Tour[] = [
   {
     id: "tour-01",
     slug: "cultural-triangle-kandy-4-days",
-    title: { en: "Cultural Triangle & Kandy — 4 Days", it: "Triangolo Culturale e Kandy — 4 Giorni" },
+    title: { en: "Cultural Triangle & Kandy: 4 Days", it: "Triangolo Culturale e Kandy: 4 Giorni" },
     tagline: {
       en: "Lion Rock, cave temples, royal ruins and the sacred city of Kandy.",
       it: "La Rocca del Leone, templi nelle grotte, rovine reali e la città sacra di Kandy.",
@@ -68,7 +68,7 @@ export const tours: Tour[] = [
   {
     id: "tour-02",
     slug: "hill-country-train-4-days",
-    title: { en: "Hill Country by Train — 4 Days", it: "Altopiano in Treno — 4 Giorni" },
+    title: { en: "Hill Country by Train: 4 Days", it: "Altopiano in Treno: 4 Giorni" },
     tagline: {
       en: "Tea estates, waterfalls and the world's most scenic train ride.",
       it: "Piantagioni di tè, cascate e il viaggio in treno più bello del mondo.",
@@ -105,7 +105,7 @@ export const tours: Tour[] = [
   {
     id: "tour-03",
     slug: "ancient-kingdoms-4-days",
-    title: { en: "Ancient Kingdoms — 4 Days", it: "Antichi Regni — 4 Giorni" },
+    title: { en: "Ancient Kingdoms: 4 Days", it: "Antichi Regni: 4 Giorni" },
     tagline: {
       en: "2,500 years of history in Anuradhapura, Mihintale and Polonnaruwa.",
       it: "2.500 anni di storia ad Anuradhapura, Mihintale e Polonnaruwa.",
@@ -138,7 +138,7 @@ export const tours: Tour[] = [
   {
     id: "tour-04",
     slug: "south-coast-beaches-5-days",
-    title: { en: "South Coast Beaches — 5 Days", it: "Spiagge della Costa Sud — 5 Giorni" },
+    title: { en: "South Coast Beaches: 5 Days", it: "Spiagge della Costa Sud: 5 Giorni" },
     tagline: {
       en: "Whale watching, colonial Galle and golden beaches.",
       it: "Avvistamento balene, Galle coloniale e spiagge dorate.",
@@ -176,7 +176,7 @@ export const tours: Tour[] = [
   {
     id: "tour-05",
     slug: "ceylon-tea-food-5-days",
-    title: { en: "Ceylon Tea & Flavours — 5 Days", it: "Tè di Ceylon e Sapori — 5 Giorni" },
+    title: { en: "Ceylon Tea & Flavours: 5 Days", it: "Tè di Ceylon e Sapori: 5 Giorni" },
     tagline: {
       en: "Spice gardens, tea tastings and cooking with local families.",
       it: "Giardini delle spezie, degustazioni di tè e cucina con le famiglie locali.",
@@ -210,7 +210,7 @@ export const tours: Tour[] = [
   {
     id: "tour-06",
     slug: "east-coast-escape-5-days",
-    title: { en: "East Coast Escape — 5 Days", it: "Fuga sulla Costa Est — 5 Giorni" },
+    title: { en: "East Coast Escape: 5 Days", it: "Fuga sulla Costa Est: 5 Giorni" },
     tagline: {
       en: "Snorkelling with reef sharks and surfing at Arugam Bay.",
       it: "Snorkeling con gli squali di barriera e surf ad Arugam Bay.",
@@ -247,10 +247,10 @@ export const tours: Tour[] = [
   {
     id: "tour-07",
     slug: "family-wildlife-6-days",
-    title: { en: "Family Wildlife Adventure — 6 Days", it: "Avventura Natura per Famiglie — 6 Giorni" },
+    title: { en: "Family Wildlife Adventure: 6 Days", it: "Avventura Natura per Famiglie: 6 Giorni" },
     tagline: {
-      en: "Elephants, leopards and turtles — kid-friendly pace and hotels with pools.",
-      it: "Elefanti, leopardi e tartarughe — ritmo adatto ai bambini e hotel con piscina.",
+      en: "Elephants, leopards and turtles, with a kid-friendly pace and hotels with pools.",
+      it: "Elefanti, leopardi e tartarughe, con ritmo adatto ai bambini e hotel con piscina.",
     },
     description: {
       en: "Designed for families with children: ethical wildlife encounters at Minneriya and Udawalawe, the Elephant Transit Home, a Yala safari and a turtle conservation project.",
@@ -285,14 +285,14 @@ export const tours: Tour[] = [
   {
     id: "tour-08",
     slug: "classic-sri-lanka-7-days",
-    title: { en: "Classic Sri Lanka — 7 Days", it: "Sri Lanka Classico — 7 Giorni" },
+    title: { en: "Classic Sri Lanka: 7 Days", it: "Sri Lanka Classico: 7 Giorni" },
     tagline: {
       en: "The perfect first trip: rocks, tea hills, safari and the sea.",
       it: "Il primo viaggio perfetto: rocche, colline del tè, safari e mare.",
     },
     description: {
-      en: "Our best-selling loop around the island — from Sigiriya and Kandy through the tea country by train, to a jeep safari in Yala and the Dutch fort of Galle.",
-      it: "Il nostro giro dell'isola più venduto — da Sigiriya e Kandy attraverso le terre del tè in treno, fino al safari in jeep a Yala e al forte olandese di Galle.",
+      en: "Our best-selling loop around the island, from Sigiriya and Kandy through the tea country by train, to a jeep safari in Yala and the Dutch fort of Galle.",
+      it: "Il nostro giro dell'isola più venduto, da Sigiriya e Kandy attraverso le terre del tè in treno, fino al safari in jeep a Yala e al forte olandese di Galle.",
     },
     durationDays: 7,
     prices: { standard: 980, premium: 1260 },
@@ -322,7 +322,7 @@ export const tours: Tour[] = [
   {
     id: "tour-09",
     slug: "wild-sri-lanka-safari-8-days",
-    title: { en: "Wild Sri Lanka Safari — 8 Days", it: "Safari nello Sri Lanka Selvaggio — 8 Giorni" },
+    title: { en: "Wild Sri Lanka Safari: 8 Days", it: "Safari nello Sri Lanka Selvaggio: 8 Giorni" },
     tagline: {
       en: "Leopards, elephants, sloth bears and rainforest birds in five national parks.",
       it: "Leopardi, elefanti, orsi labiati e uccelli della foresta pluviale in cinque parchi nazionali.",
@@ -362,7 +362,7 @@ export const tours: Tour[] = [
   {
     id: "tour-10",
     slug: "romantic-sri-lanka-10-days",
-    title: { en: "Romantic Sri Lanka — 10 Days", it: "Sri Lanka Romantico — 10 Giorni" },
+    title: { en: "Romantic Sri Lanka: 10 Days", it: "Sri Lanka Romantico: 10 Giorni" },
     tagline: {
       en: "A honeymoon of tea-country bungalows, a slow train and a beach villa.",
       it: "Una luna di miele tra bungalow nelle terre del tè, un treno lento e una villa sul mare.",
@@ -402,7 +402,7 @@ export const tours: Tour[] = [
   {
     id: "tour-11",
     slug: "highlights-and-beaches-12-days",
-    title: { en: "Sri Lanka Highlights & Beaches — 12 Days", it: "Il Meglio dello Sri Lanka e Mare — 12 Giorni" },
+    title: { en: "Sri Lanka Highlights & Beaches: 12 Days", it: "Il Meglio dello Sri Lanka e Mare: 12 Giorni" },
     tagline: {
       en: "All the classics at a relaxed pace, finished with three days on the beach.",
       it: "Tutti i classici con calma, per finire con tre giorni di mare.",
@@ -441,14 +441,14 @@ export const tours: Tour[] = [
   {
     id: "tour-12",
     slug: "grand-tour-14-days",
-    title: { en: "Grand Tour of Sri Lanka — 14 Days", it: "Gran Tour dello Sri Lanka — 14 Giorni" },
+    title: { en: "Grand Tour of Sri Lanka: 14 Days", it: "Gran Tour dello Sri Lanka: 14 Giorni" },
     tagline: {
       en: "The whole island in two unhurried weeks.",
       it: "Tutta l'isola in due settimane senza fretta.",
     },
     description: {
-      en: "Ancient capitals, the hill country, two national parks and plenty of beach time — the complete Sri Lanka experience at a relaxed pace.",
-      it: "Antiche capitali, l'altopiano, due parchi nazionali e tanto mare — l'esperienza completa dello Sri Lanka con un ritmo rilassato.",
+      en: "Ancient capitals, the hill country, two national parks and plenty of beach time: the complete Sri Lanka experience at a relaxed pace.",
+      it: "Antiche capitali, l'altopiano, due parchi nazionali e tanto mare: l'esperienza completa dello Sri Lanka con un ritmo rilassato.",
     },
     durationDays: 14,
     prices: { standard: 1960, premium: 2520 },
@@ -485,7 +485,7 @@ export const tours: Tour[] = [
   {
     id: "tour-13",
     slug: "north-to-south-16-days",
-    title: { en: "North to South: Jaffna to Galle — 16 Days", it: "Da Nord a Sud: da Jaffna a Galle — 16 Giorni" },
+    title: { en: "North to South (Jaffna to Galle): 16 Days", it: "Da Nord a Sud (da Jaffna a Galle): 16 Giorni" },
     tagline: {
       en: "Tamil temples, island ferries and east-coast reefs before the classic south.",
       it: "Templi tamil, traghetti tra le isole e barriere coralline della costa est prima del classico sud.",
@@ -525,7 +525,7 @@ export const tours: Tour[] = [
   {
     id: "tour-14",
     slug: "ultimate-sri-lanka-20-days",
-    title: { en: "Ultimate Sri Lanka — 20 Days", it: "Sri Lanka Completo — 20 Giorni" },
+    title: { en: "Ultimate Sri Lanka: 20 Days", it: "Sri Lanka Completo: 20 Giorni" },
     tagline: {
       en: "Every corner of the island, from sacred summits to both coasts.",
       it: "Ogni angolo dell'isola, dalle vette sacre a entrambe le coste.",

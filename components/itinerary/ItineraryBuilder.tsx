@@ -66,7 +66,7 @@ function distribute(selected: string[], days: number): DayPlan[] {
 
 function Stepper({ label, value, min, max, onChange }: { label: string; value: number; min: number; max: number; onChange: (n: number) => void }) {
   return (
-    <div className="flex items-center justify-between gap-4 rounded-2xl bg-sky px-4 py-3">
+    <div className="flex items-center justify-between gap-4 rounded-card bg-ivory px-4 py-3">
       <span className="font-medium" id={`stepper-${label}`}>
         {label}
       </span>
@@ -116,7 +116,7 @@ function RadioCard({
   return (
     <label
       className={cn(
-        "relative flex cursor-pointer gap-3 rounded-2xl border-2 bg-white p-4 transition-all",
+        "relative flex cursor-pointer gap-3 rounded-card border-2 bg-white p-4 transition-all",
         checked ? "border-primary shadow-card" : "border-line hover:border-primary/40",
         disabled && "cursor-not-allowed opacity-50"
       )}
@@ -126,7 +126,7 @@ function RadioCard({
         aria-hidden
         className={cn(
           "mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full border-2 transition peer-focus-visible:ring-4 peer-focus-visible:ring-primary/30",
-          checked ? "border-primary bg-primary text-white" : "border-line"
+          checked ? "border-primary bg-primary text-ivory" : "border-line"
         )}
       >
         {checked && <Check className="h-3 w-3" />}
@@ -161,13 +161,13 @@ function DayRow({
       layout="position"
       whileDrag={{ scale: 1.02, boxShadow: "0 22px 44px -12px rgb(10 110 255 / 0.35)", zIndex: 10 }}
       transition={{ duration: 0.35, ease: easeOutExpo }}
-      className="relative flex gap-3 rounded-2xl bg-white p-3 ring-1 ring-line"
+      className="relative flex gap-3 rounded-card bg-white p-3 ring-1 ring-line"
     >
       <button
         type="button"
         onPointerDown={(e) => controls.start(e)}
         aria-label={`${t.dragHandle} ${index + 1}`}
-        className="grid w-8 shrink-0 cursor-grab touch-none place-items-center rounded-xl text-muted hover:bg-sky active:cursor-grabbing"
+        className="grid w-8 shrink-0 cursor-grab touch-none place-items-center rounded-control text-muted hover:bg-ivory active:cursor-grabbing"
       >
         <GripVertical className="h-5 w-5" aria-hidden />
       </button>
@@ -187,7 +187,7 @@ function DayRow({
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
-                  className="inline-flex items-center gap-1 rounded-full bg-sky py-1 pr-1 pl-3 text-sm"
+                  className="inline-flex items-center gap-1 rounded-full bg-ivory py-1 pr-1 pl-3 text-sm"
                 >
                   {attractionName(id)}
                   <button
@@ -220,7 +220,7 @@ function DayRow({
           disabled={index === 0}
           onClick={() => onMove(index, index - 1)}
           aria-label={`${t.moveUp} ${index + 1}`}
-          className="grid h-7 w-7 place-items-center rounded-full hover:bg-sky disabled:opacity-30"
+          className="grid h-7 w-7 place-items-center rounded-full hover:bg-ivory disabled:opacity-30"
         >
           <ArrowUp className="h-4 w-4" aria-hidden />
         </button>
@@ -229,7 +229,7 @@ function DayRow({
           disabled={index === total - 1}
           onClick={() => onMove(index, index + 1)}
           aria-label={`${t.moveDown} ${index + 1}`}
-          className="grid h-7 w-7 place-items-center rounded-full hover:bg-sky disabled:opacity-30"
+          className="grid h-7 w-7 place-items-center rounded-full hover:bg-ivory disabled:opacity-30"
         >
           <ArrowDown className="h-4 w-4" aria-hidden />
         </button>
@@ -340,7 +340,7 @@ export function ItineraryBuilder({ initial }: { initial: BuilderInitial }) {
         <CheckCircle2 className="h-16 w-16 text-accent" aria-hidden />
         <h2 className="text-2xl font-semibold">{t.successTitle}</h2>
         <p className="text-ink/85">{t.successText}</p>
-        <p className="rounded-xl bg-sky px-5 py-3 font-mono text-xl font-bold tracking-wider text-primary-600">{reference}</p>
+        <p className="rounded-control bg-ivory px-5 py-3 font-mono text-xl font-bold tracking-wider text-primary-600">{reference}</p>
         <button
           type="button"
           className="btn btn-outline"
@@ -380,7 +380,7 @@ export function ItineraryBuilder({ initial }: { initial: BuilderInitial }) {
                 >
                   <span className="h-1.5 overflow-hidden rounded-full bg-line">
                     <motion.span
-                      className="block h-full rounded-full bg-linear-to-r from-primary to-accent"
+                      className="block h-full rounded-full bg-primary"
                       initial={false}
                       animate={{ width: i <= step ? "100%" : "0%" }}
                       transition={{ duration: 0.35, ease: easeOutExpo }}
@@ -587,7 +587,7 @@ export function ItineraryBuilder({ initial }: { initial: BuilderInitial }) {
                 <dl className="card grid gap-4 p-6 sm:grid-cols-2">
                   {[
                     [t.steps[0], `${days} ${t.days} · ${adults} ${dict.booking.adults.toLowerCase()}${kids ? `, ${kids} ${dict.booking.kids.toLowerCase()}` : ""}`],
-                    [t.startDate, start || "—"],
+                    [t.startDate, start || "–"],
                     [t.vehicle, `${l(vehicle.name, lang)} (${vehicle.model})`],
                     [t.guide, t.guideOptions[guide]],
                     [t.accommodation, t.accommodationOptions[accommodation]],
@@ -601,7 +601,7 @@ export function ItineraryBuilder({ initial }: { initial: BuilderInitial }) {
                 </dl>
                 <ol className="flex flex-col gap-2">
                   {plan.map((d, i) => (
-                    <li key={d.id} className="flex gap-4 rounded-2xl bg-sky/70 px-4 py-3">
+                    <li key={d.id} className="flex gap-4 rounded-card bg-ivory/70 px-4 py-3">
                       <span className="w-14 shrink-0 text-sm font-bold text-primary-600">
                         {dict.tour.day} {i + 1}
                       </span>
@@ -646,7 +646,7 @@ export function ItineraryBuilder({ initial }: { initial: BuilderInitial }) {
                     <textarea id="ib-message" name="message" rows={4} className="input" placeholder={dict.contact.messagePlaceholder} />
                   </div>
                   {status === "error" && (
-                    <p role="alert" className="rounded-xl bg-red-50 px-4 py-3 text-sm text-red-700 sm:col-span-2">
+                    <p role="alert" className="rounded-control bg-red-50 px-4 py-3 text-sm text-red-700 sm:col-span-2">
                       {dict.contact.error}
                     </p>
                   )}
@@ -675,22 +675,22 @@ export function ItineraryBuilder({ initial }: { initial: BuilderInitial }) {
 
       {/* Live estimate panel */}
       <aside aria-label={t.estimate} className="lg:sticky lg:top-24 lg:self-start">
-        <div className="overflow-hidden rounded-3xl bg-ink text-white shadow-lift">
-          <div className="bg-linear-to-br from-primary to-accent p-6">
-            <p className="text-sm font-semibold tracking-wide text-white/85 uppercase">{t.estimate}</p>
+        <div className="on-green overflow-hidden rounded-panel bg-primary-600 text-ivory shadow-lift">
+          <div className="bg-primary p-6">
+            <p className="text-sm font-semibold tracking-wide text-ivory/85 uppercase">{t.estimate}</p>
             <p className="mt-2" aria-live="polite">
               <motion.span key={estimate.total} initial={{ opacity: 0.4, y: 6 }} animate={{ opacity: 1, y: 0 }} className="inline-block">
                 <Price usd={estimate.total} className="font-heading text-4xl font-bold" />
               </motion.span>
             </p>
-            <p className="mt-1 text-sm text-white/90">
+            <p className="mt-1 text-sm text-ivory/90">
               {t.perPerson}: <Price usd={estimate.perPerson} className="font-semibold" />
             </p>
           </div>
           <dl className="flex flex-col gap-2.5 p-6 text-sm">
             {breakdown.map((b) => (
               <div key={b.label} className="flex justify-between gap-3">
-                <dt className="text-white/70">{b.label}</dt>
+                <dt className="text-ivory/70">{b.label}</dt>
                 <dd className="font-medium">
                   <Price usd={b.value} />
                 </dd>
@@ -703,7 +703,7 @@ export function ItineraryBuilder({ initial }: { initial: BuilderInitial }) {
               </dd>
             </div>
           </dl>
-          <div className="border-t border-white/10 px-6 py-4 text-xs text-white/60">
+          <div className="border-t border-ivory/15 px-6 py-4 text-xs text-ivory/60">
             <p>
               {days} {t.days} · {pax} {t.travellers.toLowerCase()} · {selected.length || t.noAttractions} {selected.length ? t.selected : ""}
             </p>

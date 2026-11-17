@@ -2,8 +2,11 @@
 // TODO: replace every placeholder below with the agency's real details before launch.
 
 export const site = {
-  name: "SriLanka Expo Tours",
-  shortName: "SriLanka Expo",
+  name: "Lankavé Tours",
+  shortName: "Lankavé",
+  tagline: "Feel Sri Lanka. Live the Journey.",
+  /** Logo files in /public/brand. Reversed logo and monogram are not supplied yet (text fallbacks are used). */
+  logo: { src: "/brand/logo-primary-notagline.png", width: 1209, height: 709 },
   url: (process.env.NEXT_PUBLIC_SITE_URL || "https://www.srilankaexpotours.com").replace(/\/$/, ""),
   phone: "+94 77 706 6217",
   phoneHref: "tel:+94777066217",
@@ -18,7 +21,7 @@ export const site = {
   },
   /** Office / meeting point shown on the contact map (Madiwela Road, Thalawatugoda). */
   meetingPoint: [6.8775, 79.9285] as [number, number],
-  licenseNumber: "SLTDA Reg. No. — TBC", // TODO: Sri Lanka Tourism Development Authority licence
+  licenseNumber: "SLTDA Reg. No. TBC", // TODO: Sri Lanka Tourism Development Authority licence
   founder: "Nishan Silva",
   founderPhoto: "/media/pages/nishan-silva.jpg",
   rating: { value: 4.9, count: 2300 },

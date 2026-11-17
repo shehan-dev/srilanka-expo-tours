@@ -162,7 +162,7 @@ export function ToursCatalog({ initial }: { initial: CatalogFilters }) {
           className="btn btn-outline btn-sm lg:hidden"
         >
           <SlidersHorizontal className="h-4 w-4" aria-hidden /> {dict.catalog.filters}
-          {activeCount > 0 && <span className="rounded-full bg-primary px-2 text-xs text-white">{activeCount}</span>}
+          {activeCount > 0 && <span className="rounded-full bg-primary px-2 text-xs text-ivory">{activeCount}</span>}
         </button>
         <p className="text-sm text-muted" aria-live="polite">
           <strong className="text-ink">{results.length}</strong> {dict.catalog.results}
@@ -181,7 +181,7 @@ export function ToursCatalog({ initial }: { initial: CatalogFilters }) {
               <option value="duration">{dict.catalog.sortDuration}</option>
             </select>
           </label>
-          <div className="flex rounded-full bg-sky p-1">
+          <div className="flex rounded-full bg-ivory p-1">
             {(["grid", "list"] as const).map((v) => (
               <button
                 key={v}
@@ -189,7 +189,7 @@ export function ToursCatalog({ initial }: { initial: CatalogFilters }) {
                 aria-pressed={view === v}
                 aria-label={v === "grid" ? dict.catalog.grid : dict.catalog.list}
                 onClick={() => setView(v)}
-                className={cn("grid h-8 w-8 place-items-center rounded-full transition", view === v && "bg-white text-primary-600 shadow-sm")}
+                className={cn("grid h-8 w-8 place-items-center rounded-full transition", view === v && "bg-primary text-ivory")}
               >
                 {v === "grid" ? <LayoutGrid className="h-4 w-4" aria-hidden /> : <List className="h-4 w-4" aria-hidden />}
               </button>
@@ -201,7 +201,7 @@ export function ToursCatalog({ initial }: { initial: CatalogFilters }) {
         </div>
       </div>
 
-      <p className="mb-6 flex items-start gap-2 rounded-2xl bg-sky px-4 py-3 text-sm text-ink/80">
+      <p className="mb-6 flex items-start gap-2 rounded-card bg-ivory px-4 py-3 text-sm text-ink/80">
         <Info className="mt-0.5 h-4 w-4 shrink-0 text-accent-700" aria-hidden />
         <span>
           {dict.tour.standard} = {dict.tour.standardHotels} · {dict.tour.premium} = {dict.tour.premiumHotels}. {dict.tour.priceDisclaimer}{" "}

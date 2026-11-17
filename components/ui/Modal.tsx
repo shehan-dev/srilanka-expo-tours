@@ -78,7 +78,7 @@ export function Modal({
       {open && (
         <div className="fixed inset-0 z-[100] flex items-end justify-center sm:items-center sm:p-6">
           <motion.div
-            className="absolute inset-0 bg-ink/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-primary-600/60 backdrop-blur-sm"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -91,7 +91,7 @@ export function Modal({
             aria-modal="true"
             aria-labelledby={titleId}
             className={cn(
-              "relative z-10 max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-t-3xl bg-white shadow-2xl sm:rounded-3xl",
+              "relative z-10 max-h-[92vh] w-full max-w-2xl overflow-y-auto rounded-t-panel bg-ivory shadow-lift sm:rounded-panel",
               className
             )}
             initial={{ opacity: 0, y: 40, scale: 0.98 }}
@@ -106,7 +106,7 @@ export function Modal({
               type="button"
               onClick={onClose}
               aria-label={closeLabel}
-              className="absolute top-4 right-4 z-10 grid h-10 w-10 place-items-center rounded-full bg-white/90 text-ink shadow-md transition hover:bg-sky"
+              className="absolute top-4 right-4 z-10 grid h-11 w-11 place-items-center rounded-full bg-ivory text-primary shadow-card transition hover:bg-ivory-deep"
             >
               <X className="h-5 w-5" aria-hidden />
             </button>

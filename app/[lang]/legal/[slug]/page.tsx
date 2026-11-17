@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
   if (!hasLocale(lang) || !isLegalSlug(slug)) return {};
   const dict = await getDictionary(lang);
-  return pageMetadata({ lang, path: `/legal/${slug}`, title: dict.legal[slug], description: `${site.name} — ${dict.legal[slug]}` });
+  return pageMetadata({ lang, path: `/legal/${slug}`, title: dict.legal[slug], description: `${dict.legal[slug]} · ${site.name}` });
 }
 
 export default async function LegalPage({ params }: Props) {
@@ -49,7 +49,7 @@ export default async function LegalPage({ params }: Props) {
                   <Link
                     href={href(lang, `/legal/${s}`)}
                     aria-current={s === slug ? "page" : undefined}
-                    className={`block rounded-xl px-3 py-2 hover:bg-sky ${s === slug ? "bg-sky font-semibold text-primary-600" : ""}`}
+                    className={`block rounded-control px-3 py-2 hover:bg-ivory ${s === slug ? "bg-ivory font-semibold text-primary-600" : ""}`}
                   >
                     {dict.legal[s]}
                   </Link>
@@ -69,7 +69,7 @@ export default async function LegalPage({ params }: Props) {
             ))}
 
             {(slug === "insurance" || slug === "terms") && (
-              <section className="mt-10 rounded-card bg-sky p-6">
+              <section className="mt-10 rounded-card bg-ivory p-6">
                 <h2 className="mt-0! flex items-center gap-2">
                   <FileText className="h-5 w-5 text-accent-700" aria-hidden /> {dict.legal.documents}
                 </h2>

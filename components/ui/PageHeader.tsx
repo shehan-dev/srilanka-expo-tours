@@ -32,13 +32,13 @@ export function PageHeader({
     <header
       className={cn(
         "relative isolate overflow-hidden pt-32 pb-14 md:pt-44 md:pb-20",
-        photo ? "flex min-h-[420px] items-end bg-ink md:min-h-[520px]" : "bg-sky"
+        photo ? "on-green flex min-h-[420px] items-end bg-primary-600 md:min-h-[520px]" : "bg-ivory-deep"
       )}
     >
       {photo ? (
         <>
           <Image src={image} alt="" fill priority sizes="100vw" className="-z-20 object-cover" />
-          <div aria-hidden className="absolute inset-0 -z-10 bg-linear-to-t from-ink/80 via-ink/40 to-ink/55" />
+          <div aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(to_top,rgb(15_74_60/0.9),rgb(15_74_60/0.45)_50%,rgb(15_74_60/0.25))]" />
         </>
       ) : (
         <div aria-hidden className="absolute inset-y-0 right-0 -z-10 hidden w-1/2 opacity-60 [mask-image:linear-gradient(to_left,black,transparent)] md:block">
@@ -47,16 +47,16 @@ export function PageHeader({
       )}
       <div className="container-site">
         <nav aria-label="Breadcrumb" className="mb-6">
-          <ol className={cn("flex flex-wrap items-center gap-1 text-sm", photo ? "text-white/80" : "text-muted")}>
+          <ol className={cn("flex flex-wrap items-center gap-1 text-sm", photo ? "text-ivory/80" : "text-muted")}>
             {crumbs.map((c, i) => (
               <li key={c.path} className="flex items-center gap-1">
                 {i > 0 && <ChevronRight className="h-3.5 w-3.5" aria-hidden />}
                 {i < crumbs.length - 1 ? (
-                  <Link href={c.path} className={cn("hover:underline", photo ? "hover:text-white" : "hover:text-primary")}>
+                  <Link href={c.path} className={cn("hover:underline", photo ? "hover:text-ivory" : "hover:text-primary")}>
                     {c.name}
                   </Link>
                 ) : (
-                  <span aria-current="page" className={cn("font-medium", photo ? "text-white" : "text-ink")}>
+                  <span aria-current="page" className={cn("font-medium", photo ? "text-ivory" : "text-ink")}>
                     {c.name}
                   </span>
                 )}
@@ -66,13 +66,12 @@ export function PageHeader({
         </nav>
         <Reveal className="max-w-3xl">
           {eyebrow && (
-            <p className={cn("eyebrow mb-3", photo && "text-white/90")}>
-              <span aria-hidden className={cn("h-px w-6", photo ? "bg-white/70" : "bg-accent")} />
-              {eyebrow}
+            <p className="eyebrow mb-3">
+                            {eyebrow}
             </p>
           )}
-          <h1 className={cn("h1", photo && "text-white drop-shadow-[0_2px_16px_rgb(15_23_36/0.4)]")}>{title}</h1>
-          {subtitle && <p className={cn("mt-4 text-lg md:text-xl", photo ? "text-white/90" : "text-muted")}>{subtitle}</p>}
+          <h1 className={cn("h1", photo && "text-ivory")}>{title}</h1>
+          {subtitle && <p className={cn("mt-4 text-lg md:text-xl", photo ? "text-ivory/90" : "text-muted")}>{subtitle}</p>}
         </Reveal>
       </div>
       <JsonLd data={breadcrumbLd(crumbs)} />

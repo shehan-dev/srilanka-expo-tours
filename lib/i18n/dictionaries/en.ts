@@ -1,8 +1,8 @@
 const en = {
   meta: {
-    title: "SriLanka Expo Tours — Private tours of Sri Lanka with Italian-speaking guides",
+    title: "Lankavé Tours: Private tours of Sri Lanka with Italian-speaking guides",
     description:
-      "Tailor-made private tours of Sri Lanka with licensed Italian-speaking guides, comfortable private vehicles and custom itineraries. Book online or ask us to plan a custom trip.",
+      "Tailor-made private tours of Sri Lanka with licensed Italian-speaking guides, comfortable private vehicles and custom itineraries. Feel Sri Lanka. Live the Journey.",
   },
   nav: {
     home: "Home",
@@ -28,8 +28,8 @@ const en = {
     callUs: "Call us",
   },
   hero: {
-    title: "Discover Sri Lanka — Tailor-made tours for Italian travellers",
-    subtitle: "Licensed guides, private vehicles and Italian-speaking tours — every journey planned around you.",
+    title: "Discover Sri Lanka: tailor-made tours for Italian travellers",
+    subtitle: "Licensed guides, private vehicles and Italian-speaking tours, with every journey planned around you.",
     ctaPrimary: "Book a Tour",
     ctaSecondary: "Plan a Custom Trip",
     badge: "Italian guided tours available",
@@ -41,13 +41,15 @@ const en = {
     title: "Plan your trip",
     destination: "Destination",
     destinationPlaceholder: "Region or city",
-    noResults: "No matches — try another place",
+    noResults: "No matches. Try another place",
     start: "Start date",
     end: "End date",
     adults: "Adults",
     kids: "Children",
     language: "Guide language",
     estimate: "Estimate Price",
+    increase: "Increase",
+    decrease: "Decrease",
     search: "Search Tours",
     expand: "Plan your trip",
     collapse: "Hide search",
@@ -73,7 +75,7 @@ const en = {
   popular: {
     eyebrow: "Curated highlights",
     title: "Popular tour packages",
-    subtitle: "Our most-loved routes — every one can be adapted to your dates and pace.",
+    subtitle: "Our most-loved routes, and every one can be adapted to your dates and pace.",
     prev: "Previous tours",
     next: "Next tours",
     preview: "Quick view",
@@ -97,7 +99,7 @@ const en = {
     close: "Close",
     priceNote: "Price per person, based on 2 travellers sharing. Your quote is confirmed within 24 hours.",
     priceDisclaimer:
-      "Prices are indicative, not fixed — slight variations may occur depending on vehicle type, hotel rate updates, season and group size.",
+      "Prices are indicative, not fixed. Slight variations may occur depending on vehicle type, hotel rate updates, season and group size.",
     options: "Package options",
     standard: "Standard",
     premium: "Premium",
@@ -124,7 +126,7 @@ const en = {
     price: "Max price",
     reset: "Reset filters",
     results: "tours",
-    noResults: "No tours match these filters. Try widening your search — or ask us for a custom trip.",
+    noResults: "No tours match these filters. Try widening your search, or ask us for a custom trip.",
     grid: "Grid view",
     list: "Compact list",
     map: "Map",
@@ -142,7 +144,7 @@ const en = {
   itinerary: {
     eyebrow: "Itinerary builder",
     title: "Build your own Sri Lanka itinerary",
-    subtitle: "Choose your days, pick the places you love, and see a live price estimate — then request your free quote.",
+    subtitle: "Choose your days, pick the places you love, and see a live price estimate, then request your free quote.",
     steps: ["Duration", "Attractions", "Options", "Summary", "Request quote"],
     step: "Step",
     of: "of",
@@ -157,7 +159,7 @@ const en = {
     attractionsHint: "Selected places are spread across your days. Drag days to reorder them, or move places between days.",
     selected: "selected",
     dayPlan: "Your day plan",
-    freeDay: "Free day — relax, beach or optional excursion",
+    freeDay: "Free day: relax, beach or optional excursion",
     moveUp: "Move day up",
     moveDown: "Move day down",
     moveToPrev: "Move to previous day",
@@ -193,19 +195,19 @@ const en = {
     send: "Send request",
     sending: "Sending…",
     successTitle: "Request received!",
-    successText: "Thank you — we'll send your personalised quote within 24 hours. Your reference is",
+    successText: "Thank you! We'll send your personalised quote within 24 hours. Your reference is",
     startOver: "Plan another trip",
     noAttractions: "No places selected yet",
     comingSoon: "Coming soon",
     comingSoonTitle: "Our online itinerary builder is coming soon",
     comingSoonText:
-      "Soon you'll be able to pick your days, choose the places you love and see a live price estimate. Until then, tell us what you'd like to see and we'll design a custom itinerary for you — free, within 24 hours.",
+      "Soon you'll be able to pick your days, choose the places you love and see a live price estimate. Until then, tell us what you'd like to see and we'll design a custom itinerary for you, free, within 24 hours.",
     comingSoonCta: "Plan a custom trip with us",
   },
   discover: {
     eyebrow: "Discover Sri Lanka",
     title: "Regions & destinations",
-    subtitle: "From misty tea hills to wild east-coast beaches — find the right places for your season.",
+    subtitle: "From misty tea hills to wild east-coast beaches, find the right places for your season.",
     bestMonths: "Best months",
     topThings: "Top things to do",
     seeTours: "See tours from",
@@ -234,7 +236,7 @@ const en = {
   services: {
     eyebrow: "Our services",
     title: "Everything you need, handled locally",
-    subtitle: "Private guides, a modern fleet and door-to-door transfers — one team, one point of contact.",
+    subtitle: "Private guides, a modern fleet and door-to-door transfers: one team, one point of contact.",
     items: [
       { title: "Licensed multilingual guides", text: "National guides licensed by SLTDA, with certified Italian proficiency, who bring history and daily life to life." },
       { title: "Chauffeur-guide packages", text: "Owner-led routes with a dedicated driver-guide who stays with you for the whole trip." },
@@ -260,7 +262,7 @@ const en = {
     eyebrow: "About us",
     title: "Authentic, sustainable, Italian-friendly",
     story:
-      "SriLanka Expo Tours was founded by a Sri Lankan chauffeur tourist guide who spent more than twenty years living in Italy. We design private journeys that support family-run guesthouses, local cooks and community projects — and we speak your language, literally.",
+      "Lankavé Tours was founded by a Sri Lankan chauffeur tourist guide who spent more than twenty years living in Italy. We design private journeys that support family-run guesthouses, local cooks and community projects, and we speak your language, literally.",
     mission: [
       { title: "Authentic experiences", text: "Village lunches, temple ceremonies and tea-estate walks with the people who live there." },
       { title: "Sustainable travel", text: "Small groups, local suppliers and plastic-free water refills in every vehicle." },
@@ -268,9 +270,9 @@ const en = {
     ],
     founderTitle: "Founder & chauffeur tourist guide",
     founderBio:
-      "Born in the deep south of Sri Lanka, Nishan lived in Italy for more than two decades before coming home to share his island with travellers. As a chauffeur tourist guide with over 5 years in the tourism industry, he has welcomed international guests from all over the world — and with fluent Italian and a real feel for Italian tastes, Italian travellers are always right at home with him.",
+      "Born in the deep south of Sri Lanka, Nishan lived in Italy for more than two decades before coming home to share his island with travellers. As a chauffeur tourist guide with over 5 years in the tourism industry, he has welcomed international guests from all over the world, and with fluent Italian and a real feel for Italian tastes, Italian travellers are always right at home with him.",
     favouriteRoute: "Favourite route",
-    favouriteRouteText: "“Sunrise at Sigiriya, then the slow train from Kandy to Ella — I never get tired of watching guests see the tea hills for the first time.”",
+    favouriteRouteText: "“Sunrise at Sigiriya, then the slow train from Kandy to Ella. I never get tired of watching guests see the tea hills for the first time.”",
     yearsGuiding: "Years in tourism",
     languagesSpoken: "Languages",
     credentials: "Role",
@@ -316,7 +318,7 @@ const en = {
   faq: {
     eyebrow: "FAQ",
     title: "Frequently asked questions",
-    subtitle: "Can't find your answer? Message us on WhatsApp — we reply in Italian or English.",
+    subtitle: "Can't find your answer? Message us on WhatsApp. We reply in Italian or English.",
     categories: {
       booking: "Booking & Payment",
       visas: "Visas & Entry",
@@ -342,7 +344,7 @@ const en = {
   contact: {
     eyebrow: "Contact",
     title: "Book now or ask us anything",
-    subtitle: "Tell us about your trip — we reply within 24 hours, in Italian or English.",
+    subtitle: "Tell us about your trip. We reply within 24 hours, in Italian or English.",
     name: "Full name",
     email: "Email",
     phone: "Phone",
@@ -354,6 +356,9 @@ const en = {
     tour: "Tour of interest",
     tourNone: "Not sure yet",
     option: "Package option",
+    groupDetails: "Your details",
+    groupTrip: "Your trip",
+    groupMessage: "Message",
     message: "Message",
     messagePlaceholder: "Tell us what you'd love to see, your pace and any special requests…",
     consent: "You can also contact me on WhatsApp",
@@ -403,6 +408,8 @@ const en = {
     backHome: "Back to home",
     loading: "Loading…",
     stars: "out of 5 stars",
+    backToTop: "Back to top",
+    backToTours: "Back to tours",
   },
 };
 

@@ -47,7 +47,7 @@ export default async function TourPage({ params }: Props) {
     .filter((t) => t.id !== tour.id && t.themes.some((th) => tour.themes.includes(th)))
     .slice(0, 3);
 
-  const whatsappText = encodeURIComponent(`${dict.contact.prefill} — ${title}`);
+  const whatsappText = encodeURIComponent(`${dict.contact.prefill} (${title})`);
   const options: { key: PackageOption; label: string; hotels: string }[] = [
     { key: "standard", label: dict.tour.standard, hotels: dict.tour.standardHotels },
     { key: "premium", label: dict.tour.premium, hotels: dict.tour.premiumHotels },
@@ -59,23 +59,23 @@ export default async function TourPage({ params }: Props) {
       <JsonLd data={breadcrumbLd(crumbs)} />
 
       {/* Hero */}
-      <header className="relative isolate flex min-h-[70vh] items-end overflow-hidden pt-32 pb-12">
+      <header className="on-green relative isolate flex min-h-[70vh] items-end overflow-hidden bg-primary-600 pt-32 pb-12">
         <div className="absolute inset-0 -z-20">
           <Media src={tour.image} scene={tour.scene} alt="" sizes="100vw" priority />
         </div>
-        <div aria-hidden className="absolute inset-0 -z-10 bg-linear-to-t from-ink/85 via-ink/30 to-ink/40" />
-        <div className="container-site text-white">
+        <div aria-hidden className="absolute inset-0 -z-10 bg-[linear-gradient(to_top,rgb(15_74_60/0.9),rgb(15_74_60/0.45)_50%,rgb(15_74_60/0.25))]" />
+        <div className="container-site text-ivory">
           <nav aria-label="Breadcrumb" className="mb-5">
-            <ol className="flex flex-wrap items-center gap-1 text-sm text-white/80">
+            <ol className="flex flex-wrap items-center gap-1 text-sm text-ivory/80">
               {crumbs.map((c, i) => (
                 <li key={c.path} className="flex items-center gap-1">
                   {i > 0 && <ChevronRight className="h-3.5 w-3.5" aria-hidden />}
                   {i < crumbs.length - 1 ? (
-                    <Link href={c.path} className="hover:text-white hover:underline">
+                    <Link href={c.path} className="hover:text-ivory hover:underline">
                       {c.name}
                     </Link>
                   ) : (
-                    <span aria-current="page" className="text-white">
+                    <span aria-current="page" className="text-ivory">
                       {c.name}
                     </span>
                   )}
@@ -84,8 +84,8 @@ export default async function TourPage({ params }: Props) {
             </ol>
           </nav>
           <TourTags tour={tour} className="mb-4" />
-          <h1 className="h1 max-w-4xl text-white">{title}</h1>
-          <p className="mt-3 max-w-2xl text-lg text-white/90">{l(tour.tagline, lang)}</p>
+          <h1 className="h1 max-w-4xl text-ivory">{title}</h1>
+          <p className="mt-3 max-w-2xl text-lg text-ivory/90">{l(tour.tagline, lang)}</p>
           <ul className="mt-6 flex flex-wrap gap-x-6 gap-y-2 text-sm">
             <li className="flex items-center gap-1.5">
               <Clock className="h-4 w-4" aria-hidden /> {tour.durationDays} {dict.tour.days}
@@ -100,7 +100,7 @@ export default async function TourPage({ params }: Props) {
             href={tour.imageCredit.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="absolute right-3 bottom-2 text-[11px] text-white/60 hover:text-white"
+            className="absolute right-3 bottom-2 text-[11px] text-ivory/60 hover:text-ivory"
           >
             {dict.tour.photoBy}: {tour.imageCredit.name} / Unsplash
           </a>
@@ -117,7 +117,7 @@ export default async function TourPage({ params }: Props) {
             <h2 className="mb-5 text-2xl font-semibold">{dict.tour.highlights}</h2>
             <ul className="grid gap-3 sm:grid-cols-2">
               {l(tour.highlights, lang).map((h) => (
-                <li key={h} className="flex gap-3 rounded-2xl bg-sky p-4 text-[15px]">
+                <li key={h} className="flex gap-3 rounded-card bg-ivory p-4 text-[15px]">
                   <CheckCircle2 className="h-5 w-5 shrink-0 text-accent-700" aria-hidden /> {h}
                 </li>
               ))}
@@ -128,10 +128,11 @@ export default async function TourPage({ params }: Props) {
             <h2 id="itinerary-title" className="mb-6 text-2xl font-semibold">
               {dict.tour.itinerary}
             </h2>
-            <ol className="relative flex flex-col gap-6 border-l-2 border-dashed border-sky-200 pl-8">
+            <ol className="relative flex flex-col gap-6 pl-8">
+              <Reveal as="span" variant="line" aria-hidden className="absolute top-2 bottom-2 left-[3px] w-0.5 rounded-full bg-accent" />
               {tour.itinerary.map((d, i) => (
                 <Reveal as="li" key={i} delay={Math.min(i, 6) * 0.05} className="relative">
-                  <span className="absolute top-0 -left-[49px] grid h-8 w-8 place-items-center rounded-full bg-primary text-sm font-bold text-white ring-4 ring-white">
+                  <span className="absolute top-0 -left-[45px] grid h-8 w-8 place-items-center rounded-full border-2 border-accent bg-ivory text-sm font-bold text-primary">
                     {i + 1}
                   </span>
                   <p className="text-xs font-semibold tracking-wide text-accent-700 uppercase">
@@ -171,7 +172,7 @@ export default async function TourPage({ params }: Props) {
                 <li
                   key={o.key}
                   className={cn(
-                    "flex items-center justify-between gap-3 rounded-2xl border-2 p-4",
+                    "flex items-center justify-between gap-3 rounded-card border-2 p-4",
                     o.key === "premium" ? "border-primary/40 bg-primary-50/60" : "border-line"
                   )}
                 >
@@ -191,7 +192,7 @@ export default async function TourPage({ params }: Props) {
                   >
                     {dict.tour.bookOption}
                     <span className="sr-only">
-                      : {title} — {o.label}
+                      : {title}, {o.label}
                     </span>
                   </Link>
                 </li>
@@ -209,7 +210,7 @@ export default async function TourPage({ params }: Props) {
               </div>
             </dl>
 
-            <p className="flex gap-2 rounded-xl bg-sky p-3 text-xs text-ink/80">
+            <p className="flex gap-2 rounded-control bg-ivory p-3 text-xs text-ink/80">
               <Languages className="h-4 w-4 shrink-0 text-accent-700" aria-hidden /> {dict.tour.anyGuide}
             </p>
 
@@ -221,7 +222,7 @@ export default async function TourPage({ params }: Props) {
                 href={`https://wa.me/${site.whatsapp}?text=${whatsappText}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-sm text-primary-600 hover:bg-sky"
+                className="btn btn-sm text-primary-600 hover:bg-ivory"
               >
                 <MessageCircle className="h-4 w-4" aria-hidden /> {dict.tour.askQuestion}
               </a>
@@ -237,7 +238,7 @@ export default async function TourPage({ params }: Props) {
       </div>
 
       {related.length > 0 && (
-        <section aria-labelledby="related-title" className="section bg-sky/60">
+        <section aria-labelledby="related-title" className="section bg-ivory/60">
           <div className="container-site">
             <h2 id="related-title" className="h2 mb-8">
               {dict.tour.related}

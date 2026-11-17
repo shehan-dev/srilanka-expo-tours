@@ -21,7 +21,7 @@ interface CurrencyValue {
 const I18nContext = createContext<I18nValue | null>(null);
 const CurrencyContext = createContext<CurrencyValue | null>(null);
 
-const CURRENCY_KEY = "sle-currency";
+const CURRENCY_KEY = "lankave-currency";
 
 export function AppProviders({ lang, dict, children }: I18nValue & { children: ReactNode }) {
   // Italian visitors see euros by default; the choice is remembered per browser.

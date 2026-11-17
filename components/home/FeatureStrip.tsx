@@ -1,65 +1,39 @@
-"use client";
-
-import { motion } from "motion/react";
-import { Award, BadgeCheck, CarFront, Route, ShieldCheck, Star } from "lucide-react";
-import { useI18n } from "@/components/providers/AppProviders";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { easeOutExpo } from "@/lib/utils";
+import { BadgeCheck, CarFront, Route, ShieldCheck } from "lucide-react";
+import type { Dictionary } from "@/lib/i18n";
+import { Reveal } from "@/components/ui/Reveal";
 
 const icons = [BadgeCheck, CarFront, Route, ShieldCheck];
-// Small looping micro-animations (one per icon), 2–3s loops.
-const loops = [
-  { rotate: [0, -8, 8, 0] },
-  { x: [0, 4, 0, -2, 0] },
-  { y: [0, -4, 0] },
-  { scale: [1, 1.12, 1] },
-];
 
-export function FeatureStrip() {
-  const { dict } = useI18n();
-
+/** "Why travel with us": the one full-width Tea Green band, ivory text and gold line icons. */
+export function FeatureStrip({ dict }: { dict: Dictionary }) {
   return (
-    <section aria-labelledby="why-us" className="section bg-linear-to-b from-white to-sky/60">
+    <section aria-labelledby="why-us" className="on-green section bg-primary text-ivory">
       <div className="container-site">
-        <SectionHeading id="why-us" title={dict.features.title} subtitle={dict.features.subtitle} />
+        <div className="mb-12 flex flex-col items-center gap-3 text-center md:mb-16">
+          <Reveal delay={0.05}>
+            <h2 id="why-us" className="h2 text-ivory">
+              {dict.features.title}
+            </h2>
+          </Reveal>
+          <Reveal as="span" variant="rule" delay={0.12} className="rule-taper" aria-hidden />
+          <Reveal as="p" delay={0.2} className="measure text-lg text-ivory/85">
+            {dict.features.subtitle}
+          </Reveal>
+        </div>
 
-        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <ul className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {dict.features.items.map((item, i) => {
             const Icon = icons[i];
             return (
-              <motion.li
-                key={item.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-40px" }}
-                transition={{ duration: 0.5, ease: easeOutExpo, delay: i * 0.08 }}
-                className="card group flex flex-col gap-4 p-6 transition-shadow hover:shadow-lift"
-              >
-                <motion.span
-                  className="grid h-14 w-14 place-items-center rounded-2xl bg-linear-to-br from-primary to-accent text-white shadow-lg"
-                  animate={loops[i]}
-                  transition={{ duration: 2.4 + i * 0.2, repeat: Infinity, ease: "easeInOut" }}
-                  aria-hidden
-                >
-                  <Icon className="h-7 w-7" />
-                </motion.span>
-                <h3 className="text-lg font-semibold">{item.title}</h3>
-                <p className="text-sm text-muted">{item.text}</p>
-              </motion.li>
+              <Reveal as="li" key={item.title} delay={i * 0.075} className="flex flex-col items-center gap-4 text-center">
+                <span className="grid h-16 w-16 place-items-center rounded-full border border-accent/50">
+                  <Icon className="h-8 w-8 text-accent" strokeWidth={1.5} aria-hidden />
+                </span>
+                <h3 className="text-xl font-semibold text-ivory">{item.title}</h3>
+                <p className="max-w-[28ch] text-sm leading-relaxed text-ivory/85">{item.text}</p>
+              </Reveal>
             );
           })}
-        </ul>
-
-        <ul className="mt-10 flex flex-wrap items-center justify-center gap-3" aria-label="Trust badges">
-          {[
-            { label: dict.features.badges.license, Icon: Award },
-            { label: dict.features.badges.google, Icon: Star },
-          ].map(({ label, Icon }) => (
-            <li key={label} className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-sm font-medium shadow-card ring-1 ring-line">
-              <Icon className="h-4 w-4 text-accent-700" aria-hidden />
-              {label}
-            </li>
-          ))}
         </ul>
       </div>
     </section>

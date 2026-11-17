@@ -33,7 +33,7 @@ export function MapView({
     <div
       role="region"
       aria-label={label ?? dict.catalog.map}
-      className={cn("relative isolate overflow-hidden rounded-card bg-sky ring-1 ring-line", className)}
+      className={cn("relative isolate overflow-hidden rounded-card bg-ivory ring-1 ring-line", className)}
     >
       <LeafletMap points={points} activeId={activeId} onSelect={onSelect} linkLabel={linkLabel} />
     </div>

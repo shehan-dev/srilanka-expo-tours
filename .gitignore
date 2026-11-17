@@ -9,3 +9,6 @@ next-env.d.ts
 .DS_Store
 npm-debug.log*
 .claude/
+
+# Local brand source/reference files (originals, brand kit). Not used by the site.
+/brand/

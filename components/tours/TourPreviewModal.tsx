@@ -29,8 +29,8 @@ export function TourPreviewModal({ tour, onClose }: { tour: Tour | null; onClose
         <div>
           <div className="relative aspect-[16/7] overflow-hidden">
             <Media src={tour.image} scene={tour.scene} alt="" sizes="768px" />
-            <div aria-hidden className="absolute inset-0 bg-linear-to-t from-ink/80 via-ink/10 to-transparent" />
-            <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 p-6 text-white">
+            <div aria-hidden className="absolute inset-0 bg-[linear-gradient(to_top,rgb(15_74_60/0.9),rgb(15_74_60/0.2)_60%,transparent)]" />
+            <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2 p-6 text-ivory">
               <TourTags tour={tour} />
               <p aria-hidden className="font-heading text-2xl font-semibold sm:text-3xl">
                 {l(tour.title, lang)}
@@ -52,12 +52,12 @@ export function TourPreviewModal({ tour, onClose }: { tour: Tour | null; onClose
                 <ol className="flex flex-col gap-2">
                   {tour.itinerary.slice(0, 7).map((d, i) => (
                     <li key={i} className="flex gap-3 text-sm">
-                      <span className="grid h-6 min-w-6 shrink-0 place-items-center rounded-full bg-sky px-1.5 text-xs font-bold text-primary-600">
+                      <span className="grid h-6 min-w-6 shrink-0 place-items-center rounded-full bg-ivory px-1.5 text-xs font-bold text-primary-600">
                         {labels[i].label}
                       </span>
                       <span>
                         <strong className="font-semibold">{l(d.title, lang)}</strong>
-                        <span className="text-muted"> — {l(d.description, lang)}</span>
+                        <span className="text-muted">: {l(d.description, lang)}</span>
                       </span>
                     </li>
                   ))}
@@ -83,7 +83,7 @@ export function TourPreviewModal({ tour, onClose }: { tour: Tour | null; onClose
                 <MapPin className="h-3.5 w-3.5" aria-hidden />
                 {tour.regions.map((r) => dict.regions[r]).join(" · ")}
               </p>
-              <div className="mt-auto rounded-2xl border border-line p-4">
+              <div className="mt-auto rounded-card border border-line p-4">
                 <TourPrices tour={tour} />
                 <p className="mt-2 text-xs text-muted">
                   / {dict.tour.perPerson} · {dict.tour.priceDisclaimer}

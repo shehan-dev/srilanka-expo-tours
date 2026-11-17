@@ -10,32 +10,32 @@ export function ContactDetails({ dict }: { dict: Dictionary }) {
 
   return (
     <div className="flex flex-col gap-5">
-      <div className="card flex flex-col gap-4 p-6">
-        <h2 className="text-xl font-semibold">{t.office}</h2>
+      <div className="on-green flex flex-col gap-4 rounded-card bg-primary p-6 text-ivory md:p-8">
+        <h2 className="text-2xl font-semibold text-ivory">{t.office}</h2>
         <address className="flex flex-col gap-3 text-[15px] not-italic">
           <p className="flex gap-3">
-            <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-accent-700" aria-hidden />
+            <MapPin className="mt-0.5 h-5 w-5 shrink-0 text-accent" aria-hidden />
             {site.address.street}, {site.address.city}, {site.address.region}, {site.address.country}
           </p>
-          <a href={site.phoneHref} className="flex gap-3 hover:text-primary">
-            <Phone className="mt-0.5 h-5 w-5 shrink-0 text-accent-700" aria-hidden />
+          <a href={site.phoneHref} className="flex gap-3 hover:underline">
+            <Phone className="mt-0.5 h-5 w-5 shrink-0 text-accent" aria-hidden />
             {site.phone}
           </a>
-          <a href={`mailto:${site.email}`} className="flex gap-3 hover:text-primary">
-            <Mail className="mt-0.5 h-5 w-5 shrink-0 text-accent-700" aria-hidden />
+          <a href={`mailto:${site.email}`} className="flex gap-3 hover:underline">
+            <Mail className="mt-0.5 h-5 w-5 shrink-0 text-accent" aria-hidden />
             {site.email}
           </a>
         </address>
-        <div className="flex flex-col gap-2 border-t border-line pt-4 text-sm">
+        <div className="flex flex-col gap-3 border-t border-ivory/20 pt-4 text-sm">
           <p className="flex gap-3">
-            <Clock className="h-5 w-5 shrink-0 text-accent-700" aria-hidden />
+            <Clock className="h-5 w-5 shrink-0 text-accent" aria-hidden />
             <span>
               <strong className="block font-semibold">{t.hours}</strong>
               {t.hoursText}
             </span>
           </p>
           <p className="flex gap-3">
-            <Headphones className="h-5 w-5 shrink-0 text-accent-700" aria-hidden />
+            <Headphones className="h-5 w-5 shrink-0 text-accent" aria-hidden />
             <span>
               <span aria-hidden>🇮🇹 </span>
               {t.italianSupport}
@@ -51,7 +51,7 @@ export function ContactDetails({ dict }: { dict: Dictionary }) {
           >
             <WhatsappIcon width={18} height={18} /> WhatsApp
           </a>
-          <a href={site.phoneHref} className="btn btn-outline btn-sm">
+          <a href={site.phoneHref} className="btn btn-ghost-light btn-sm">
             <Phone className="h-4 w-4" aria-hidden /> {t.call}
           </a>
         </div>

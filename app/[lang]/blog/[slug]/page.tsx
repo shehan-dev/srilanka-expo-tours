@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 function ArticleBody({ source }: { source: string }) {
   const blocks = source.split(/\n\s*\n/);
   return (
-    <div className="prose-article">
+    <div className="prose-article prose-blog">
       {blocks.map((block, i) => {
         const lines = block.trim().split("\n");
         if (lines[0].startsWith("## ")) {
@@ -93,7 +93,7 @@ export default async function BlogPostPage({ params }: Props) {
           </Link>
         </div>
       </article>
-      <section aria-labelledby="more-title" className="section bg-sky/60">
+      <section aria-labelledby="more-title" className="section bg-ivory/60">
         <div className="container-site">
           <h2 id="more-title" className="h2 mb-8">
             {dict.blog.related}

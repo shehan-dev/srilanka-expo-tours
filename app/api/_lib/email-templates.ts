@@ -18,23 +18,24 @@ const languageNames: Record<string, { en: string; it: string }> = {
 };
 
 const optionNames = {
-  standard: { en: "Standard — 3★ hotels", it: "Standard — hotel 3★" },
-  premium: { en: "Premium — 4★ & 5★ hotels", it: "Premium — hotel 4★ e 5★" },
+  standard: { en: "Standard (3★ hotels)", it: "Standard (hotel 3★)" },
+  premium: { en: "Premium (4★ & 5★ hotels)", it: "Premium (hotel 4★ e 5★)" },
 };
 
 function layout(title: string, body: string, footer: string) {
   return `<!doctype html>
 <html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title></head>
-<body style="margin:0;padding:0;background:#e8f6ff;font-family:Arial,Helvetica,sans-serif;color:#0f1724">
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#e8f6ff;padding:24px 12px">
+<body style="margin:0;padding:0;background:#f7f2e7;font-family:Montserrat,Arial,Helvetica,sans-serif;color:#1c2b26">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f7f2e7;padding:24px 12px">
 <tr><td align="center">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;background:#ffffff;border-radius:16px;overflow:hidden">
-    <tr><td style="background:#0a6eff;background-image:linear-gradient(135deg,#0a6eff,#00a3c4);padding:24px 28px;color:#ffffff">
-      <div style="font-size:20px;font-weight:bold">SriLanka <span style="color:#cdeaff">Expo</span> Tours</div>
-      <div style="font-size:14px;opacity:.9;margin-top:4px">${esc(title)}</div>
+    <tr><td style="background:#0f4a3c;padding:24px 28px;color:#f7f2e7;border-bottom:3px solid #d4a24a">
+      <div style="font-family:'Playfair Display',Georgia,serif;font-size:24px;letter-spacing:.04em">LANKAVÉ <span style="font-family:Montserrat,Arial,sans-serif;font-size:11px;letter-spacing:.35em;color:#e6c27a">TOURS</span></div>
+      <div style="font-family:Lora,Georgia,serif;font-style:italic;font-size:14px;opacity:.9;margin-top:6px">Feel Sri Lanka. Live the Journey.</div>
+      <div style="font-size:14px;margin-top:10px">${esc(title)}</div>
     </td></tr>
     <tr><td style="padding:28px;font-size:15px;line-height:1.6">${body}</td></tr>
-    <tr><td style="padding:18px 28px;background:#f6fbff;font-size:12px;color:#475569;line-height:1.5">${footer}</td></tr>
+    <tr><td style="padding:18px 28px;background:#f7f2e7;font-size:12px;color:#55635d;line-height:1.5">${footer}</td></tr>
   </table>
 </td></tr>
 </table>
@@ -47,7 +48,7 @@ ${items
   .filter(([, v]) => v)
   .map(
     ([k, v]) =>
-      `<tr><td style="padding:8px 12px 8px 0;border-bottom:1px solid #d8e6f2;color:#475569;width:38%;vertical-align:top">${esc(k)}</td><td style="padding:8px 0;border-bottom:1px solid #d8e6f2;font-weight:bold">${v}</td></tr>`
+      `<tr><td style="padding:8px 12px 8px 0;border-bottom:1px solid #ede5d3;color:#55635d;width:38%;vertical-align:top">${esc(k)}</td><td style="padding:8px 0;border-bottom:1px solid #ede5d3;font-weight:bold">${v}</td></tr>`
   )
   .join("\n")}
 </table>`;
@@ -67,10 +68,10 @@ const travellers = (e: Enquiry, lang: "en" | "it") =>
 const dates = (e: Enquiry, lang: "en" | "it") =>
   e.startDate ? `${e.startDate}${e.endDate ? ` → ${e.endDate}` : ""}` : lang === "it" ? "Da definire" : "Flexible / not set";
 
-/** Notification for the SriLanka Expo team (always in English). Reply-To is the guest. */
+/** Notification for the Lankavé Tours team (always in English). Reply-To is the guest. */
 export function adminNotification(e: Enquiry) {
   const tourLine = e.tour
-    ? `${esc(e.tour.title.en)} (${e.tour.durationDays} days)${e.option ? ` — ${esc(optionNames[e.option].en)}, from ${usd(e.tour.prices[e.option])} pp` : ""}`
+    ? `${esc(e.tour.title.en)} (${e.tour.durationDays} days)${e.option ? `, ${esc(optionNames[e.option].en)}, from ${usd(e.tour.prices[e.option])} pp` : ""}`
     : undefined;
   const wa = e.phone ? `https://wa.me/${e.phone.replace(/[^\d]/g, "")}` : undefined;
 
@@ -90,12 +91,12 @@ export function adminNotification(e: Enquiry) {
     ["Received", new Date(e.receivedAt).toUTCString()],
   ];
 
-  const message = e.message ? `<p style="margin:0 0 6px;color:#475569">Message</p><div style="white-space:pre-wrap;background:#f6fbff;border-radius:10px;padding:14px">${esc(e.message)}</div>` : "";
+  const message = e.message ? `<p style="margin:0 0 6px;color:#55635d">Message</p><div style="white-space:pre-wrap;background:#f7f2e7;border-radius:10px;padding:14px">${esc(e.message)}</div>` : "";
   const itinerary = e.itinerary
-    ? `<p style="margin:20px 0 6px;color:#475569">Itinerary builder details</p><pre style="white-space:pre-wrap;font-size:12px;background:#f6fbff;border-radius:10px;padding:14px">${esc(JSON.stringify(e.itinerary, null, 2))}</pre>`
+    ? `<p style="margin:20px 0 6px;color:#55635d">Itinerary builder details</p><pre style="white-space:pre-wrap;font-size:12px;background:#f7f2e7;border-radius:10px;padding:14px">${esc(JSON.stringify(e.itinerary, null, 2))}</pre>`
     : "";
 
-  const subject = `New ${e.type === "itinerary" ? "itinerary quote" : "booking"} request ${e.reference} — ${e.name}${e.tour ? ` · ${e.tour.title.en}` : ""}`;
+  const subject = `New ${e.type === "itinerary" ? "itinerary quote" : "booking"} request ${e.reference}: ${e.name}${e.tour ? ` · ${e.tour.title.en}` : ""}`;
   return {
     subject,
     html: layout(
@@ -109,39 +110,39 @@ export function adminNotification(e: Enquiry) {
 
 const copy = {
   en: {
-    subject: (ref: string) => `We've received your request — ${ref}`,
+    subject: (ref: string) => `We've received your request (${ref})`,
     title: "Thank you for your request",
     hello: (name: string) => `Dear ${name},`,
     intro:
-      "Thank you for contacting SriLanka Expo Tours! We've received your request and our team will get back to you with a personalised quote within 24 hours.",
+      "Thank you for contacting Lankavé Tours! We've received your request and our team will get back to you with a personalised quote within 24 hours.",
     ref: "Your reference",
     summary: "Your request",
     tour: "Tour",
     option: "Package option",
     dates: "Travel dates",
     travellers: "Travellers",
-    note: "Prices on our website are indicative and not fixed — slight variations may occur depending on vehicle type, hotel rate updates and season. Your quote will confirm the final price.",
+    note: "Prices on our website are indicative and not fixed. Slight variations may occur depending on vehicle type, hotel rate updates and season. Your quote will confirm the final price.",
     questions: "Questions in the meantime? Call or WhatsApp us on",
     signoff: "Warm regards,",
-    team: "The SriLanka Expo Tours team",
+    team: "The Lankavé Tours team",
     footer: "You are receiving this email because you sent a request on our website.",
   },
   it: {
-    subject: (ref: string) => `Abbiamo ricevuto la tua richiesta — ${ref}`,
+    subject: (ref: string) => `Abbiamo ricevuto la tua richiesta (${ref})`,
     title: "Grazie per la tua richiesta",
     hello: (name: string) => `Gentile ${name},`,
     intro:
-      "Grazie per aver contattato SriLanka Expo Tours! Abbiamo ricevuto la tua richiesta e il nostro team ti invierà un preventivo personalizzato entro 24 ore.",
+      "Grazie per aver contattato Lankavé Tours! Abbiamo ricevuto la tua richiesta e il nostro team ti invierà un preventivo personalizzato entro 24 ore.",
     ref: "Il tuo codice di riferimento",
     summary: "La tua richiesta",
     tour: "Tour",
     option: "Opzione del pacchetto",
     dates: "Date del viaggio",
     travellers: "Viaggiatori",
-    note: "I prezzi sul nostro sito sono indicativi e non fissi — possono variare leggermente in base al tipo di veicolo, agli aggiornamenti delle tariffe alberghiere e alla stagione. Il preventivo confermerà il prezzo finale.",
+    note: "I prezzi sul nostro sito sono indicativi e non fissi: possono variare leggermente in base al tipo di veicolo, agli aggiornamenti delle tariffe alberghiere e alla stagione. Il preventivo confermerà il prezzo finale.",
     questions: "Domande nel frattempo? Chiamaci o scrivici su WhatsApp al",
     signoff: "Un caro saluto,",
-    team: "Il team di SriLanka Expo Tours",
+    team: "Il team di Lankavé Tours",
     footer: "Ricevi questa email perché hai inviato una richiesta dal nostro sito.",
   },
 };
@@ -162,14 +163,14 @@ export function customerConfirmation(e: Enquiry, replyTo: string) {
     t.title,
     `<p style="margin:0 0 12px">${esc(t.hello(e.name))}</p>
 <p style="margin:0 0 20px">${esc(t.intro)}</p>
-<div style="background:#e8f6ff;border-radius:12px;padding:14px 18px;margin:0 0 20px">
-  <div style="font-size:12px;color:#475569;text-transform:uppercase;letter-spacing:.05em">${esc(t.ref)}</div>
-  <div style="font-size:22px;font-weight:bold;color:#0759d1;letter-spacing:.06em;font-family:Consolas,monospace">${esc(e.reference)}</div>
+<div style="background:#e3ede8;border-radius:12px;padding:14px 18px;margin:0 0 20px">
+  <div style="font-size:12px;color:#55635d;text-transform:uppercase;letter-spacing:.05em">${esc(t.ref)}</div>
+  <div style="font-size:22px;font-weight:bold;color:#0f4a3c;letter-spacing:.06em;font-family:Consolas,monospace">${esc(e.reference)}</div>
 </div>
 <p style="margin:0;font-weight:bold">${esc(t.summary)}</p>
 ${rows(items)}
-<p style="margin:0 0 16px;font-size:13px;color:#475569">${esc(t.note)}</p>
-<p style="margin:0 0 20px">${esc(t.questions)} <a href="${site.phoneHref}" style="color:#0759d1">${esc(site.phone)}</a> · <a href="${wa}" style="color:#0759d1">WhatsApp</a></p>
+<p style="margin:0 0 16px;font-size:13px;color:#55635d">${esc(t.note)}</p>
+<p style="margin:0 0 20px">${esc(t.questions)} <a href="${site.phoneHref}" style="color:#0f4a3c">${esc(site.phone)}</a> · <a href="${wa}" style="color:#0f4a3c">WhatsApp</a></p>
 <p style="margin:0">${esc(t.signoff)}<br><strong>${esc(t.team)}</strong></p>`,
     `${esc(site.name)} · ${esc(site.address.street)}, ${esc(site.address.city)}, ${esc(site.address.region)}, ${esc(site.address.country)}<br>${esc(t.footer)}`
   );

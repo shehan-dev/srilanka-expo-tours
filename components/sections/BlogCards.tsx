@@ -10,10 +10,10 @@ import { Reveal } from "@/components/ui/Reveal";
 export function BlogCard({ post, lang, dict, index = 0 }: { post: BlogPost; lang: Locale; dict: Dictionary; index?: number }) {
   const url = href(lang, `/blog/${post.slug}`);
   return (
-    <Reveal as="li" delay={index * 0.08} className="card group relative flex h-full flex-col overflow-hidden transition-shadow hover:shadow-lift">
+    <Reveal as="li" delay={index * 0.08} className="card card-lift relative flex h-full flex-col overflow-hidden">
       <div className="relative aspect-[16/10] overflow-hidden">
-        <Media src={post.image} scene={post.scene} alt="" className="transition-transform duration-700 group-hover:scale-105" />
-        <span className="absolute top-3 left-3 rounded-full bg-white/90 px-3 py-1 text-xs font-semibold text-primary-600">
+        <Media src={post.image} scene={post.scene} alt="" className="card-img" />
+        <span className="absolute top-3 left-3 rounded-full bg-ivory px-3 py-1 text-xs font-semibold text-primary">
           {dict.blog.categories[post.category]}
         </span>
       </div>
@@ -29,8 +29,8 @@ export function BlogCard({ post, lang, dict, index = 0 }: { post: BlogPost; lang
           </Link>
         </h3>
         <p className="line-clamp-3 text-sm text-muted">{l(post.excerpt, lang)}</p>
-        <span aria-hidden className="mt-auto pt-2 text-sm font-semibold text-primary-600">
-          {dict.blog.readMore} →
+        <span aria-hidden className="mt-auto inline-flex items-center gap-1 pt-2 text-sm font-semibold text-primary">
+          {dict.blog.readMore} <span className="card-arrow">→</span>
         </span>
       </div>
     </Reveal>

@@ -10,7 +10,7 @@ export function Stars({ rating, size = 16, label, className }: { rating: number;
           aria-hidden
           width={size}
           height={size}
-          className={i < Math.round(rating) ? "fill-star text-star" : "fill-line text-line"}
+          className={i < Math.round(rating) ? "fill-accent text-accent" : "fill-ivory-deep text-ivory-deep"}
         />
       ))}
     </span>

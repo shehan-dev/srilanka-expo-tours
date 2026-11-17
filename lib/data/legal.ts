@@ -18,8 +18,8 @@ export const legalPages: Record<LegalSlug, Section[]> = {
     {
       heading: { en: "1. Who we are", it: "1. Chi siamo" },
       body: {
-        en: "SriLanka Expo Tours is a licensed tour operator registered in Sri Lanka. These terms apply to every tour, transfer and service booked through this website, by email, WhatsApp or phone.",
-        it: "SriLanka Expo Tours è un tour operator autorizzato registrato in Sri Lanka. I presenti termini si applicano a ogni tour, transfer e servizio prenotato tramite questo sito, via email, WhatsApp o telefono.",
+        en: "Lankavé Tours is a licensed tour operator registered in Sri Lanka. These terms apply to every tour, transfer and service booked through this website, by email, WhatsApp or phone.",
+        it: "Lankavé Tours è un tour operator autorizzato registrato in Sri Lanka. I presenti termini si applicano a ogni tour, transfer e servizio prenotato tramite questo sito, via email, WhatsApp o telefono.",
       },
     },
     {

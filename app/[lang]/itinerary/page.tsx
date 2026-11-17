@@ -71,8 +71,8 @@ export default async function ItineraryPage({ params }: Props) {
               {t.steps.map((step, i) => {
                 const Icon = stepIcons[i];
                 return (
-                  <li key={step} className="flex items-center gap-4 rounded-2xl bg-sky px-4 py-3">
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-primary-600 shadow-sm">
+                  <li key={step} className="flex items-center gap-4 rounded-card bg-ivory px-4 py-3">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-control bg-white text-primary-600 shadow-sm">
                       <Icon className="h-5 w-5" aria-hidden />
                     </span>
                     <span className="text-sm text-muted">

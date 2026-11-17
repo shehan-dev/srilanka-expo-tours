@@ -43,10 +43,10 @@ const int = (value: unknown, min: number, max: number, fallback: number) => {
   return Number.isFinite(n) ? Math.min(max, Math.max(min, n)) : fallback;
 };
 
-/** Booking reference shown to the guest, e.g. SLE-261031-7F3A. */
+/** Booking reference shown to the guest, e.g. LKV-261116-7F3A. */
 export function createReference(date = new Date()) {
   const ymd = `${date.getFullYear() % 100}${String(date.getMonth() + 1).padStart(2, "0")}${String(date.getDate()).padStart(2, "0")}`;
-  return `SLE-${ymd}-${crypto.randomUUID().replace(/-/g, "").slice(0, 4).toUpperCase()}`;
+  return `LKV-${ymd}-${crypto.randomUUID().replace(/-/g, "").slice(0, 4).toUpperCase()}`;
 }
 
 export function validateEnquiry(body: Record<string, unknown>): ValidationResult {

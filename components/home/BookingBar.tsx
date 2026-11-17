@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
+import { useId, useMemo, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Calculator, CalendarDays, ChevronDown, Languages, MapPin, Search, Users, X } from "lucide-react";
+import { BadgeCheck, Calculator, CalendarDays, Languages, MapPin, Minus, Plus, Search, Star, Users, X } from "lucide-react";
 import { useI18n } from "@/components/providers/AppProviders";
 import { Price } from "@/components/ui/Price";
+import { Reveal } from "@/components/ui/Reveal";
 import { searchPlaces } from "@/lib/data/destinations";
-import { href } from "@/lib/i18n/config";
+import { href, intlLocale } from "@/lib/i18n/config";
 import { estimateTrip } from "@/lib/pricing";
+import { site } from "@/lib/site";
 import type { GuideLanguage, RegionId } from "@/lib/types";
 import { cn, easeOutExpo } from "@/lib/utils";
 
@@ -115,7 +117,7 @@ function DestinationCombobox({ value, onChange }: { value: Option | null; onChan
                 onMouseEnter={() => setActive(i)}
                 className={cn(
                   "flex cursor-pointer items-center justify-between gap-2 rounded-xl px-3 py-2 text-sm",
-                  i === active && "bg-sky"
+                  i === active && "bg-ivory"
                 )}
               >
                 <span className="font-medium">{o.label}</span>
@@ -135,11 +137,61 @@ const daysBetween = (a: string, b: string) => {
   return d > 0 && d < 60 ? d : 7;
 };
 
-/** Quick search / booking bar. Sticks under the header while scrolling the home page. */
+/** Guest counter with − / + buttons (44px targets). The value fades when it changes. */
+function GuestStepper({
+  id,
+  label,
+  icon,
+  value,
+  min,
+  max,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  icon?: boolean;
+  value: number;
+  min: number;
+  max: number;
+  onChange: (n: number) => void;
+}) {
+  const { dict } = useI18n();
+  return (
+    <div role="group" aria-labelledby={id}>
+      <span id={id} className="field-label flex items-center gap-1.5">
+        {icon && <Users className="h-4 w-4 text-accent-700" aria-hidden />} {label}
+      </span>
+      <div className="flex h-11 items-center justify-between rounded-control border border-line bg-white">
+        <button
+          type="button"
+          onClick={() => onChange(Math.max(min, value - 1))}
+          disabled={value <= min}
+          aria-label={`${dict.booking.decrease}: ${label}`}
+          className="grid h-11 w-11 place-items-center rounded-control text-primary transition-colors hover:bg-primary-50 disabled:opacity-35"
+        >
+          <Minus className="h-4 w-4" aria-hidden />
+        </button>
+        <output key={value} aria-live="polite" className="fade-in min-w-6 text-center text-[15px] font-semibold tabular-nums">
+          {value}
+        </output>
+        <button
+          type="button"
+          onClick={() => onChange(Math.min(max, value + 1))}
+          disabled={value >= max}
+          aria-label={`${dict.booking.increase}: ${label}`}
+          className="grid h-11 w-11 place-items-center rounded-control text-primary transition-colors hover:bg-primary-50 disabled:opacity-35"
+        >
+          <Plus className="h-4 w-4" aria-hidden />
+        </button>
+      </div>
+    </div>
+  );
+}
+
+/** Quick search / booking card. Overlaps the bottom edge of the hero; a slim trust strip sits beneath it. */
 export function BookingBar() {
   const { lang, dict } = useI18n();
   const router = useRouter();
-  const [expanded, setExpanded] = useState(false);
   const [destination, setDestination] = useState<Option | null>(null);
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
@@ -147,19 +199,6 @@ export function BookingBar() {
   const [kids, setKids] = useState(0);
   const [guideLang, setGuideLang] = useState<GuideLanguage>(lang === "it" ? "it" : "en");
   const [showEstimate, setShowEstimate] = useState(false);
-  const [stuck, setStuck] = useState(false);
-  const barRef = useRef<HTMLDivElement>(null);
-
-  // Once the bar is pinned under the header, hide field labels on desktop to keep it slim.
-  useEffect(() => {
-    const onScroll = () => {
-      const top = barRef.current?.getBoundingClientRect().top ?? 999;
-      setStuck(top <= 65);
-    };
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   const today = new Date().toISOString().slice(0, 10);
   const days = daysBetween(start, end);
@@ -186,53 +225,29 @@ export function BookingBar() {
     }${start ? ` · ${start}` : ""} · ${dict.booking.language}: ${dict.languages[guideLang]}`,
   })}`;
 
-  return (
-    <div id="search" ref={barRef} className="sticky top-16 z-30 -mt-14 scroll-mt-24 md:-mt-16">
-      <div className="container-site">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.5, ease: easeOutExpo }}
-          className={cn(
-            "rounded-3xl bg-white/95 p-3 shadow-lift ring-1 ring-line backdrop-blur-xl transition-[padding] duration-300",
-            stuck ? "md:p-2.5" : "md:p-4"
-          )}
-        >
-          <h2 className="sr-only">{dict.booking.title}</h2>
+  const trust = [
+    { Icon: BadgeCheck, label: dict.features.badges.license },
+    { Icon: Star, label: dict.features.badges.google },
+    { Icon: Users, label: `${site.rating.count.toLocaleString(intlLocale[lang])}+ ${dict.hero.travellers}` },
+    { Icon: Languages, label: dict.hero.badge },
+  ];
 
-          {/* Mobile: collapsed icon row */}
-          <button
-            type="button"
-            onClick={() => setExpanded((v) => !v)}
-            aria-expanded={expanded}
-            aria-controls="booking-fields"
-            className="flex w-full items-center justify-between gap-3 rounded-2xl bg-sky px-4 py-3 text-left md:hidden"
-          >
-            <span className="flex items-center gap-2 font-semibold">
-              <Search className="h-5 w-5 text-primary" aria-hidden />
-              {expanded ? dict.booking.collapse : dict.booking.expand}
-            </span>
-            <span className="flex items-center gap-2 text-muted" aria-hidden>
-              <MapPin className="h-4 w-4" />
-              <CalendarDays className="h-4 w-4" />
-              <Users className="h-4 w-4" />
-              <ChevronDown className={cn("h-5 w-5 transition-transform", expanded && "rotate-180")} />
-            </span>
-          </button>
+  return (
+    <section id="search" aria-labelledby="search-title" className="relative z-10 -mt-20 md:-mt-24">
+      <div className="container-site">
+        <Reveal delay={0.6} className="rounded-panel bg-white p-4 shadow-lift ring-1 ring-line/60 md:p-6">
+          <h2 id="search-title" className="sr-only">
+            {dict.booking.title}
+          </h2>
 
           <form
-            id="booking-fields"
             onSubmit={(e) => {
               e.preventDefault();
               search();
             }}
-            className={cn(
-              "mt-3 gap-3 md:mt-0 md:grid md:grid-cols-6 md:items-end lg:grid-cols-[1.5fr_1fr_1fr_0.6fr_0.6fr_1fr_auto]",
-              expanded ? "grid" : "hidden",
-              stuck && "md:[&_.field-label]:sr-only"
-            )}
+            className="grid grid-cols-2 items-end gap-3 md:grid-cols-4 xl:grid-cols-[1.4fr_1fr_1fr_0.85fr_0.85fr_1.25fr_auto]"
           >
-            <div className="md:col-span-2 lg:col-span-1">
+            <div className="col-span-2 xl:col-span-1">
               <DestinationCombobox value={destination} onChange={setDestination} />
             </div>
             <div>
@@ -247,30 +262,10 @@ export function BookingBar() {
               </label>
               <input id="bb-end" type="date" min={start || today} className="input" value={end} onChange={(e) => setEnd(e.target.value)} />
             </div>
-            <div className="grid grid-cols-2 gap-3 md:contents">
-              <div>
-                <label htmlFor="bb-adults" className="field-label flex items-center gap-1.5">
-                  <Users className="h-4 w-4 text-accent-700" aria-hidden /> {dict.booking.adults}
-                </label>
-                <select id="bb-adults" className="input" value={adults} onChange={(e) => setAdults(Number(e.target.value))}>
-                  {Array.from({ length: 20 }, (_, i) => i + 1).map((n) => (
-                    <option key={n}>{n}</option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label htmlFor="bb-kids" className="field-label">
-                  {dict.booking.kids}
-                </label>
-                <select id="bb-kids" className="input" value={kids} onChange={(e) => setKids(Number(e.target.value))}>
-                  {Array.from({ length: 11 }, (_, i) => i).map((n) => (
-                    <option key={n}>{n}</option>
-                  ))}
-                </select>
-              </div>
-            </div>
-            <div className="md:col-span-2 lg:col-span-1">
-              <label htmlFor="bb-lang" className="field-label flex items-center gap-1.5">
+            <GuestStepper id="bb-adults" label={dict.booking.adults} icon value={adults} min={1} max={20} onChange={setAdults} />
+            <GuestStepper id="bb-kids" label={dict.booking.kids} value={kids} min={0} max={10} onChange={setKids} />
+            <div className="col-span-2 xl:col-span-1">
+              <label htmlFor="bb-lang" className="field-label flex items-center gap-1.5 whitespace-nowrap">
                 <Languages className="h-4 w-4 text-accent-700" aria-hidden /> {dict.booking.language}
               </label>
               <select id="bb-lang" className="input" value={guideLang} onChange={(e) => setGuideLang(e.target.value as GuideLanguage)}>
@@ -282,18 +277,20 @@ export function BookingBar() {
                 ))}
               </select>
             </div>
-            <div className="flex gap-2 md:col-span-4 lg:col-span-1">
+            <div className="col-span-2 flex gap-2 md:col-span-4 xl:col-span-1">
               <button
                 type="button"
                 onClick={() => setShowEstimate((v) => !v)}
                 aria-expanded={showEstimate}
                 aria-controls="bb-estimate"
-                className="btn btn-outline flex-1 px-4 lg:flex-none"
+                aria-label={dict.booking.estimate}
+                title={dict.booking.estimate}
+                className="btn btn-outline flex-1 px-4 xl:flex-none"
               >
                 <Calculator className="h-4 w-4" aria-hidden />
-                <span className="lg:sr-only xl:not-sr-only">{dict.booking.estimate}</span>
+                <span className="xl:hidden">{dict.booking.estimate}</span>
               </button>
-              <button type="submit" className="btn btn-primary flex-1 px-5 lg:flex-none">
+              <button type="submit" className="btn btn-primary flex-1 px-5 xl:flex-none">
                 <Search className="h-4 w-4" aria-hidden /> {dict.booking.search}
               </button>
             </div>
@@ -309,16 +306,16 @@ export function BookingBar() {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: "auto" }}
                 exit={{ opacity: 0, height: 0 }}
-                transition={{ duration: 0.35, ease: easeOutExpo }}
+                transition={{ duration: 0.28, ease: easeOutExpo }}
                 className="overflow-hidden"
               >
-                <div className="mt-3 flex flex-col gap-3 rounded-2xl bg-sky p-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="mt-4 flex flex-col gap-3 rounded-card bg-ivory p-4 sm:flex-row sm:items-center sm:justify-between">
                   <div>
                     <p className="text-sm font-semibold text-accent-700">
                       {dict.booking.estimateTitle} · {days} {dict.booking.days} · {destination?.label ?? dict.booking.anyDestination}
                     </p>
                     <p className="mt-1 flex flex-wrap items-baseline gap-x-3">
-                      <Price usd={estimate.perPerson} className="font-heading text-3xl font-bold" />
+                      <Price usd={estimate.perPerson} className="font-heading text-3xl font-semibold text-primary" />
                       <span className="text-sm text-muted">{dict.booking.perPerson}</span>
                       <span className="text-sm text-muted">
                         (<Price usd={estimate.total} /> {dict.booking.total})
@@ -326,14 +323,14 @@ export function BookingBar() {
                     </p>
                     <p className="mt-1 text-xs text-muted">{dict.booking.estimateNote}</p>
                   </div>
-                  <div className="flex gap-2">
-                    <Link href={quoteHref} className="btn btn-accent btn-sm">
+                  <div className="flex items-center gap-2">
+                    <Link href={quoteHref} className="btn btn-primary btn-sm">
                       {dict.booking.buildIt}
                     </Link>
                     <button
                       type="button"
                       onClick={() => setShowEstimate(false)}
-                      className="grid h-9 w-9 place-items-center rounded-full hover:bg-white"
+                      className="grid h-11 w-11 place-items-center rounded-full hover:bg-white"
                       aria-label={dict.tour.close}
                     >
                       <X className="h-4 w-4" aria-hidden />
@@ -343,8 +340,18 @@ export function BookingBar() {
               </motion.div>
             )}
           </AnimatePresence>
-        </motion.div>
+        </Reveal>
+
+        {/* Trust strip: existing figures only */}
+        <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-medium text-ink">
+          {trust.map(({ Icon, label }, i) => (
+            <Reveal as="li" key={label} delay={0.1 + i * 0.07} className="inline-flex items-center gap-2">
+              <Icon className="h-[18px] w-[18px] text-accent-700" strokeWidth={1.75} aria-hidden />
+              {label}
+            </Reveal>
+          ))}
+        </ul>
       </div>
-    </div>
+    </section>
   );
 }

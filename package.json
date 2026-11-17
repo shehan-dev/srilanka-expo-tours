@@ -1,5 +1,6 @@
 {
-  "name": "srilanka-expo-tours",
+  "name": "lankave-tours",
+  "description": "Lankavé Tours: private tours of Sri Lanka. Feel Sri Lanka. Live the Journey.",
   "version": "0.1.0",
   "private": true,
   "scripts": {

@@ -25,8 +25,8 @@ export const testimonials: Testimonial[] = [
     flag: "🇮🇹",
     rating: 5,
     quote: {
-      en: "Travelling with two kids was effortless — child seats, pools at every hotel and a guide who made history fun for them.",
-      it: "Viaggiare con due bambini è stato facilissimo — seggiolini, piscina in ogni hotel e una guida che ha reso la storia divertente per loro.",
+      en: "Travelling with two kids was effortless: child seats, pools at every hotel and a guide who made history fun for them.",
+      it: "Viaggiare con due bambini è stato facilissimo: seggiolini, piscina in ogni hotel e una guida che ha reso la storia divertente per loro.",
     },
     source: "google",
     link: "https://g.page/",
