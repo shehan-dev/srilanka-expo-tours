@@ -9,6 +9,7 @@ import { useCurrency, useI18n } from "@/components/providers/AppProviders";
 import { WhatsappIcon } from "@/components/ui/SocialIcons";
 import { href, locales, type Locale } from "@/lib/i18n/config";
 import { site, type Currency } from "@/lib/site";
+import { lockScroll } from "@/lib/scroll";
 import { cn, easeOutExpo } from "@/lib/utils";
 import { Logo } from "./Logo";
 
@@ -164,8 +165,7 @@ function MobileMenu({
   useEffect(() => {
     if (!open) return;
     const previouslyFocused = document.activeElement as HTMLElement | null;
-    const { overflow } = document.body.style;
-    document.body.style.overflow = "hidden";
+    const unlock = lockScroll();
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -187,7 +187,7 @@ function MobileMenu({
 
     return () => {
       cancelAnimationFrame(raf);
-      document.body.style.overflow = overflow;
+      unlock();
       document.removeEventListener("keydown", onKey);
       previouslyFocused?.focus?.();
     };

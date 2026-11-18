@@ -71,6 +71,20 @@
   @keyframes draw-stroke {
     to { stroke-dashoffset: 0; }
   }
+  @keyframes loader-l {
+    0% { opacity: 0; transform: translateY(14%); }
+    30%, 70% { opacity: 1; transform: none; }
+    100% { opacity: 0; transform: translateY(-6%); }
+  }
+  @keyframes loader-rule {
+    0%, 20% { transform: scaleX(0); }
+    45%, 72% { transform: scaleX(1); }
+    100% { transform: scaleX(0); opacity: 0.4; }
+  }
+  @keyframes loader-fade {
+    0%, 100% { opacity: 0.55; }
+    50% { opacity: 1; }
+  }
   @keyframes hero-zoom {
     from { transform: scale(1); }
     to { transform: scale(1.06); }
@@ -116,6 +130,10 @@
   }
   [id] {
     scroll-margin-top: 6rem;
+  }
+  /* Lenis drives scrolling when active; native smooth behaviour would fight it */
+  html.lenis {
+    scroll-behavior: auto;
   }
   /* Focus rings: green on light surfaces, gold on green surfaces */
   :focus-visible {
@@ -450,10 +468,61 @@ html[data-js] [data-reveal][data-revealed] {
   transform: none;
 }
 
+/* Brand loader (components/ui/LogoLoader.tsx) */
+.loader-l {
+  display: inline-block;
+  margin-top: -12%;
+  animation: loader-l 1.6s var(--ease-brand) infinite;
+}
+.loader-rule {
+  transform-origin: center;
+  animation: loader-rule 1.6s var(--ease-brand) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .loader-l,
+  .loader-rule {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+  .loader-mark {
+    animation: loader-fade 2s ease-in-out infinite !important;
+    animation-duration: 2s !important;
+    animation-iteration-count: infinite !important;
+  }
+}
+
 /* Hero photo: one very slow scale for depth (desktop only) */
 @media (min-width: 768px) {
   .hero-zoom {
     animation: hero-zoom 12s ease-out 1 both;
+  }
+}
+
+/* Brand cursor (mouse/trackpad only): Tea Green arrow, Golden Sand over interactive elements */
+@media (pointer: fine) {
+  html {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M4 2.5 L4 23.5 L9.6 18.4 L13.4 26.6 L17.6 24.8 L13.8 16.8 L21.4 16.8 Z' fill='%230F4A3C' stroke='%23F7F2E7' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 4 2, auto;
+  }
+  a,
+  button,
+  summary,
+  label[for],
+  select,
+  [role="button"],
+  [role="tab"],
+  input[type="checkbox"],
+  input[type="radio"],
+  input[type="range"],
+  .leaflet-interactive {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M4 2.5 L4 23.5 L9.6 18.4 L13.4 26.6 L17.6 24.8 L13.8 16.8 L21.4 16.8 Z' fill='%23D4A24A' stroke='%230F4A3C' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E") 4 2, pointer;
+  }
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  textarea {
+    cursor: text;
+  }
+  button:disabled {
+    cursor: not-allowed;
   }
 }
 

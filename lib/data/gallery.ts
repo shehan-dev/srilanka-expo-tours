@@ -1,18 +1,42 @@
 import type { GalleryItem } from "@/lib/types";
 
-// Add real photos under /public/media/gallery and set `image` (or `video` for clips).
+// Gallery photos live in /public/media/gallery. To add one, drop the file there and add an entry below
+// (`aspect` controls the tile shape: "tall", "wide" or "square"; set `video` for a clip instead).
 
 export const gallery: GalleryItem[] = [
-  { id: "g1", category: "nature", scene: "hills", aspect: "tall", caption: { en: "Tea pickers above Ella", it: "Raccoglitrici di tè sopra Ella" } },
-  { id: "g2", category: "culture", scene: "temple", aspect: "square", caption: { en: "Evening puja in Kandy", it: "Puja serale a Kandy" } },
-  { id: "g3", category: "nature", scene: "coast", aspect: "wide", caption: { en: "Sunset at Mirissa", it: "Tramonto a Mirissa" } },
-  { id: "g4", category: "culture", scene: "rock", aspect: "tall", caption: { en: "Sigiriya at dawn", it: "Sigiriya all'alba" } },
-  { id: "g5", category: "food", scene: "city", aspect: "square", caption: { en: "Kottu roti, Colombo", it: "Kottu roti, Colombo" } },
-  { id: "g6", category: "nature", scene: "safari", aspect: "wide", caption: { en: "Elephants in Minneriya", it: "Elefanti a Minneriya" } },
-  { id: "g7", category: "vehicles", scene: "hills", aspect: "square", caption: { en: "Our family van in the hill country", it: "Il nostro van sull'altopiano" } },
-  { id: "g8", category: "food", scene: "coast", aspect: "tall", caption: { en: "Fresh seafood on the beach", it: "Pesce fresco sulla spiaggia" } },
-  { id: "g9", category: "culture", scene: "temple", aspect: "wide", caption: { en: "Ruwanwelisaya stupa", it: "Lo stupa Ruwanwelisaya" } },
-  { id: "g10", category: "nature", scene: "safari", aspect: "tall", caption: { en: "Leopard spotting in Yala", it: "Avvistamento leopardi a Yala" } },
-  { id: "g11", category: "vehicles", scene: "city", aspect: "wide", caption: { en: "Tuk-tuk tour of Colombo", it: "Tour in tuk-tuk di Colombo" } },
-  { id: "g12", category: "food", scene: "hills", aspect: "square", caption: { en: "Tea tasting in Nuwara Eliya", it: "Degustazione di tè a Nuwara Eliya" } },
+  {
+    id: "g1",
+    image: "/media/gallery/gallery-01-kingfisher.jpg",
+    scene: "hills",
+    aspect: "square",
+    caption: { en: "White-throated kingfisher", it: "Martin pescatore golabianca" },
+  },
+  {
+    id: "g2",
+    image: "/media/gallery/gallery-02-crocodile.jpg",
+    scene: "safari",
+    aspect: "wide",
+    caption: { en: "Crocodile in the lagoon", it: "Coccodrillo nella laguna" },
+  },
+  {
+    id: "g3",
+    image: "/media/gallery/gallery-03-eagle.jpg",
+    scene: "hills",
+    aspect: "tall",
+    caption: { en: "Crested serpent eagle", it: "Aquila serpentaria crestata" },
+  },
+  {
+    id: "g4",
+    image: "/media/gallery/gallery-04-elephant.jpg",
+    scene: "safari",
+    aspect: "wide",
+    caption: { en: "Elephant greeting", it: "Il saluto dell'elefante" },
+  },
+  {
+    id: "g5",
+    image: "/media/gallery/gallery-05-leopard.jpg",
+    scene: "safari",
+    aspect: "tall",
+    caption: { en: "Sri Lankan leopard", it: "Leopardo dello Sri Lanka" },
+  },
 ];

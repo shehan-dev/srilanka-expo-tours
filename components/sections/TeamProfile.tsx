@@ -59,7 +59,7 @@ export function TeamProfile({ dict, lang }: { dict: Dictionary; lang: Locale }) 
         <div className="absolute right-0 -bottom-2 rounded-card border border-accent bg-ivory p-4 shadow-card sm:-right-6">
           <p className="text-xs font-semibold tracking-[0.15em] text-accent-700 uppercase">{dict.about.yearsGuiding}</p>
           <p className="font-heading text-3xl font-semibold text-primary">
-            <CountUp value="5+" />
+            <CountUp value="8+" />
           </p>
         </div>
       </Reveal>

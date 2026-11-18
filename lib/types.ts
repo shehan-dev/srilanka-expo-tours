@@ -73,9 +73,11 @@ export interface Testimonial {
   flag: string;
   rating: number;
   quote: L10n;
-  source: "google";
-  link: string;
-  date: string;
+  /** "letter" = handwritten note (no link); "google" = online review with a link. */
+  source: "google" | "letter";
+  link?: string;
+  /** "YYYY-MM" (shown as month and year), optional. */
+  date?: string;
 }
 
 export type BlogCategory = "for-italians" | "food-drink" | "practical" | "nature";
@@ -118,11 +120,8 @@ export interface Faq {
   answer: L10n;
 }
 
-export type GalleryCategory = "food" | "nature" | "culture" | "vehicles";
-
 export interface GalleryItem {
   id: string;
-  category: GalleryCategory;
   caption: L10n;
   scene: Scene;
   image?: string;

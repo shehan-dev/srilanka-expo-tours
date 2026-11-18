@@ -4,6 +4,7 @@ import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "motion/react";
 import { X } from "lucide-react";
+import { lockScroll } from "@/lib/scroll";
 import { cn, easeOutExpo } from "@/lib/utils";
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])';
@@ -35,8 +36,7 @@ export function Modal({
   useEffect(() => {
     if (!open) return;
     const previouslyFocused = document.activeElement as HTMLElement | null;
-    const { overflow } = document.body.style;
-    document.body.style.overflow = "hidden";
+    const unlock = lockScroll();
 
     const raf = requestAnimationFrame(() => {
       panelRef.current?.querySelector<HTMLElement>(FOCUSABLE)?.focus();
@@ -66,7 +66,7 @@ export function Modal({
     return () => {
       cancelAnimationFrame(raf);
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = overflow;
+      unlock();
       previouslyFocused?.focus?.();
     };
   }, [open, onClose]);

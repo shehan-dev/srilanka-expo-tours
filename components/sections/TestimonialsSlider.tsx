@@ -10,9 +10,13 @@ import { Stars } from "@/components/ui/Stars";
 import { testimonials } from "@/lib/data/testimonials";
 import { intlLocale, l } from "@/lib/i18n/config";
 import { site } from "@/lib/site";
-import { cn, easeOutExpo, formatDate } from "@/lib/utils";
+import { cn, easeOutExpo } from "@/lib/utils";
 
-const sourceName = { google: "Google" };
+const sourceName = { google: "Google", letter: "" };
+const countryName: Record<string, { en: string; it: string }> = { Italy: { en: "Italy", it: "Italia" } };
+
+/** "2026-08" → "August 2026" / "agosto 2026" */
+const monthYear = (ym: string, locale: string) => new Date(`${ym}-01T12:00:00`).toLocaleDateString(locale, { month: "long", year: "numeric" });
 
 /** Manually controlled review carousel: arrows, dots and swipe. No autoplay. */
 export function TestimonialsSlider() {
@@ -40,7 +44,7 @@ export function TestimonialsSlider() {
 
         <div className="grid items-center gap-10 lg:grid-cols-[1.6fr_1fr] lg:gap-16">
           <div role="region" aria-roledescription="carousel" aria-label={dict.testimonials.title}>
-            <div className="relative min-h-[320px] sm:min-h-[280px]" aria-live="polite">
+            <div className="relative min-h-[460px] sm:min-h-[380px]" aria-live="polite">
               <AnimatePresence mode="wait" initial={false} custom={direction}>
                 <motion.figure
                   key={r.id}
@@ -62,7 +66,16 @@ export function TestimonialsSlider() {
                   <span aria-hidden className="font-heading text-7xl leading-[0.6] text-accent">
                     &ldquo;
                   </span>
-                  <blockquote className="tagline text-2xl leading-snug text-primary md:text-[1.75rem]">{l(r.quote, lang)}</blockquote>
+                  <blockquote
+                    lang={lang === "en" ? "en" : "it"}
+                    className={cn(
+                      "tagline leading-snug text-primary",
+                      l(r.quote, lang).length > 220 ? "text-lg md:text-xl" : "text-2xl md:text-[1.75rem]"
+                    )}
+                  >
+                    {l(r.quote, lang)}
+                  </blockquote>
+                  {lang === "en" && <p className="-mt-2 text-xs text-muted">{dict.testimonials.translated}</p>}
                   <Stars rating={r.rating} label={dict.common.stars} size={18} />
                   <figcaption className="flex flex-wrap items-center justify-between gap-3">
                     <span className="flex items-center gap-3">
@@ -72,18 +85,21 @@ export function TestimonialsSlider() {
                       <span>
                         <span className="block font-semibold text-ink">{r.name}</span>
                         <span className="text-sm text-muted">
-                          {r.country} · {formatDate(r.date, intlLocale[lang])}
+                          {countryName[r.country]?.[lang] ?? r.country}
+                          {r.date && ` · ${monthYear(r.date, intlLocale[lang])}`}
                         </span>
                       </span>
                     </span>
-                    <a
-                      href={r.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-primary hover:underline"
-                    >
-                      {dict.testimonials.readOn} {sourceName[r.source]} <ExternalLink className="h-3.5 w-3.5" aria-hidden />
-                    </a>
+                    {r.link && (
+                      <a
+                        href={r.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex min-h-11 items-center gap-1 text-sm font-semibold text-primary hover:underline"
+                      >
+                        {dict.testimonials.readOn} {sourceName[r.source]} <ExternalLink className="h-3.5 w-3.5" aria-hidden />
+                      </a>
+                    )}
                   </figcaption>
                 </motion.figure>
               </AnimatePresence>

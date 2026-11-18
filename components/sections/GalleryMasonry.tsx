@@ -10,7 +10,7 @@ import { InstagramIcon } from "@/components/ui/SocialIcons";
 import { gallery } from "@/lib/data/gallery";
 import { l } from "@/lib/i18n/config";
 import { site } from "@/lib/site";
-import type { GalleryCategory, GalleryItem } from "@/lib/types";
+import type { GalleryItem } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 const aspectClass: Record<GalleryItem["aspect"], string> = {
@@ -19,15 +19,12 @@ const aspectClass: Record<GalleryItem["aspect"], string> = {
   square: "aspect-square",
 };
 
-const categories: GalleryCategory[] = ["nature", "culture", "food", "vehicles"];
-
-/** Filterable masonry grid with keyboard-navigable lightbox. */
+/** Masonry photo grid with a keyboard-navigable lightbox. */
 export function GalleryMasonry({ limit }: { limit?: number }) {
   const { lang, dict } = useI18n();
-  const [filter, setFilter] = useState<GalleryCategory | "all">("all");
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const items = gallery.filter((g) => filter === "all" || g.category === filter).slice(0, limit);
+  const items = gallery.slice(0, limit);
   const current = openIndex !== null ? items[openIndex] : null;
 
   const step = useCallback(
@@ -58,18 +55,7 @@ export function GalleryMasonry({ limit }: { limit?: number }) {
 
   return (
     <div>
-      <div className="chip-row mb-8 md:justify-center" role="group" aria-label={dict.gallery.title}>
-        <button type="button" className="chip" aria-pressed={filter === "all"} onClick={() => setFilter("all")}>
-          {dict.gallery.all}
-        </button>
-        {categories.map((c) => (
-          <button key={c} type="button" className="chip" aria-pressed={filter === c} onClick={() => setFilter(c)}>
-            {dict.gallery.categories[c]}
-          </button>
-        ))}
-      </div>
-
-      <ul className="columns-2 gap-4 md:columns-3 lg:columns-4 [&>li]:mb-4">
+      <ul className="columns-2 gap-4 md:columns-3 [&>li]:mb-4">
         <AnimatePresence initial={false}>
           {items.map((item, i) => (
             <motion.li

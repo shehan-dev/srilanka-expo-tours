@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
 import localFont from "next/font/local";
 import { AppProviders } from "@/components/providers/AppProviders";
+import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { ClosingCta } from "@/components/layout/ClosingCta";
@@ -92,6 +93,7 @@ export default async function RootLayout({ children, params }: Props) {
           <ClosingCta />
           <Footer lang={lang} dict={dict} />
           <FloatingContact />
+          <SmoothScroll />
         </AppProviders>
         <JsonLd data={organizationLd(lang, dict.meta.description)} />
       </body>

@@ -8,6 +8,7 @@ import { useI18n } from "@/components/providers/AppProviders";
 import { WhatsappIcon } from "@/components/ui/SocialIcons";
 import { href } from "@/lib/i18n/config";
 import { site } from "@/lib/site";
+import { scrollToTop } from "@/lib/scroll";
 import { cn } from "@/lib/utils";
 
 /**
@@ -64,7 +65,7 @@ export function FloatingContact() {
       {/* Back to top: clear of the WhatsApp button (desktop) and the action bar (mobile) */}
       <button
         type="button"
-        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        onClick={scrollToTop}
         aria-label={dict.common.backToTop}
         tabIndex={farDown ? 0 : -1}
         className={cn(
