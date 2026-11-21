@@ -14,7 +14,6 @@ import { TestimonialsSlider } from "@/components/sections/TestimonialsSlider";
 import { GalleryMasonry } from "@/components/sections/GalleryMasonry";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
 import { BlogCards } from "@/components/sections/BlogCards";
-import { ContactForm } from "@/components/sections/ContactForm";
 import { ContactDetails } from "@/components/sections/ContactDetails";
 import { Reveal } from "@/components/ui/Reveal";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -147,14 +146,11 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         </div>
       </section>
 
-      {/* Contact / Book now: form card + Tea Green details panel (ivory) */}
+      {/* Contact / Book now: Tea Green details panel + office map (ivory) */}
       <section id="contact" aria-labelledby="contact-title" className="section">
         <div className="container-site">
           <SectionHeading id="contact-title" eyebrow={dict.contact.eyebrow} title={dict.contact.title} subtitle={dict.contact.subtitle} />
-          <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr] lg:gap-8">
-            <ContactForm />
-            <ContactDetails dict={dict} />
-          </div>
+          <ContactDetails dict={dict} />
         </div>
       </section>
     </>

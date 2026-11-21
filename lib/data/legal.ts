@@ -18,8 +18,8 @@ export const legalPages: Record<LegalSlug, Section[]> = {
     {
       heading: { en: "1. Who we are", it: "1. Chi siamo" },
       body: {
-        en: "Lankavé Tours is a licensed tour operator registered in Sri Lanka. These terms apply to every tour, transfer and service booked through this website, by email, WhatsApp or phone.",
-        it: "Lankavé Tours è un tour operator autorizzato registrato in Sri Lanka. I presenti termini si applicano a ogni tour, transfer e servizio prenotato tramite questo sito, via email, WhatsApp o telefono.",
+        en: "Lankavé Tours is a licensed tour operator registered in Sri Lanka. These terms apply to every tour, transfer and service booked through this website, WhatsApp or phone.",
+        it: "Lankavé Tours è un tour operator autorizzato registrato in Sri Lanka. I presenti termini si applicano a ogni tour, transfer e servizio prenotato tramite questo sito, WhatsApp o telefono.",
       },
     },
     {
@@ -69,8 +69,8 @@ export const legalPages: Record<LegalSlug, Section[]> = {
     {
       heading: { en: "Your rights (GDPR)", it: "I tuoi diritti (GDPR)" },
       body: {
-        en: "You may request access to, correction or deletion of your personal data at any time by writing to info@srilankaexpotours.com.",
-        it: "Puoi richiedere in qualsiasi momento l'accesso, la rettifica o la cancellazione dei tuoi dati personali scrivendo a info@srilankaexpotours.com.",
+        en: "You may request access to, correction or deletion of your personal data at any time by messaging us on WhatsApp at +94 77 252 1903.",
+        it: "Puoi richiedere in qualsiasi momento l'accesso, la rettifica o la cancellazione dei tuoi dati personali scrivendoci su WhatsApp al +94 77 252 1903.",
       },
     },
   ],
@@ -154,8 +154,8 @@ export const legalPages: Record<LegalSlug, Section[]> = {
     {
       heading: { en: "Feedback", it: "Segnalazioni" },
       body: {
-        en: "If something on this site is hard to use, please email info@srilankaexpotours.com and we will fix it.",
-        it: "Se qualcosa su questo sito è difficile da usare, scrivi a info@srilankaexpotours.com e lo correggeremo.",
+        en: "If something on this site is hard to use, please message us on WhatsApp or call +94 77 252 1903 and we will fix it.",
+        it: "Se qualcosa su questo sito è difficile da usare, scrivici su WhatsApp o chiama il +94 77 252 1903 e lo correggeremo.",
       },
     },
   ],

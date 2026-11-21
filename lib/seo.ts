@@ -50,7 +50,7 @@ export const organizationLd = (lang: Locale, description: string) => ({
   logo: abs("/icon.svg"),
   description,
   telephone: site.phone,
-  email: site.email,
+  openingHours: site.openingHours,
   address: {
     "@type": "PostalAddress",
     streetAddress: site.address.street,
@@ -59,11 +59,6 @@ export const organizationLd = (lang: Locale, description: string) => ({
     addressCountry: site.address.countryCode,
   },
   founder: { "@type": "Person", name: site.founder, jobTitle: "Founder & Chauffeur Tourist Guide", image: abs(site.founderPhoto) },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: site.rating.value,
-    reviewCount: site.rating.count,
-  },
   knowsLanguage: ["it", "en"],
   sameAs: Object.values(site.social),
 });

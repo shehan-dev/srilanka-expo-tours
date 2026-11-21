@@ -1,15 +1,19 @@
-import { Clock, Headphones, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Headphones, MapPin, Phone } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
 import { site } from "@/lib/site";
 import { MapView } from "@/components/map/MapView";
 import { WhatsappIcon } from "@/components/ui/SocialIcons";
 
-export function ContactDetails({ dict }: { dict: Dictionary }) {
+/**
+ * Contact panel (address, phone, hours, WhatsApp / call) beside the office map. `message` prefills the
+ * WhatsApp chat, e.g. with the tour and package a visitor came from.
+ */
+export function ContactDetails({ dict, message }: { dict: Dictionary; message?: string }) {
   const t = dict.contact;
-  const text = encodeURIComponent(t.prefill);
+  const text = encodeURIComponent(message || t.prefill);
 
   return (
-    <div className="flex flex-col gap-5">
+    <div className="grid gap-6 lg:grid-cols-2 lg:gap-8">
       <div className="on-green flex flex-col gap-4 rounded-card bg-primary p-6 text-ivory md:p-8">
         <h2 className="text-2xl font-semibold text-ivory">{t.office}</h2>
         <address className="flex flex-col gap-3 text-[15px] not-italic">
@@ -20,10 +24,6 @@ export function ContactDetails({ dict }: { dict: Dictionary }) {
           <a href={site.phoneHref} className="flex gap-3 hover:underline">
             <Phone className="mt-0.5 h-5 w-5 shrink-0 text-accent" aria-hidden />
             {site.phone}
-          </a>
-          <a href={`mailto:${site.email}`} className="flex gap-3 hover:underline">
-            <Mail className="mt-0.5 h-5 w-5 shrink-0 text-accent" aria-hidden />
-            {site.email}
           </a>
         </address>
         <div className="flex flex-col gap-3 border-t border-ivory/20 pt-4 text-sm">
@@ -57,10 +57,10 @@ export function ContactDetails({ dict }: { dict: Dictionary }) {
         </div>
       </div>
 
-      <div>
+      <div className="flex flex-col">
         <h2 className="mb-2 text-sm font-semibold tracking-wide text-muted uppercase">{t.meetingPoint}</h2>
         <MapView
-          className="h-64"
+          className="h-72 lg:h-auto lg:min-h-72 lg:flex-1"
           label={t.meetingPoint}
           points={[{ id: "office", coords: site.meetingPoint, title: site.name, subtitle: `${site.address.street}, ${site.address.city}, ${site.address.region}` }]}
         />

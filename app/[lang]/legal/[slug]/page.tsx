@@ -86,9 +86,6 @@ export default async function LegalPage({ params }: Props) {
                 ) : (
                   <p className="mb-0!">{dict.legal.documentsOnRequest}</p>
                 )}
-                <p className="mb-0! text-sm text-muted">
-                  {dict.footer.license}: {site.licenseNumber}
-                </p>
               </section>
             )}
           </div>

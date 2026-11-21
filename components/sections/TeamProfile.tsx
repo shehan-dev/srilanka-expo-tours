@@ -29,7 +29,7 @@ export function MissionCards({ dict }: { dict: Dictionary }) {
 /** Stats: Playfair numerals in green with gold-dark labels. Numbers count up once; the final value is in the HTML. */
 export function Milestones({ dict }: { dict: Dictionary }) {
   return (
-    <dl className="grid grid-cols-2 gap-4 md:grid-cols-4">
+    <dl className="mx-auto grid max-w-4xl gap-4 sm:grid-cols-3">
       {dict.about.milestones.map((m, i) => (
         <Reveal key={m.label} delay={i * 0.075} className="flex flex-col-reverse items-center rounded-card bg-white p-6 text-center shadow-card ring-1 ring-line/60">
           <dt className="mt-2 text-xs font-semibold tracking-[0.15em] text-accent-700 uppercase">{m.label}</dt>

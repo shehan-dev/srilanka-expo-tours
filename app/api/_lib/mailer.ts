@@ -27,7 +27,7 @@ function getTransporter() {
 export const mailFrom = () => process.env.MAIL_FROM || `${site.name} <${process.env.SMTP_USER}>`;
 
 /** Inbox that receives new booking notifications. */
-export const notifyTo = () => process.env.BOOKING_NOTIFY_TO || site.email;
+export const notifyTo = () => process.env.BOOKING_NOTIFY_TO || process.env.SMTP_USER!;
 
 export async function sendMail(message: { to: string; subject: string; html: string; text: string; replyTo?: string }) {
   return getTransporter().sendMail({ from: mailFrom(), ...message });

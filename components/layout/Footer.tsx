@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Mail, MapPin, Phone, ShieldCheck } from "lucide-react";
+import { MapPin, Phone } from "lucide-react";
 import type { Dictionary } from "@/lib/i18n";
 import { href, locales, type Locale } from "@/lib/i18n/config";
 import { site } from "@/lib/site";
@@ -54,11 +54,6 @@ export function Footer({ lang, dict }: { lang: Locale; dict: Dictionary }) {
                 <Phone className="h-4 w-4 text-accent" aria-hidden /> {site.phone}
               </a>
             </li>
-            <li>
-              <a href={`mailto:${site.email}`} className={`inline-flex items-center gap-2 ${linkClass}`}>
-                <Mail className="h-4 w-4 text-accent" aria-hidden /> {site.email}
-              </a>
-            </li>
             <li className="inline-flex items-center gap-2 text-ivory/85">
               <MapPin className="h-4 w-4 shrink-0 text-accent" aria-hidden /> {site.address.street}, {site.address.city}, {site.address.region}
             </li>
@@ -102,10 +97,6 @@ export function Footer({ lang, dict }: { lang: Locale; dict: Dictionary }) {
 
       <div className="border-t border-ivory/15">
         <div className="container-site flex flex-col gap-4 py-6 text-xs text-ivory/80 lg:flex-row lg:items-center lg:justify-between">
-          <p className="flex items-center gap-2">
-            <ShieldCheck className="h-4 w-4 text-accent" aria-hidden />
-            {dict.footer.license}: {site.licenseNumber}
-          </p>
           <p className="max-w-md">
             <Link href={href(lang, "/legal/accessibility")} className={linkClass}>
               {dict.footer.accessibility}

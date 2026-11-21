@@ -27,7 +27,7 @@ Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL` (and optional
 
 ## Where to edit things
 
-- **Business details** (phone, WhatsApp, email, address, licence no., socials, hero video, currency rates): `lib/site.ts`
+- **Business details** (phone, WhatsApp, address, opening hours, socials, Google review link, hero video, currency rates): `lib/site.ts`
 - **UI text** in both languages: `lib/i18n/dictionaries/en.ts` and `it.ts` (TypeScript makes sure Italian has every key English has)
 - **Content**: `lib/data/*.ts`: tours, destinations, testimonials, blog, FAQs, gallery, vehicles, attractions, legal text
 - **Tour prices**: `prices: { standard, premium }` on each tour in `lib/data/tours.ts` (USD per person, 2 sharing)
@@ -93,8 +93,8 @@ The brief's suggested gold-dark `#8A6420` measured 4.27:1 on ivory-deep, so it w
 ### Photos & video
 Tours, destinations, blog posts, the fleet and all page headers use free Unsplash photos stored in `/public/media` (credits in `public/media/CREDITS.md`). To swap one, replace the file or change the `image` field. Anything without an `image` (e.g. gallery items) shows an illustrated scene. Images are served through `next/image` (AVIF/WebP, lazy-loaded, blur-up). For the hero, either set `heroVideo` in `lib/site.ts` or edit the slides in `components/home/HeroVideo.tsx`.
 
-### Booking form → emails
-The contact/booking form posts to `POST /api/booking`:
+### Booking API → emails
+The on-site booking form has been removed (enquiries now go to WhatsApp and phone; tour and booking-bar links prefill the WhatsApp message). The endpoint is kept, unused, in case a form returns, e.g. with the itinerary builder: `POST /api/booking`:
 
 ```
 app/api/
@@ -110,9 +110,8 @@ For each request the team gets a notification (reply goes straight to the guest)
 
 ## Before launch · placeholders to replace
 
-- [ ] Email, SLTDA licence number, Facebook/Instagram/Google links · `lib/site.ts`
 - [ ] **Testimonials are samples** · replace with real reviews and links (`lib/data/testimonials.ts`)
-- [ ] Founder bio, years of experience, milestones (12+ years, 2,300+ travellers, 450+ tours) · dictionaries `about` section
+- [ ] Founder bio, years of experience, milestones · dictionaries `about` section
 - [ ] Deposit %, payment methods and cancellation tiers · `lib/data/faqs.ts` and `lib/data/legal.ts`
 - [ ] Legal pages are templates · have them reviewed
 - [ ] Logo and favicon

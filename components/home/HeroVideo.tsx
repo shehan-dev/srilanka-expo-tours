@@ -8,9 +8,8 @@ import { ArrowRight, MapPin } from "lucide-react";
 import { useI18n } from "@/components/providers/AppProviders";
 import { Price } from "@/components/ui/Price";
 import { Reveal } from "@/components/ui/Reveal";
-import { Stars } from "@/components/ui/Stars";
 import { getTour } from "@/lib/data/tours";
-import { href, intlLocale, l } from "@/lib/i18n/config";
+import { href, l } from "@/lib/i18n/config";
 import { site } from "@/lib/site";
 import { cn } from "@/lib/utils";
 
@@ -113,14 +112,6 @@ export function HeroVideo() {
             <Link href={href(lang, "/contact")} className="btn btn-ghost-light">
               {dict.hero.ctaSecondary}
             </Link>
-          </Reveal>
-
-          <Reveal delay={0.5} className="mt-6 flex items-center gap-3 text-sm text-ivory/90">
-            <Stars rating={5} size={16} label={dict.common.stars} />
-            <span>
-              <strong className="font-semibold text-ivory">{site.rating.value}</strong> · {site.rating.count.toLocaleString(intlLocale[lang])}{" "}
-              {dict.hero.travellers}
-            </span>
           </Reveal>
         </div>
 

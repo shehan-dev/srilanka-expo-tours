@@ -4,14 +4,13 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useId, useMemo, useState, type KeyboardEvent } from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { BadgeCheck, Calculator, CalendarDays, Languages, MapPin, Minus, Plus, Search, Star, Users, X } from "lucide-react";
+import { Calculator, CalendarDays, Car, Languages, MapPin, Minus, Plus, Route, Search, ShieldCheck, Users, X } from "lucide-react";
 import { useI18n } from "@/components/providers/AppProviders";
 import { Price } from "@/components/ui/Price";
 import { Reveal } from "@/components/ui/Reveal";
 import { searchPlaces } from "@/lib/data/destinations";
-import { href, intlLocale } from "@/lib/i18n/config";
+import { href } from "@/lib/i18n/config";
 import { estimateTrip } from "@/lib/pricing";
-import { site } from "@/lib/site";
 import type { GuideLanguage, RegionId } from "@/lib/types";
 import { cn, easeOutExpo } from "@/lib/utils";
 
@@ -226,10 +225,10 @@ export function BookingBar() {
   })}`;
 
   const trust = [
-    { Icon: BadgeCheck, label: dict.features.badges.license },
-    { Icon: Star, label: dict.features.badges.google },
-    { Icon: Users, label: `${site.rating.count.toLocaleString(intlLocale[lang])}+ ${dict.hero.travellers}` },
     { Icon: Languages, label: dict.hero.badge },
+    { Icon: Car, label: dict.features.items[1].title },
+    { Icon: Route, label: dict.features.items[2].title },
+    { Icon: ShieldCheck, label: dict.features.items[3].title },
   ];
 
   return (
@@ -342,7 +341,7 @@ export function BookingBar() {
           </AnimatePresence>
         </Reveal>
 
-        {/* Trust strip: existing figures only */}
+        {/* Trust strip */}
         <ul className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-medium text-ink">
           {trust.map(({ Icon, label }, i) => (
             <Reveal as="li" key={label} delay={0.1 + i * 0.07} className="inline-flex items-center gap-2">

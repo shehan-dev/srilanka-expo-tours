@@ -4,7 +4,6 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { ChevronLeft, ChevronRight, ExternalLink, PenLine } from "lucide-react";
 import { useI18n } from "@/components/providers/AppProviders";
-import { CountUp } from "@/components/ui/CountUp";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Stars } from "@/components/ui/Stars";
 import { testimonials } from "@/lib/data/testimonials";
@@ -31,11 +30,6 @@ export function TestimonialsSlider() {
   };
 
   const r = testimonials[index];
-  const stats = [
-    { value: "450+", label: dict.testimonials.toursRun },
-    { value: `${site.rating.count.toLocaleString(intlLocale[lang])}+`, label: dict.testimonials.travellers },
-    { value: `${site.rating.value.toLocaleString(intlLocale[lang])}★`, label: dict.testimonials.avgRating },
-  ];
 
   return (
     <section aria-labelledby="reviews-title" className="section overflow-hidden">
@@ -139,18 +133,10 @@ export function TestimonialsSlider() {
             </div>
           </div>
 
-          <aside className="flex flex-col gap-6 rounded-panel bg-white p-8 shadow-card ring-1 ring-line/60">
-            <dl className="grid gap-6">
-              {stats.map((s) => (
-                <div key={s.label} className="flex flex-col-reverse">
-                  <dt className="text-xs font-semibold tracking-[0.15em] text-accent-700 uppercase">{s.label}</dt>
-                  <dd className="font-heading text-4xl font-semibold text-primary">
-                    <CountUp value={s.value} />
-                  </dd>
-                </div>
-              ))}
-            </dl>
-            <a href={site.social.google} target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-sm self-start">
+          <aside className="flex flex-col gap-5 rounded-panel bg-white p-8 shadow-card ring-1 ring-line/60">
+            <Stars rating={5} label={dict.common.stars} size={22} />
+            <p className="font-heading text-2xl leading-snug font-semibold text-primary">{dict.testimonials.reviewPrompt}</p>
+            <a href={site.googleReview} target="_blank" rel="noopener noreferrer" className="btn btn-outline btn-sm self-start">
               <PenLine className="h-4 w-4" aria-hidden /> {dict.testimonials.write} · Google
             </a>
           </aside>

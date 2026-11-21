@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ContactDetails } from "@/components/sections/ContactDetails";
-import { ContactForm } from "@/components/sections/ContactForm";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { getTour } from "@/lib/data/tours";
 import { getDictionary } from "@/lib/i18n";
-import { hasLocale, href } from "@/lib/i18n/config";
+import { hasLocale, href, l } from "@/lib/i18n/config";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
@@ -27,10 +26,16 @@ export default async function ContactPage({ params, searchParams }: Props) {
   const dict = await getDictionary(lang);
   const sp = await searchParams;
 
-  // Prefill from links like ?tour=slug&option=premium, ?guide=nishan or ?message=… (booking bar estimate)
-  const tour = sp.tour && getTour(sp.tour) ? sp.tour : "";
-  const option = sp.option === "premium" || sp.option === "standard" ? sp.option : "";
-  const message = [sp.message?.slice(0, 500) ?? "", sp.guide === "nishan" ? `${dict.about.bookNishan} (${site.founder})` : ""]
+  // Links like ?tour=slug&option=premium, ?guide=nishan or ?message=… (booking bar estimate) prefill
+  // the WhatsApp chat with what the visitor was looking at.
+  const tour = sp.tour ? getTour(sp.tour) : undefined;
+  const option = sp.option === "premium" || sp.option === "standard" ? sp.option : undefined;
+  const message = [
+    dict.contact.prefill,
+    tour ? `${dict.contact.tour}: ${l(tour.title, lang)}${option ? ` (${dict.tour[option]})` : ""}` : "",
+    sp.message?.slice(0, 500) ?? "",
+    sp.guide === "nishan" ? `${dict.about.bookNishan} (${site.founder})` : "",
+  ]
     .filter(Boolean)
     .join("\n");
 
@@ -48,9 +53,8 @@ export default async function ContactPage({ params, searchParams }: Props) {
         ]}
       />
       <section className="section pt-10 md:pt-14">
-        <div className="container-site grid gap-8 lg:grid-cols-[1.5fr_1fr]">
-          <ContactForm defaultTour={tour} defaultOption={option} defaultMessage={message} />
-          <ContactDetails dict={dict} />
+        <div className="container-site">
+          <ContactDetails dict={dict} message={message} />
         </div>
       </section>
     </>
