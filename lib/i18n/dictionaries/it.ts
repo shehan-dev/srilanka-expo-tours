@@ -268,7 +268,7 @@ const it: Dictionary = {
       { title: "Viaggi sostenibili", text: "Piccoli gruppi, fornitori locali e ricariche d'acqua plastic-free su ogni veicolo." },
       { title: "Servizio per italiani", text: "Guide di lingua italiana, assistenza in italiano e menu adattati ai tuoi gusti." },
     ],
-    founderTitle: "Fondatore e autista-guida turistica",
+    founderTitle: "Fondatore e docente per autisti-guida turistiche",
     founderBio:
       "Nato nel profondo sud dello Sri Lanka, Nishan ha vissuto in Italia per oltre vent'anni prima di tornare a casa per far conoscere la sua isola ai viaggiatori. Come autista-guida turistica, con più di 8 anni di esperienza nel turismo, ha accolto ospiti internazionali da tutto il mondo, e grazie al suo italiano fluente e alla sua conoscenza dei gusti italiani, con lui i viaggiatori italiani si sentono sempre a casa.",
     favouriteRoute: "Itinerario preferito",
@@ -276,10 +276,23 @@ const it: Dictionary = {
     yearsGuiding: "Anni nel turismo",
     languagesSpoken: "Lingue",
     credentials: "Ruolo",
-    credentialsText: "Autista-guida turistica (Chauffeur Tourist Guide)",
+    credentialsText: "Docente per autisti-guida turistiche (Chauffeur Tourist Guide Lecturer)",
     italy: "In Italia",
     italyText: "Oltre 20 anni",
     bookNishan: "Prenota Nishan come autista-guida",
+    teamTitle: "Il team dietro il tuo viaggio",
+    team: {
+      shehan: {
+        role: "Co-founder e Managing Director",
+        highlight: "Oltre 5 anni nell'informatica",
+        bio: "Shehan porta in Lankavé oltre 5 anni di esperienza nel settore informatico e ne guida la parte organizzativa: pianificazione, prenotazioni ed esperienza digitale. Anni passati a gestire tour accanto al fondatore Nishan Silva, suo padre, fanno sì che ogni viaggio sia organizzato con l'occhio attento di una guida.",
+      },
+      dhammika: {
+        role: "Tour Manager",
+        highlight: "Certificazione di Chauffeur Tourist Guide Lecturer",
+        bio: "Come Tour Manager, Dhammika segue ogni tour sul posto: itinerari, autisti, hotel e i piccoli dettagli che rendono serena ogni giornata.",
+      },
+    },
     milestonesTitle: "I nostri traguardi",
     milestones: [
       { value: "8+", label: "Anni nel turismo" },

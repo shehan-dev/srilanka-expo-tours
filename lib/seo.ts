@@ -58,7 +58,7 @@ export const organizationLd = (lang: Locale, description: string) => ({
     addressRegion: site.address.region,
     addressCountry: site.address.countryCode,
   },
-  founder: { "@type": "Person", name: site.founder, jobTitle: "Founder & Chauffeur Tourist Guide", image: abs(site.founderPhoto) },
+  founder: { "@type": "Person", name: site.founder, jobTitle: "Founder & Chauffeur Tourist Guide Lecturer", image: abs(site.founderPhoto) },
   knowsLanguage: ["it", "en"],
   sameAs: Object.values(site.social),
 });

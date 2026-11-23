@@ -9,7 +9,7 @@ import { ToursTeaser } from "@/components/home/ToursTeaser";
 import { ItineraryTeaser } from "@/components/home/ItineraryTeaser";
 import { DestinationExplorer } from "@/components/discover/DestinationExplorer";
 import { ServicesGrid } from "@/components/sections/Services";
-import { MissionCards, Milestones, TeamProfile } from "@/components/sections/TeamProfile";
+import { MissionCards, Milestones, TeamMembers, TeamProfile } from "@/components/sections/TeamProfile";
 import { TestimonialsSlider } from "@/components/sections/TestimonialsSlider";
 import { GalleryMasonry } from "@/components/sections/GalleryMasonry";
 import { FAQAccordion } from "@/components/sections/FAQAccordion";
@@ -84,6 +84,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
         <div className="container-site flex flex-col gap-16 md:gap-20">
           <SectionHeading id="about-title" eyebrow={dict.about.eyebrow} title={dict.about.title} subtitle={dict.about.story} />
           <TeamProfile dict={dict} lang={lang} />
+          <TeamMembers dict={dict} />
           <MissionCards dict={dict} />
           <div>
             <h3 className="mb-6 text-center text-2xl font-semibold">{dict.about.milestonesTitle}</h3>

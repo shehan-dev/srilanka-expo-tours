@@ -42,6 +42,48 @@ export function Milestones({ dict }: { dict: Dictionary }) {
   );
 }
 
+const team = [
+  { id: "shehan", name: "Shehan Silva", photo: "/media/team/shehan-silva.jpg", position: "object-[50%_25%]" },
+  { id: "dhammika", name: "Dhammika Fernando", photo: "/media/team/dhammika-fernando-portrait.jpg", position: "object-[50%_20%]" },
+] as const;
+
+/** The rest of the team, shown under the founder: photo beside name, role, one highlight and a short bio. */
+export function TeamMembers({ dict }: { dict: Dictionary }) {
+  return (
+    <div className="flex flex-col gap-6">
+      <Reveal>
+        <h3 className="text-center text-2xl font-semibold">{dict.about.teamTitle}</h3>
+      </Reveal>
+      <ul className="grid gap-6 lg:grid-cols-2">
+        {team.map((m, i) => {
+          const t = dict.about.team[m.id];
+          return (
+            <Reveal
+              as="li"
+              key={m.id}
+              delay={i * 0.08}
+              className="grid overflow-hidden rounded-panel bg-white shadow-card ring-1 ring-line/60 sm:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]"
+            >
+              <div className="relative aspect-[4/5] bg-ivory-deep sm:aspect-auto sm:min-h-full">
+                <Image src={m.photo} alt={`${m.name}, ${t.role}`} fill sizes="(min-width: 1024px) 16rem, (min-width: 640px) 40vw, 90vw" className={`object-cover ${m.position}`} />
+              </div>
+              <div className="flex flex-col gap-3 p-6 md:p-7">
+                <span className="text-xs font-semibold tracking-[0.15em] text-accent-700 uppercase">{t.role}</span>
+                <h4 className="font-heading text-2xl font-semibold text-primary">{m.name}</h4>
+                <span className="rule-taper" aria-hidden />
+                <p className="flex items-start gap-2 text-sm font-medium">
+                  <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden /> {t.highlight}
+                </p>
+                <p className="text-[15px] text-ink/85">{t.bio}</p>
+              </div>
+            </Reveal>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
 /** Founder / chauffeur tourist guide: photo in a large rounded panel with a gold-outlined caption card. */
 export function TeamProfile({ dict, lang }: { dict: Dictionary; lang: Locale }) {
   return (
@@ -87,7 +129,6 @@ export function TeamProfile({ dict, lang }: { dict: Dictionary; lang: Locale }) 
             <div className="rounded-card bg-white p-4 ring-1 ring-line/60">
               <dt className="text-xs font-semibold tracking-[0.15em] text-accent-700 uppercase">{dict.about.italy}</dt>
               <dd className="mt-1 text-sm font-medium">
-                <span aria-hidden>🇮🇹 </span>
                 {dict.about.italyText}
               </dd>
             </div>

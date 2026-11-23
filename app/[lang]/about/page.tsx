@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { MissionCards, Milestones, TeamProfile } from "@/components/sections/TeamProfile";
+import { MissionCards, Milestones, TeamMembers, TeamProfile } from "@/components/sections/TeamProfile";
 import { TestimonialsSlider } from "@/components/sections/TestimonialsSlider";
 import { PageHeader } from "@/components/ui/PageHeader";
 import { getDictionary } from "@/lib/i18n";
@@ -37,7 +37,10 @@ export default async function AboutPage({ params }: Props) {
       <section className="section">
         <div className="container-site flex flex-col gap-20">
           <MissionCards dict={dict} />
-          <TeamProfile dict={dict} lang={lang} />
+          <div className="flex flex-col gap-16 md:gap-20">
+            <TeamProfile dict={dict} lang={lang} />
+            <TeamMembers dict={dict} />
+          </div>
           <div>
             <h2 className="h2 mb-8 text-center">{dict.about.milestonesTitle}</h2>
             <Milestones dict={dict} />

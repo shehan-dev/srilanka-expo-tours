@@ -266,7 +266,7 @@ const en = {
       { title: "Sustainable travel", text: "Small groups, local suppliers and plastic-free water refills in every vehicle." },
       { title: "Italian-friendly service", text: "Italian-speaking guides, Italian support line and menus adapted to your tastes." },
     ],
-    founderTitle: "Founder & chauffeur tourist guide",
+    founderTitle: "Founder & chauffeur tourist guide lecturer",
     founderBio:
       "Born in the deep south of Sri Lanka, Nishan lived in Italy for more than two decades before coming home to share his island with travellers. As a chauffeur tourist guide with over 8 years in the tourism industry, he has welcomed international guests from all over the world, and with fluent Italian and a real feel for Italian tastes, Italian travellers are always right at home with him.",
     favouriteRoute: "Favourite route",
@@ -274,10 +274,23 @@ const en = {
     yearsGuiding: "Years in tourism",
     languagesSpoken: "Languages",
     credentials: "Role",
-    credentialsText: "Chauffeur Tourist Guide",
+    credentialsText: "Chauffeur Tourist Guide Lecturer",
     italy: "Lived in Italy",
     italyText: "20+ years",
     bookNishan: "Book Nishan as your chauffeur guide",
+    teamTitle: "The team behind your journey",
+    team: {
+      shehan: {
+        role: "Co-founder & Managing Director",
+        highlight: "5+ years in Information Technology",
+        bio: "Shehan brings more than 5 years in information technology to Lankavé and runs the business side: planning, bookings and the digital experience. Years of managing tours alongside founder Nishan Silva, Shehan's father, mean every trip is organised with a guide's eye for detail.",
+      },
+      dhammika: {
+        role: "Tour Manager",
+        highlight: "Certified Chauffeur Tourist Guide Lecturer",
+        bio: "As Tour Manager, Dhammika looks after every tour on the ground: routes, drivers, hotels and the small details that keep each day running smoothly.",
+      },
+    },
     milestonesTitle: "Milestones",
     milestones: [
       { value: "8+", label: "Years in tourism" },
